@@ -4,7 +4,6 @@ import {
   LiveError,
   LivePreview,
 } from 'react-live-runner'
-import * as Reaviz from 'reaviz';
 
 export const Runner = (props) => (
   <div className="flex w-full border rounded-sm border-gray-800 mt-5">
@@ -12,7 +11,6 @@ export const Runner = (props) => (
       {...props}
       scope={{
         import: {
-          'reaviz': Reaviz
         }
       }}
     >

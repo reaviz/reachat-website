@@ -51,10 +51,10 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>reaviz - Data visualization library for React</title>
+        <title>reachat - Build Chat Experiences in Hours, Not Weeks.</title>
         <meta
           name="description"
-          content={"22+ Data Visualization Components for ReactJS"}
+          content={"Open-source UI Building Blocks for LLM and ChatUIs for ReactJS"}
         />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

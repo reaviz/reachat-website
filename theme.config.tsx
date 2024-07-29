@@ -115,7 +115,7 @@ const config: DocsThemeConfig = {
           Made with ❤️ by{" "}
           <Link
             className="text-secondary underline"
-            href="https://goodcode.us?utm_source=reablocks"
+            href="https://goodcode.us?utm_source=reachat"
           >
             Good Code
           </Link>
@@ -127,9 +127,9 @@ const config: DocsThemeConfig = {
     content: null,
   },
   project: {
-    link: "https://github.com/reaviz/reablocks",
+    link: "https://github.com/reaviz/reachat",
   },
-  docsRepositoryBase: "https://github.com/reaviz/reablocks-website/tree/master",
+  docsRepositoryBase: "https://github.com/reaviz/reachat-website/tree/master",
   useNextSeoProps: () => {
     const { asPath } = useRouter();
 
@@ -138,22 +138,22 @@ const config: DocsThemeConfig = {
       if (asPath === "/docs" || asPath === "/blocks") {
         return {
           titleTemplate:
-            "Reablocks \u2013 Open Source ReactJS Component Library",
+            "reachat \u2013 Build Chat Experiences in Hours, Not Weeks.",
           description:
-            "Beautifully designed, highly customizable, Open Source React components based on Tailwind and Framer Motion.",
+            "Open-source UI Building Blocks for LLM and ChatUIs for ReactJS",
         };
       }
 
       return {
-        titleTemplate: "%s \u2013 Reablocks",
+        titleTemplate: "%s \u2013 reachat",
         description:
           "Beautifully designed, highly customizable, Open Source React components based on Tailwind and Framer Motion.",
       };
     } else {
       return {
-        titleTemplate: "Reablocks \u2013 Open Source ReactJS Component Library",
+        titleTemplate: "reachat \u2013 Build Chat Experiences in Hours, Not Weeks.",
         description:
-          "Beautifully designed, highly customizable, Open Source React components based on Tailwind and Framer Motion.",
+          "Open-source UI Building Blocks for LLM and ChatUIs for ReactJS",
       };
     }
   },
