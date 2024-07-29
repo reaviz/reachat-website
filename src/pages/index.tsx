@@ -208,23 +208,10 @@ export default function Home() {
               <div className="relative flex h-full min-h-[500px] max-w-[90vw] flex-1 items-center justify-center gap-4">
                 <AnimateIn className="relative -bottom-20 left-0 z-10 min-w-[250px]">
                   <Image
-                    src="/heatmap-block-small.png"
-                    alt="Heatmap Block"
-                    width={235}
-                    height={350}
-                    objectFit="contain"
-                    className="rounded-xl shadow-card"
-                  />
-                </AnimateIn>
-                <AnimateIn
-                  className="relative -top-20 left-0 z-10 min-w-[250px]"
-                  transition={{ delay: 0.05 }}
-                >
-                  <Image
-                    src="/barchart-block-small.png"
-                    alt="Bar Chart Block"
-                    width={235}
-                    height={350}
+                    src="/popup.png"
+                    alt="popup"
+                    width={500}
+                    height={500}
                     objectFit="contain"
                     className="rounded-xl shadow-card"
                   />
