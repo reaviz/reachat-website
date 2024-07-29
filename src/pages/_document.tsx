@@ -4,22 +4,22 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <meta property="og:image" content="https://reablocks.dev/preview.png" />
+        <meta property="og:image" content="https://reachat.dev/preview.png" />
         <meta
           property="og:title"
-          content="Reablocks - Open Source ReactJS Component Library"
+          content="reachat - Build Chat Experiences in Hours, Not Weeks."
         />
         <meta
           property="og:description"
-          content="Beautifully designed, highly customizable, Open Source React components based on Tailwind and Framer Motion."
+          content="Open-source UI Building Blocks for LLM and ChatUIs for ReactJS"
         />
         <meta
           name="twitter:title"
-          content="Reablocks - Open Source ReactJS Component Library"
+          content="reachat - Build Chat Experiences in Hours, Not Weeks."
         />
         <meta
           name="twitter:description"
-          content="Beautifully designed, highly customizable, Open Source React components based on Tailwind and Framer Motion."
+          content="Open-source UI Building Blocks for LLM and ChatUIs for ReactJS"
         />
       </Head>
       <body>

@@ -25,8 +25,8 @@ import { useEffect, useState } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "reaviz - Data visualization library for React",
-  description: "22+ Data Visualization Components for ReactJS",
+  title: "reablocks - Build Chat Experiences in Hours, Not Weeks.",
+  description: "Open-source UI Building Blocks for LLM / Chat UIs",
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
@@ -75,18 +75,17 @@ export default function Home() {
           <HeroParallax className="hidden md:block">
             <section className="container mt-40 flex flex-col px-4 md:items-center md:px-24">
               <div className="mb-4 flex flex-col gap-4 md:mb-20 md:items-center md:text-center">
-                <a href="https://github.com/reaviz/reaviz" target="_blank">
+                <a href="https://github.com/reaviz/reachat" target="_blank">
                   <img
                     alt="GitHub stars"
-                    src="https://img.shields.io/github/stars/reaviz/reaviz?style=social"
+                    src="https://img.shields.io/github/stars/reaviz/reachat?style=social"
                   />
                 </a>
                 <h3 className="text-content text-4xl font-bold !leading-[150%] md:text-[60px] md:!leading-[120%]">
-                  Enterprise ready <br />
+                Build Chat Experiences <br />
                   <span className="md:text-[90px]">
-                    Open-Source Data{" "}
                     <span className="md:bg-opacity-50 md:bg-gradient-to-b md:from-white md:to-neutral-400 md:bg-clip-text md:text-transparent">
-                      Visualizations
+                      In Hours, Not Weeks
                     </span>
                   </span>
                 </h3>
@@ -101,7 +100,7 @@ export default function Home() {
                       Get Started
                     </button>
                   </Link>
-                  <Link className="flex-1" href="https://storybook.reaviz.dev">
+                  <Link className="flex-1" href="https://storybook.reachat.dev">
                     <button className="w-full min-w-[125px] whitespace-nowrap rounded-md bg-primary px-4 py-2 font-semibold text-content-primary shadow-button transition-colors hover:brightness-110">
                       Demos →
                     </button>
@@ -409,7 +408,7 @@ export default function Home() {
                 Made with ❤️ by{" "}
                 <Link
                   className="text-secondary underline"
-                  href="https://goodcode.us"
+                  href="https://goodcode.us?utm=reachat"
                 >
                   GoodCode
                 </Link>
