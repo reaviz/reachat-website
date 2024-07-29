@@ -7,22 +7,22 @@ import Link from "next/link";
 const config: DocsThemeConfig = {
   head: (
     <>
-      <meta property="og:image" content="https://reablocks.dev/preview.png" />
+      <meta property="og:image" content="https://reachat.dev/preview.png" />
       <meta
         property="og:title"
-        content="Reablocks - Open Source ReactJS Component Library"
+        content="reachat - Open Source ReactJS Component Library"
       />
       <meta
         property="og:description"
-        content="Beautifully designed, highly customizable, Open Source React components based on Tailwind and Framer Motion."
+        content="Open-source UI Building Blocks for LLM and ChatUIs for ReactJS"
       />
       <meta
         name="twitter:title"
-        content="Reablocks - Open Source ReactJS Component Library"
+        content="reachat - Open Source ReactJS Component Library"
       />
       <meta
         name="twitter:description"
-        content="Beautifully designed, highly customizable, Open Source React components based on Tailwind and Framer Motion."
+        content="Open-source UI Building Blocks for LLM and ChatUIs for ReactJS"
       />
     </>
   ),
