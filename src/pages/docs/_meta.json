@@ -8,11 +8,8 @@
     }
   },
   "getting-started": "🚀 ⏐ Getting Started",
-  "theme": "🎨 ⏐ Themeing",
-  "components": "🏗️ ⏐ Components",
-  "utils": "⚙️ ⏐ Utils",
-  "advanced": "⚡️ ⏐ Advanced",
-  "recipes": "🧩 ⏐ Recipes",
+  "customization": "🎨 ⏐ Customization",
+  "api": "🏗️ ⏐ API",
   "changelog": {
     "title": "📓 ⏐ Changelog",
     "theme": {
