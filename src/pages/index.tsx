@@ -131,7 +131,7 @@ export default function Home() {
           <section className="container px-4 md:mt-10 md:px-24 lg:mt-28">
             <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
               <AnimateIn>
-                <Card className="items-center text-center md:items-start md:text-left">
+                <Card className="items-center text-center md:items-start md:text-left h-full">
                   <IconCard>
                     <WrenchIcon />
                   </IconCard>
@@ -145,7 +145,7 @@ export default function Home() {
                 </Card>
               </AnimateIn>
               <AnimateIn transition={{ delay: 0.05 }}>
-                <Card className="items-center text-center md:items-start md:text-left">
+                <Card className="items-center text-center md:items-start md:text-left h-full">
                   <IconCard>
                     <WaveIcon />
                   </IconCard>
@@ -159,7 +159,7 @@ export default function Home() {
                 </Card>
               </AnimateIn>
               <AnimateIn transition={{ delay: 0.1 }}>
-                <Card className="items-center text-center md:items-start md:text-left">
+                <Card className="items-center text-center md:items-start md:text-left h-full">
                   <IconCard>
                     <SnapIcon />
                   </IconCard>
@@ -171,7 +171,7 @@ export default function Home() {
                 </Card>
               </AnimateIn>
               <AnimateIn>
-                <Card className="items-center text-center md:items-start md:text-left">
+                <Card className="items-center text-center md:items-start md:text-left h-full">
                   <IconCard>
                     <BatteryIcon />
                   </IconCard>
@@ -186,7 +186,7 @@ export default function Home() {
                 </Card>
               </AnimateIn>
               <AnimateIn transition={{ delay: 0.05 }}>
-                <Card className="items-center text-center md:items-start md:text-left">
+                <Card className="items-center text-center md:items-start md:text-left h-full">
                   <IconCard>
                     <SwordsIcon />
                   </IconCard>
@@ -197,7 +197,7 @@ export default function Home() {
                 </Card>
               </AnimateIn>
               <AnimateIn transition={{ delay: 0.1 }}>
-                <Card className="items-center md:items-start">
+                <Card className="items-center text-center md:items-start md:text-left h-full">
                   <IconCard>
                     <KnowledgeIcon />
                   </IconCard>
