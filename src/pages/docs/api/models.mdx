@@ -1,49 +1,38 @@
 # API Models
 Below is the API for the `sessions` and `conversations` data.
 
+## `Session`
 ```ts
-export interface ConversationSource {
+export interface Session {
   /**
-   * URL of the source, if applicable
+   * Unique identifier for the session
    */
-  url?: string;
+  id: string;
 
   /**
-   * Title or description of the source
+   * Title of the session
    */
   title?: string;
 
   /**
-   * Image URL of the source, if applicable.
+   * Date and time when the session was created
    */
-  image?: string;
+  createdAt?: Date;
+
+  /**
+   * Date and time when the session was last updated
+   */
+  updatedAt?: Date;
+
+  /**
+   * Array of conversations within this session
+   */
+  conversations: Conversation[];
 }
 ```
 
-```ts
-export interface ConversationFile {
-  /**
-   * Name of the file
-   */
-  name: string;
 
-  /**
-   * Type of the file
-   */
-  type?: string;
-
-  /**
-   * Size of the file
-   */
-  size?: number;
-
-  /**
-   * URL of the file
-   */
-  url?: string;
-}
-```
-
+## `Conversation`
 ```ts
 export interface Conversation {
   /**
@@ -83,31 +72,47 @@ export interface Conversation {
 }
 ```
 
+## `ConversationSource`
 ```ts
-export interface Session {
+export interface ConversationSource {
   /**
-   * Unique identifier for the session
+   * URL of the source, if applicable
    */
-  id: string;
+  url?: string;
 
   /**
-   * Title of the session
+   * Title or description of the source
    */
   title?: string;
 
   /**
-   * Date and time when the session was created
+   * Image URL of the source, if applicable.
    */
-  createdAt?: Date;
+  image?: string;
+}
+```
+
+## `ConversationFile`
+```ts
+export interface ConversationFile {
+  /**
+   * Name of the file
+   */
+  name: string;
 
   /**
-   * Date and time when the session was last updated
+   * Type of the file
    */
-  updatedAt?: Date;
+  type?: string;
 
   /**
-   * Array of conversations within this session
+   * Size of the file
    */
-  conversations: Conversation[];
+  size?: number;
+
+  /**
+   * URL of the file
+   */
+  url?: string;
 }
 ```
