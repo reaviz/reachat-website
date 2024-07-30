@@ -80,7 +80,7 @@ export default function Home() {
                 <a
                   href="https://github.com/reaviz/reachat"
                   target="_blank"
-                  className="self-center md:self-start"
+                  className="self-center"
                 >
                   <img
                     alt="GitHub stars"
