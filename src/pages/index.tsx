@@ -72,7 +72,7 @@ export default function Home() {
           <Nav />
         </header>
         <TracingBeams className="hidden md:block">
-          <HeroParallax className="hidden md:block">
+          <div className="hidden md:block">
             <section className="container mt-40 flex flex-col px-4 md:items-center md:px-24">
               <div className="mb-4 flex flex-col gap-4 md:mb-20 md:items-center md:text-center">
                 <a href="https://github.com/reaviz/reachat" target="_blank">
@@ -89,6 +89,8 @@ export default function Home() {
                     </span>
                   </span>
                 </h3>
+                <Image src="/console.png" alt="console" width={1000} height={500} />
+                <Image src="/popup.png" alt="console" width={500} height={500} className="absolute bottom-[75px] right-0" />
                 <p className="text-base text-content-secondary md:hidden">
                   Open-source UI Building Blocks for LLM and ChatUIs for ReactJS
                 </p>
@@ -106,8 +108,9 @@ export default function Home() {
                 </div>
               </div>
             </section>
-          </HeroParallax>
-          <section className="container px-4 md:px-24">
+          </div>
+
+          <section className="container px-4 md:px-24 mt-10">
             <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3">
               <AnimateIn>
                 <Card>
