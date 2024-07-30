@@ -61,6 +61,8 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "gradient-code":
+          "linear-gradient(180deg, rgba(54, 70, 109, 0.90) 0%, rgba(45, 58, 93, 0.90) 100%);",
       },
       boxShadow: {
         button: "0px 4px 16px 0px rgba(0, 0, 0, 0.25)",
