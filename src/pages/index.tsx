@@ -87,7 +87,7 @@ export default function Home() {
                     src="https://img.shields.io/github/stars/reaviz/reachat?style=social"
                   />
                 </a>
-                <h3 className="text-content text-center text-4xl font-bold !leading-[150%] md:text-left md:text-[60px] md:!leading-[120%]">
+                <h3 className="text-content text-center text-4xl font-bold !leading-[150%] md:text-[60px] md:!leading-[120%]">
                   Build Chat Experiences <br />
                   <span className="md:text-[90px]">
                     <span className="md:bg-opacity-50 md:bg-gradient-to-b md:from-white md:to-neutral-400 md:bg-clip-text md:text-transparent">
