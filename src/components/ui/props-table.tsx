@@ -1,6 +1,5 @@
+import metadata from 'reachat/docs.json';
 import { Card } from 'reablocks';
-
-const metadata = {};
 
 export const PropsTable = ({ name }) => {
   const data: any = metadata.find((m) => m.displayName === name);
