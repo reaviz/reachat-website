@@ -107,7 +107,7 @@ export default function Home() {
                   alt="console"
                   width={460}
                   height={500}
-                  className="absolute bottom-[-75px] right-[50px] hidden w-[250px] md:block lg:bottom-[-175px] lg:w-[340px] xl:bottom-[-275px] xl:w-[460px]"
+                  className="absolute bottom-[-75px] right-0 hidden w-[250px] md:block lg:bottom-[-75px] lg:w-[340px] xl:bottom-[-175px] xl:w-[460px]"
                 />
                 <p className="text-center text-base text-content-secondary md:hidden">
                   Open-source UI Building Blocks for LLM and ChatUIs for ReactJS
@@ -128,7 +128,7 @@ export default function Home() {
             </section>
           </div>
 
-          <section className="container px-4 md:mt-[60px] md:px-24 lg:mt-[160px]">
+          <section className="container px-4 md:mt-10 md:px-24 lg:mt-28">
             <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
               <AnimateIn>
                 <Card className="items-center text-center md:items-start md:text-left">
