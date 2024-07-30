@@ -54,7 +54,9 @@ export default function Home() {
         <title>reachat - Build Chat Experiences in Hours, Not Weeks.</title>
         <meta
           name="description"
-          content={"Open-source UI Building Blocks for LLM and ChatUIs for ReactJS"}
+          content={
+            "Open-source UI Building Blocks for LLM and ChatUIs for ReactJS"
+          }
         />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -71,30 +73,46 @@ export default function Home() {
         >
           <Nav />
         </header>
-        <TracingBeams className="hidden md:block">
-          <div className="hidden md:block">
-            <section className="container mt-40 flex flex-col px-4 md:items-center md:px-24">
+        <TracingBeams className="">
+          <div className="">
+            <section className="container relative mt-20 flex flex-col px-4 md:items-center md:px-24 md:mt-40">
               <div className="mb-4 flex flex-col gap-4 md:mb-20 md:items-center md:text-center">
-                <a href="https://github.com/reaviz/reachat" target="_blank">
+                <a
+                  href="https://github.com/reaviz/reachat"
+                  target="_blank"
+                  className="self-center md:self-start"
+                >
                   <img
                     alt="GitHub stars"
                     src="https://img.shields.io/github/stars/reaviz/reachat?style=social"
                   />
                 </a>
-                <h3 className="text-content text-4xl font-bold !leading-[150%] md:text-[60px] md:!leading-[120%]">
-                Build Chat Experiences <br />
+                <h3 className="text-content text-center text-4xl font-bold !leading-[150%] md:text-left md:text-[60px] md:!leading-[120%]">
+                  Build Chat Experiences <br />
                   <span className="md:text-[90px]">
                     <span className="md:bg-opacity-50 md:bg-gradient-to-b md:from-white md:to-neutral-400 md:bg-clip-text md:text-transparent">
                       In Hours, Not Weeks
                     </span>
                   </span>
                 </h3>
-                <Image src="/console.png" alt="console" width={1000} height={500} />
-                <Image src="/popup.png" alt="console" width={500} height={500} className="absolute bottom-[75px] right-0" />
-                <p className="text-base text-content-secondary md:hidden">
+                <Image
+                  src="/console.png"
+                  alt="console"
+                  width={1000}
+                  height={500}
+                  className="w-full"
+                />
+                <Image
+                  src="/popup.png"
+                  alt="console"
+                  width={460}
+                  height={500}
+                  className="absolute bottom-[-75px] right-0 hidden w-[250px] md:block lg:bottom-[-75px] lg:w-[340px] xl:bottom-[-175px] xl:w-[460px]"
+                />
+                <p className="text-center text-base text-content-secondary md:hidden">
                   Open-source UI Building Blocks for LLM and ChatUIs for ReactJS
                 </p>
-                <div className="mb-24 flex items-center gap-4 md:hidden">
+                <div className="mb-8 flex items-center gap-4 md:mb-24 md:hidden">
                   <Link className="flex-1" href="/docs">
                     <button className="w-full min-w-[125px] whitespace-nowrap rounded-md border border-primary bg-[#16161E] px-4 py-2 font-semibold text-content-primary shadow-button transition-colors hover:brightness-110">
                       Get Started
@@ -110,10 +128,10 @@ export default function Home() {
             </section>
           </div>
 
-          <section className="container px-4 md:px-24 mt-10">
-            <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+          <section className="container px-4 md:mt-10 md:px-24 lg:mt-28">
+            <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
               <AnimateIn>
-                <Card>
+                <Card className="items-center text-center md:items-start md:text-left h-full">
                   <IconCard>
                     <WrenchIcon />
                   </IconCard>
@@ -121,12 +139,13 @@ export default function Home() {
                     Highly Customizable
                   </span>
                   <span>
-                    Tailor the chat interface to your needs with customizable components and theming options.
+                    Tailor the chat interface to your needs with customizable
+                    components and theming options.
                   </span>
                 </Card>
               </AnimateIn>
               <AnimateIn transition={{ delay: 0.05 }}>
-                <Card>
+                <Card className="items-center text-center md:items-start md:text-left h-full">
                   <IconCard>
                     <WaveIcon />
                   </IconCard>
@@ -134,23 +153,25 @@ export default function Home() {
                     Rich Media Support
                   </span>
                   <span>
-                  Seamlessly integrate file uploads, embeds, and markdown formatting for enhanced communication.
+                    Seamlessly integrate file uploads, embeds, and markdown
+                    formatting for enhanced communication.
                   </span>
                 </Card>
               </AnimateIn>
               <AnimateIn transition={{ delay: 0.1 }}>
-                <Card>
+                <Card className="items-center text-center md:items-start md:text-left h-full">
                   <IconCard>
                     <SnapIcon />
                   </IconCard>
                   <span className="text-xl font-semibold">Easy to Use</span>
                   <span>
-                    Intuitive but flexible API for building custom chat experiences.
+                    Intuitive but flexible API for building custom chat
+                    experiences.
                   </span>
                 </Card>
               </AnimateIn>
               <AnimateIn>
-                <Card>
+                <Card className="items-center text-center md:items-start md:text-left h-full">
                   <IconCard>
                     <BatteryIcon />
                   </IconCard>
@@ -158,12 +179,14 @@ export default function Home() {
                     Multi-model Support
                   </span>
                   <span>
-                    Seamlessly switch between different AI models or integrate multiple models within the same interface for versatile capabilities.
+                    Seamlessly switch between different AI models or integrate
+                    multiple models within the same interface for versatile
+                    capabilities.
                   </span>
                 </Card>
               </AnimateIn>
               <AnimateIn transition={{ delay: 0.05 }}>
-                <Card>
+                <Card className="items-center text-center md:items-start md:text-left h-full">
                   <IconCard>
                     <SwordsIcon />
                   </IconCard>
@@ -174,7 +197,7 @@ export default function Home() {
                 </Card>
               </AnimateIn>
               <AnimateIn transition={{ delay: 0.1 }}>
-                <Card>
+                <Card className="items-center text-center md:items-start md:text-left h-full">
                   <IconCard>
                     <KnowledgeIcon />
                   </IconCard>
@@ -189,16 +212,21 @@ export default function Home() {
           </section>
           <SignatureDivider className="w-full py-12 md:w-3/4" />
           <section className="container px-4 md:px-24">
-            <div className="flex flex-col items-center gap-12 py-4 md:flex-row md:gap-4 md:py-24">
-              <div className="z-10 flex flex-1 flex-col gap-8">
-                <span className="text-4xl font-semibold md:text-6xl">
+            <span className="mb-2 block text-6xl font-semibold text-center md:text-left lg:hidden">
+              Chat UIs without all the baggage
+            </span>
+            <div className="flex flex-col items-center gap-12 py-4 md:flex-row md:gap-4 md:py-8">
+              <div className="z-10 flex flex-1 flex-col items-center gap-8 text-center md:items-start md:text-left">
+                <span className="hidden text-4xl font-semibold md:text-6xl lg:block">
                   Chat UIs without all the baggage
                 </span>
                 <span className="text-content-secondary md:text-xl">
-                  Reachat is a powerful, flexible, and user-friendly AI chat interface library for ReactJS. 
-                  It allows you to bring conversational AI capabilities to your applications without spending
-                  weeks building custom components. Its not coupled to any particular backend or LLM, so you can
-                  use it with any backend or LLM of your choice.
+                  Reachat is a powerful, flexible, and user-friendly AI chat
+                  interface library for ReactJS. It allows you to bring
+                  conversational AI capabilities to your applications without
+                  spending weeks building custom components. Its not coupled to
+                  any particular backend or LLM, so you can use it with any
+                  backend or LLM of your choice.
                 </span>
                 <div className="flex items-center gap-2">
                   <Link href="/docs">
@@ -216,7 +244,7 @@ export default function Home() {
                     width={500}
                     height={500}
                     objectFit="contain"
-                    className="rounded-xl shadow-card"
+                    className="shadow-card rounded-xl -translate-x-2.5 md:translate-x-0"
                   />
                 </AnimateIn>
                 <AnimateIn className="max-w-3/4 absolute z-0 h-[400px] w-[300px] rounded-full bg-[#2310FF] bg-opacity-50 blur-3xl backdrop-blur-3xl md:h-[600px] md:w-[500px]" />
@@ -224,7 +252,7 @@ export default function Home() {
             </div>
           </section>
           <SignatureDivider className="w-full py-12 md:w-3/4" />
-          <section className="container px-4 md:px-24">
+          <section className="container px-4 text-center md:px-24 md:text-left">
             <div className="flex flex-col gap-8 py-4 md:py-24">
               <div className="flex flex-col">
                 <span className="font-semibold text-primary md:text-xl">
@@ -236,30 +264,53 @@ export default function Home() {
               </div>
               <div className="flex flex-col gap-x-4 gap-y-8 md:flex-row">
                 <div className="flex flex-1 flex-col gap-2 md:text-xl">
-                  <p className="font-semibold md:text-xl">
+                  <p className="w-fit rounded-r-[30px] rounded-bl-[30px] bg-gradient-code px-5 py-2.5 font-semibold md:text-xl">
                     1. <code>npm i reachat</code>
                   </p>
-                  <p className="font-semibold md:text-xl">
+                  <p className="w-fit rounded-r-[30px] rounded-bl-[30px] bg-gradient-code px-5 py-2.5 font-semibold md:text-xl">
                     2. Include <code>reachat</code> in your project
                   </p>
-                  <p className="font-semibold md:text-xl">
+                  <p className="w-fit rounded-r-[30px] rounded-bl-[30px] bg-gradient-code px-5 py-2.5 font-semibold md:text-xl">
                     3. Connect your backend
                   </p>
                 </div>
                 <div className="flex flex-1 flex-col gap-2 md:text-xl">
-                  <span className="font-semibold md:text-xl">
-                    Learn more
-                  </span>
+                  <span className="font-semibold md:text-xl">Learn more</span>
                   <p className="text-pretty text-content-secondary">
-                    Explore the <a className="text-primary" href="https://reachat.dev" target="_blank" rel="noopener noreferrer">documentation</a> to learn about the API. Dive into the{' '}
-                    <a className="text-primary" href="https://storybook.reachat.dev" target="_blank" rel="noopener noreferrer">Storybook</a> demos to see the components in action. Join the{' '}
-                    <a className="text-primary" href="https://discord.gg/tt8wGExq35" target="_blank" rel="noopener noreferrer">community</a> to get support and stay up to date on new releases.
+                    Explore the{" "}
+                    <a
+                      className="text-primary"
+                      href="https://reachat.dev"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      documentation
+                    </a>{" "}
+                    to learn about the API. Dive into the{" "}
+                    <a
+                      className="text-primary"
+                      href="https://storybook.reachat.dev"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Storybook
+                    </a>{" "}
+                    demos to see the components in action. Join the{" "}
+                    <a
+                      className="text-primary"
+                      href="https://discord.gg/tt8wGExq35"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      community
+                    </a>{" "}
+                    to get support and stay up to date on new releases.
                   </p>
                 </div>
               </div>
             </div>
           </section>
-          <footer className="container mt-12 px-4 py-6 text-base text-content-secondary md:mt-24 md:px-24">
+          <footer className="container mt-12 px-4 py-6 text-base text-content-secondary md:mt-4 md:px-24 lg:mt-24">
             <div className="flex items-center justify-between gap-2">
               <Link href="#">
                 <Image
