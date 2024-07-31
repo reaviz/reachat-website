@@ -22,7 +22,7 @@
     "posthog-js": "^1.131.4",
     "reablocks": "^8.2.0",
     "reablocks-docs-theme": "^0.0.2",
-    "reachat": "^1.0.0",
+    "reachat": "^1.0.1",
     "react": "^18",
     "react-dom": "^18",
     "react-live-runner": "^1.0.7",
