@@ -75,7 +75,7 @@ export default function Home() {
         </header>
         <TracingBeams className="">
           <div className="">
-            <section className="container relative mt-20 flex flex-col px-4 md:items-center md:px-24 md:mt-40">
+            <section className="container relative mt-20 flex flex-col px-4 md:mt-40 md:items-center md:px-24">
               <div className="mb-4 flex flex-col gap-4 md:mb-20 md:items-center md:text-center">
                 <a
                   href="https://github.com/reaviz/reachat"
@@ -95,19 +95,26 @@ export default function Home() {
                     </span>
                   </span>
                 </h3>
-                <Image
-                  src="/console.png"
-                  alt="console"
-                  width={1000}
-                  height={500}
-                  className="w-full"
-                />
+
+                <div className="bg-gradient-line h-px w-[45%] self-start" />
+
+                <div className="relative">
+                  <AnimateIn className="absolute left-[-25px] z-0 mt-[50px] md:mt-[100px] h-[50%] xl:h-[70%] w-[calc(100%+50px)] rounded-full bg-[#2310FF] bg-opacity-50 blur-3xl backdrop-blur-3xl" />
+                  <Image
+                    src="/console.png"
+                    alt="console"
+                    width={1000}
+                    height={500}
+                    className="relative z-10 w-full"
+                  />
+                </div>
+
                 <Image
                   src="/popup.png"
                   alt="console"
                   width={460}
                   height={500}
-                  className="absolute bottom-[-75px] right-0 hidden w-[250px] md:block lg:bottom-[-75px] lg:w-[340px] xl:bottom-[-175px] xl:w-[460px]"
+                  className="absolute bottom-[-75px] right-0 z-20 hidden w-[250px] md:block lg:bottom-[-75px] lg:w-[340px] xl:bottom-[-175px] xl:w-[460px]"
                 />
                 <p className="text-center text-base text-content-secondary md:hidden">
                   Open-source UI Building Blocks for LLM and ChatUIs for ReactJS
@@ -131,7 +138,7 @@ export default function Home() {
           <section className="container px-4 md:mt-10 md:px-24 lg:mt-28">
             <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
               <AnimateIn>
-                <Card className="items-center text-center md:items-start md:text-left h-full">
+                <Card className="h-full items-center text-center md:items-start md:text-left">
                   <IconCard>
                     <WrenchIcon />
                   </IconCard>
@@ -145,7 +152,7 @@ export default function Home() {
                 </Card>
               </AnimateIn>
               <AnimateIn transition={{ delay: 0.05 }}>
-                <Card className="items-center text-center md:items-start md:text-left h-full">
+                <Card className="h-full items-center text-center md:items-start md:text-left">
                   <IconCard>
                     <WaveIcon />
                   </IconCard>
@@ -159,7 +166,7 @@ export default function Home() {
                 </Card>
               </AnimateIn>
               <AnimateIn transition={{ delay: 0.1 }}>
-                <Card className="items-center text-center md:items-start md:text-left h-full">
+                <Card className="h-full items-center text-center md:items-start md:text-left">
                   <IconCard>
                     <SnapIcon />
                   </IconCard>
@@ -171,7 +178,7 @@ export default function Home() {
                 </Card>
               </AnimateIn>
               <AnimateIn>
-                <Card className="items-center text-center md:items-start md:text-left h-full">
+                <Card className="h-full items-center text-center md:items-start md:text-left">
                   <IconCard>
                     <BatteryIcon />
                   </IconCard>
@@ -186,7 +193,7 @@ export default function Home() {
                 </Card>
               </AnimateIn>
               <AnimateIn transition={{ delay: 0.05 }}>
-                <Card className="items-center text-center md:items-start md:text-left h-full">
+                <Card className="h-full items-center text-center md:items-start md:text-left">
                   <IconCard>
                     <SwordsIcon />
                   </IconCard>
@@ -197,7 +204,7 @@ export default function Home() {
                 </Card>
               </AnimateIn>
               <AnimateIn transition={{ delay: 0.1 }}>
-                <Card className="items-center text-center md:items-start md:text-left h-full">
+                <Card className="h-full items-center text-center md:items-start md:text-left">
                   <IconCard>
                     <KnowledgeIcon />
                   </IconCard>
@@ -212,7 +219,7 @@ export default function Home() {
           </section>
           <SignatureDivider className="w-full py-12 md:w-3/4" />
           <section className="container px-4 md:px-24">
-            <span className="mb-2 block text-6xl font-semibold text-center md:text-left lg:hidden">
+            <span className="mb-2 block text-center text-6xl font-semibold md:text-left lg:hidden">
               Chat UIs without all the baggage
             </span>
             <div className="flex flex-col items-center gap-12 py-4 md:flex-row md:gap-4 md:py-8">
@@ -244,7 +251,7 @@ export default function Home() {
                     width={500}
                     height={500}
                     objectFit="contain"
-                    className="shadow-card rounded-xl -translate-x-2.5 md:translate-x-0"
+                    className="shadow-card -translate-x-2.5 rounded-xl md:translate-x-0"
                   />
                 </AnimateIn>
                 <AnimateIn className="max-w-3/4 absolute z-0 h-[400px] w-[300px] rounded-full bg-[#2310FF] bg-opacity-50 blur-3xl backdrop-blur-3xl md:h-[600px] md:w-[500px]" />
@@ -264,13 +271,13 @@ export default function Home() {
               </div>
               <div className="flex flex-col gap-x-4 gap-y-8 md:flex-row">
                 <div className="flex flex-1 flex-col gap-2 md:text-xl">
-                  <p className="w-fit rounded-r-[30px] rounded-bl-[30px] bg-gradient-code px-5 py-2.5 font-semibold md:text-xl">
+                  <p className="bg-gradient-code w-fit rounded-r-[30px] rounded-bl-[30px] px-5 py-2.5 font-semibold md:text-xl">
                     1. <code>npm i reachat</code>
                   </p>
-                  <p className="w-fit rounded-r-[30px] rounded-bl-[30px] bg-gradient-code px-5 py-2.5 font-semibold md:text-xl">
+                  <p className="bg-gradient-code w-fit rounded-r-[30px] rounded-bl-[30px] px-5 py-2.5 font-semibold md:text-xl">
                     2. Include <code>reachat</code> in your project
                   </p>
-                  <p className="w-fit rounded-r-[30px] rounded-bl-[30px] bg-gradient-code px-5 py-2.5 font-semibold md:text-xl">
+                  <p className="bg-gradient-code w-fit rounded-r-[30px] rounded-bl-[30px] px-5 py-2.5 font-semibold md:text-xl">
                     3. Connect your backend
                   </p>
                 </div>
