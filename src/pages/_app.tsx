@@ -12,7 +12,7 @@ import posthog from 'posthog-js';
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     try {
-      posthog.init('phc_KpMeH726m3pXXzMzj5AuiY1SDPstX8pTVxmxPEJkiCK', { api_host: "https://us.i.posthog.com" })
+      posthog.init('phc_B3nKncJbom5SWf7IpIQtwFbR8JNeHYjjFP5BR947Lot', { api_host: "https://us.i.posthog.com" })
     } catch {
       /** noop */
     }
