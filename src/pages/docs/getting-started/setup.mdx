@@ -1,8 +1,9 @@
-import { Steps } from 'nextra/components'
+import { Steps } from "nextra/components";
 
 # Getting Started
 
 ## Installing
+
 Install reachat in your project by following the steps below.
 
 <Steps>
@@ -11,21 +12,75 @@ Install reachat in your project by following the steps below.
    npm i reachat --save
    ```
 
-### 2. **Include in your project**
-   ```tsx
-    import { Sessions } from 'reachat';
+### 2. **Install Reablocks and Tailwind**
 
-    export default function App() {
-      return <Sessions />;
-    }
-   ```
+Follow the [installation steps](https://reablocks.dev/docs/getting-started/setup#install-steps) for Reablocks and Tailwind if they are not already included in your project. Then, initialize the `<ThemeProvider />` to allow for theming the chat component.
+
+The "Setup Storybook" step is optional.
+
+### 3. **Include Chat components in your project**
+
+```tsx
+import {
+  Chat,
+  ChatInput,
+  Conversation,
+  NewSessionButton,
+  Session,
+  SessionGroups,
+  SessionListItem,
+  SessionMessage,
+  SessionMessages,
+  SessionMessagePanel,
+  SessionMessagesHeader,
+  SessionsGroup,
+  SessionsList,
+} from "reachat";
+
+export default function App() {
+  return (
+    <Chat sessions={[]}>
+      <SessionsList>
+        <NewSessionButton />
+        <SessionGroups>
+          {(groups) =>
+            groups.map(({ heading, sessions }) => (
+              <SessionsGroup heading={heading} key={heading}>
+                {sessions.map((s) => (
+                  <SessionListItem key={s.id} session={s} />
+                ))}
+              </SessionsGroup>
+            ))
+          }
+        </SessionGroups>
+      </SessionsList>
+      <SessionMessagePanel>
+        <SessionMessagesHeader />
+        <SessionMessages>
+          {(conversations) =>
+            conversations.map((conversation) => (
+              <SessionMessage
+                key={conversation.id}
+                conversation={conversation}
+              />
+            ))
+          }
+        </SessionMessages>
+        <ChatInput />
+      </SessionMessagePanel>
+    </Chat>
+  );
+}
+```
 
 ### 3. **Connect your provider**
 
-   See Demos/Open AI for an example of how to connect your provider.
+See Demos/Open AI for an example of how to connect your provider.
+
 </Steps>
 
 ## Developing
+
 You can also develop Reachat locally by cloning the repository and running the development server.
 
 <Steps>
@@ -36,15 +91,19 @@ You can also develop Reachat locally by cloning the repository and running the d
    ```
 
 ### 2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+
+```bash
+npm install
+```
 
 ### 3. **Start the development server**
-   ```bash
-   npm run start
-   ```
+
+```bash
+npm run start
+```
 
 ### 4. **Open your browser**
-   Navigate to `http://localhost:3000` to see Reachat in action.
+
+Navigate to `http://localhost:3000` to see Reachat in action.
+
 </Steps>
