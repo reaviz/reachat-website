@@ -39,12 +39,12 @@ const config: DocsThemeConfig = {
     <path d="M744.741 36.3999H794.181V49.0719H776.037V103.6H762.789V49.0719H744.741V36.3999Z" fill="white"/>
     <defs>
     <linearGradient id="paint0_linear_182_647" x1="50.4025" y1="17.5" x2="50.4025" y2="102.083" gradientUnits="userSpaceOnUse">
-    <stop stop-color="#105EFF"/>
-    <stop offset="1" stop-color="#2E2E77"/>
+    <stop stopColor="#105EFF"/>
+    <stop offset="1" stopColor="#2E2E77"/>
     </linearGradient>
     <linearGradient id="paint1_linear_182_647" x1="141.706" y1="169.085" x2="61.445" y2="30.0709" gradientUnits="userSpaceOnUse">
-    <stop stop-color="#105EFF"/>
-    <stop offset="1" stop-color="#105EFF" stop-opacity="0.71"/>
+    <stop stopColor="#105EFF"/>
+    <stop offset="1" stopColor="#105EFF" stopOpacity="0.71"/>
     </linearGradient>
     </defs>
     </svg>
