@@ -127,7 +127,7 @@ export default function Home() {
                   </Link>
                   <Link className="flex-1" href="https://storybook.reachat.dev">
                     <button className="w-full min-w-[125px] whitespace-nowrap rounded-md bg-primary px-4 py-2 font-semibold text-content-primary shadow-button transition-colors hover:brightness-110">
-                      Demos →
+                      Storybook →
                     </button>
                   </Link>
                 </div>
