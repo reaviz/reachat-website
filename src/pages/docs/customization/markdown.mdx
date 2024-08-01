@@ -1,8 +1,18 @@
 ## Markdown Plugins
 reachat uses [remark](https://github.com/remarkjs/remark) to parse and render markdown.
 You can use the `remarkPlugins` prop to add custom plugins to the markdown parser.
+Any plugin that is supported by remark should work here as well.
 
-We provide a example plugin for identifying and rendering CVE links. Below is a sample response:
+### Pre-packaged plugins
+Out of the box, we provide a sample plugin but we plan to expand this later on.
+
+- [CVE Plugin](https://github.com/reaviz/reachat/blob/master/src/Markdown/plugins/remarkCve.ts)
+
+You can view the [Storybook Stories](https://storybook.reachat.dev) for more examples.
+
+### Writing your own plugin
+
+We will build a plugin that will identify and render CVE links. Below is a sample response:
 
 ```md
 Please review the following CVEs:
@@ -50,4 +60,19 @@ Please review the following CVEs:
 - [CVE-2021-34527](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-34527)
 - [CVE-2021-44228](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228)
 - [CVE-2021-45046](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-45046)
+```
+
+To leverage our new plugin, we need to include it in the `remarkPlugins` prop.
+
+```tsx
+import { Chat } from 'reachat';
+import { remarkCve } from 'PATH_YOU_SAVED_THE_PLUGIN';
+
+export function App() {
+  return (
+    <Chat remarkPlugins={[remarkCve]}>
+      ...rest of your code...
+    </Chat>
+  );
+}
 ```
