@@ -1,0 +1,146 @@
+import {
+  Chat,
+  SessionsList,
+  SessionsGroup,
+  SessionListItem,
+  NewSessionButton,
+  SessionMessages,
+  SessionGroups,
+  ChatInput,
+  SessionMessagePanel,
+  SessionMessagesHeader,
+  SessionMessage,
+} from "reachat";
+
+# Console
+The console is the default view type for Reachat. It is a full-screen view that 
+allows you to chat with your bot in a console-like interface. Below is a bare-bones
+example of a console chat. Its worth noting that If the console doesn't have enough space to render
+fully it will fall back to the companion view.
+
+<div style={{ width: '100%', height: '500px', backgroundColor: '#02020F', padding: 20, borderRadius: 5, margin: '20px 0' }}>
+  <Chat
+    sessions={[
+      {
+        id: '1',
+        title: 'Session 1',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        conversations: [
+          {
+            id: '1',
+            question: 'What is React?',
+            response: 'React is a JavaScript library for building user interfaces.',
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: '2',
+            question: 'What is JSX?',
+            response: 'JSX is a syntax extension for JavaScript.',
+            createdAt: new Date(),
+            updatedAt: new Date()
+          }
+        ]
+      }
+    ]}
+    viewType="console"
+    onDeleteSession={() => alert("delete!")}
+  >
+    <SessionsList>
+      <NewSessionButton />
+      <SessionGroups>
+        {(groups) =>
+          groups.map(({ heading, sessions }) => (
+            <SessionsGroup heading={heading} key={heading}>
+              {sessions.map((s) => (
+                <SessionListItem key={s.id} session={s} />
+              ))}
+            </SessionsGroup>
+          ))
+        }
+      </SessionGroups>
+    </SessionsList>
+    <SessionMessagePanel>
+      <SessionMessagesHeader />
+      <SessionMessages>
+        {(conversations) =>
+          conversations.map((conversation) => (
+            <SessionMessage
+              key={conversation.id}
+              conversation={conversation}
+            />
+          ))
+        }
+      </SessionMessages>
+      <ChatInput />
+    </SessionMessagePanel>
+  </Chat>
+</div>
+
+Below is the code for the above example.
+
+```tsx
+<Chat
+  sessions={[
+    {
+      id: '1',
+      title: 'Session 1',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      conversations: [
+        {
+          id: '1',
+          question: 'What is React?',
+          response: 'React is a JavaScript library for building user interfaces.',
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          id: '2',
+          question: 'What is JSX?',
+          response: 'JSX is a syntax extension for JavaScript.',
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
+      ]
+    }
+  ]}
+  viewType="console"
+  onDeleteSession={() => alert("delete!")}
+  >
+  <SessionsList>
+    <NewSessionButton />
+    <SessionGroups>
+      {(groups) =>
+        groups.map(({ heading, sessions }) => (
+          <SessionsGroup heading={heading} key={heading}>
+            {sessions.map((s) => (
+              <SessionListItem key={s.id} session={s} />
+            ))}
+          </SessionsGroup>
+        ))
+      }
+    </SessionGroups>
+  </SessionsList>
+  <SessionMessagePanel>
+    <SessionMessagesHeader />
+    <SessionMessages>
+      {(conversations) =>
+        conversations.map((conversation) => (
+          <SessionMessage
+            key={conversation.id}
+            conversation={conversation}
+          />
+        ))
+      }
+    </SessionMessages>
+    <ChatInput />
+  </SessionMessagePanel>
+  </Chat>
+```
+
+For more information on how to set up a console chat, please refer to the 
+[getting started documentation](/docs/getting-started/getting-started). For
+more examples of how to use Reachat, please refer to the 
+[storybook demos](https://storybook.reachat.dev).
