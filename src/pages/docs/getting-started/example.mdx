@@ -1,4 +1,242 @@
 # Example
+
 In this example, we are going to walk through setting up reachat
 in your project and creating your first chatbot. This guide assumes
 you've already followed the steps in Setup to install the package.
+
+By now, you should have the basic building blocks for the chat component with minimal styling,
+and no functionality. Let's add some basic functionality to the chat component. For now, we'll
+just use state variables to simulate creating and deleting sessions as well as starting
+conversations.
+
+### Creating a new session
+
+We'll start by adding the ability to create a new session by adding a `onNewSession` handler:
+
+```tsx copy
+const [sessions, setSessions] = useState<Session[]>([]);
+
+const handleNewSession = () => {
+  const newId = (sessions.length + 1).toString();
+  setSessions([
+    ...sessions,
+    {
+      id: newId,
+      title: `New Session #${newId}`,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      conversations: [],
+    },
+  ]);
+};
+
+return (
+  <Chat sessions={sessions} onNewSession={handleNewSession}>
+    <SessionsList />
+    <SessionMessagePanel />
+  </Chat>
+);
+```
+
+### Selecting a session
+
+Now we want to be able to select the new session that we created. Again, we'll handle
+this with a state variable - `activeSessionId`.
+
+```tsx copy
+const [activeSessionId, setActiveSessionId] = useState<string>();
+
+...
+
+return (
+  <Chat
+    sessions={sessions}
+    activeSessionId={activeSessionId}
+    onNewSession={handleNewSession}
+    onSelectSession={setActiveSessionId}
+  >
+    <SessionsList />
+    <SessionMessagePanel />
+  </Chat>
+);
+```
+
+### Deleting a session
+
+Let's handle deleting the session that we created by passing an `onDeleteSession` prop
+to the `Chat` component. We'll also check to see if we need to reset the `activeSessionId`
+if the session we are deleting is the one that is currently active.
+
+```tsx copy
+const handleDeleteSession = (id: string) => {
+  setSessions(sessions.filter((session) => session.id !== id));
+  if (id === activeId) {
+    setActiveId(undefined)
+  }
+};
+
+...
+
+return (
+  <Chat
+    sessions={sessions}
+    activeSessionId={activeSessionId}
+    onNewSession={handleNewSession}
+    onSelectSession={setActiveSessionId}
+    onDeleteSession={handleDeleteSession}
+  >
+    <SessionsList />
+    <SessionMessagePanel />
+  </Chat>
+);
+```
+
+### Handling session conversations
+
+Now that we can create, select, and delete sessions, let's add the ability to start a new
+conversation. We'll need to add an `onSendMessage` handler here to handle adding conversations
+to the active session. We'll just use a simple example response for now, but in a real
+application, you would likely be making a request to a backend service here.
+
+Note: you can also optionally add an `onStopMessage` handler to handle
+stopping a message that is currently being sent.
+
+We can also handle loading state here and pass `isLoading` prop to the component.
+
+```tsx copy
+const [loading, setLoading] = useState<boolean>(false);
+
+const handleNewMessage = (message: string) => {
+  setLoading(true);
+  const current = sessions.find((s) => s.id === activeId);
+  if (current) {
+    const newMessage: Conversation = {
+      id: `${current.id}-${current.conversations.length}`,
+      question: message,
+      response: "this is an example response",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    const updated = {
+      ...current,
+      conversations: [...current.conversations, newMessage],
+    };
+    setSessions([...sessions.filter((s) => s.id !== activeId), updated]);
+  }
+  setLoading(false);
+};
+
+...
+
+return (
+  <Chat
+    sessions={sessions}
+    activeSessionId={activeSessionId}
+    onNewSession={handleNewSession}
+    onSelectSession={setActiveSessionId}
+    onDeleteSession={handleDeleteSession}
+    onSendMessage={handleNewMessage}
+    isLoading={loading}
+  >
+    <SessionsList />
+    <SessionMessagePanel />
+  </Chat>
+);
+
+```
+
+### Styling
+
+Besides functionality, of course, styling would be one of the first things that
+comes to mind. There is a default theme that you can customize with basic colors by
+updating the `tailwind.config.js` colors palette.
+
+For example, if we wanted to change the default blue to a purple, we could update the
+primary color palette like this:
+
+```js copy
+theme: {
+  extend: {
+    colors: {
+      primary: {
+        DEFAULT: colorPalette.purple[500],
+        active: colorPalette.purple[500],
+        hover: colorPalette.purple[600],
+        inactive: colorPalette.purple[200]
+      },
+      ...
+    }
+  }
+}
+```
+
+To customize chat specific styles, add a `theme.ts` file which extends the `chatTheme`
+object.
+
+```tsx copy
+import { chatTheme as defaultTheme, ChatTheme } from "reachat";
+import { twMerge } from "tailwind-merge";
+
+export const chatTheme: ChatTheme = {
+  ...defaultTheme,
+  sessions: {
+    ...defaultTheme.sessions,
+    console: twMerge(defaultTheme.sessions.console, "min-w-[300px]"),
+    session: {
+      ...defaultTheme.sessions.session,
+      delete:
+        "[&>svg]:w-4 [&>svg]:h-4 opacity-70 hover:opacity-100 transition-opacity",
+    },
+  },
+  messages: {
+    ...defaultTheme.messages,
+    base: "py-4 pr-4",
+    message: {
+      ...defaultTheme.messages.message,
+      question: twMerge(
+        defaultTheme.messages.message.question,
+        "text-purple-300 text-lg",
+      ),
+      response: "border-l border-purple-300 pl-4",
+    },
+  },
+};
+```
+
+Then pass the exported `chatTheme` to your `<Chat />` component.
+
+```tsx copy
+<Chat
+  sessions={sessions}
+  activeSessionId={activeSessionId}
+  onNewSession={handleNewSession}
+  onSelectSession={setActiveSessionId}
+  onDeleteSession={handleDeleteSession}
+  onSendMessage={handleNewMessage}
+  isLoading={loading}
+  theme={chatTheme}
+>
+  <SessionsList />
+  <SessionMessagePanel />
+</Chat>
+```
+
+### ...and that's it!
+
+That's the basics of getting things off the ground. But there's plenty more you can do
+with the Reachat building blocks. It handles the hard bits for you:
+
+- Markdown display with custom plugins
+- File uploads
+- Source display
+- Scroll interactions
+- Mobile/companion mode
+
+so you can focus on building out a chat experience tailored to your users.
+
+### Advanced options
+
+If that's not enough for your needs, the components that are used within the app are
+customizable through Slots. You can learn more about custom components in our
+[storybook demo](https://storybook.reachat.dev/?path=/story/demos-console--custom-components)
+and [docs](/docs/customizations/custom).
