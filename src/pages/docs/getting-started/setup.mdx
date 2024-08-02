@@ -14,9 +14,35 @@ Install reachat in your project by following the steps below.
 
 ### 2. **Install Reablocks and Tailwind**
 
-Follow the [installation steps](https://reablocks.dev/docs/getting-started/setup#install-steps) for Reablocks and Tailwind if they are not already included in your project. Then, initialize the `<ThemeProvider />` to allow for theming the chat component.
+Open your terminal, navigate to your project's root directory, and use the reablocks-cli to initialize reablocks in your project:
+```sh copy
+npx reablocks-cli@latest init
+```
 
-The "Setup Storybook" step is optional.
+If you don't already have Tailwind installed in your project, include it:
+```sh copy
+npm install -D tailwindcss
+npx tailwindcss init
+```
+
+Then add the following Tailwind directives to your main CSS file:
+```css copy
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+Finally, wrap your application with the `ThemeProvider` component from `reablocks`.
+
+```tsx copy
+import { ThemeProvider, theme } from 'reablocks';
+
+export const App = () => (
+  <ThemeProvider theme={theme}>
+    <YourComponents />
+  </ThemeProvider>
+);
+```
 
 ### 3. **Include Chat components in your project**
 
