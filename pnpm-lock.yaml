@@ -39,8 +39,8 @@ importers:
         specifier: ^0.0.2
         version: 0.0.2(next@14.0.3(@babel/core@7.23.5)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       reachat:
-        specifier: ^1.1.0
-        version: 1.1.0(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(remark-rehype@11.1.0)
+        specifier: ^1.2.0
+        version: 1.2.0(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(remark-rehype@11.1.0)
       react:
         specifier: ^18
         version: 18.2.0
@@ -5396,6 +5396,9 @@ packages:
   mdast-util-math@2.0.2:
     resolution: {integrity: sha512-8gmkKVp9v6+Tgjtq6SYx9kGPpTf6FVYRa53/DLh479aldR9AyP48qeVOgNZ5X7QUK7nOy4yw7vg6mbiGcs9jWQ==}
 
+  mdast-util-math@3.0.0:
+    resolution: {integrity: sha512-Tl9GBNeG/AhJnQM221bJR2HPvLOSnLE/T9cJI9tlc6zwQk2nPk/4f0cHkOdEixQPC/j8UtKDdITswvLAy1OZ1w==}
+
   mdast-util-mdx-expression@1.3.1:
     resolution: {integrity: sha512-TTb6cKyTA1RD+1su1iStZ5PAv3rFfOUKcoU5EstUpv/IZo63uDX03R8+jXjMEhcobXnNOiG6/ccekvVl4eV1zQ==}
 
@@ -5525,6 +5528,9 @@ packages:
 
   micromark-extension-math@2.0.2:
     resolution: {integrity: sha512-cFv2B/E4pFPBBFuGgLHkkNiFAIQv08iDgPH2HCuR2z3AUgMLecES5Cq7AVtwOtZeRrbA80QgMUk8VVW0Z+D2FA==}
+
+  micromark-extension-math@3.1.0:
+    resolution: {integrity: sha512-lvEqd+fHjATVs+2v/8kg9i5Q0AP2k85H0WUOwpIVvUML8BapsMvh1XAogmQjOCsLpoKRCVQqEkQBB3NhVBcsOg==}
 
   micromark-extension-mdx-expression@1.0.3:
     resolution: {integrity: sha512-TjYtjEMszWze51NJCZmhv7MEBcgYRgb3tJeMAJ+HQCAaZHHRBaDCccqQzGizR/H4ODefP44wRTgOn2vE5I6nZA==}
@@ -6551,8 +6557,8 @@ packages:
       react: '>=16'
       react-dom: '>=16'
 
-  reachat@1.1.0:
-    resolution: {integrity: sha512-uQR6OevgKKJNp7THf67XaxLtaGTzGmJpwxyL6eG2iX3X3IJS/IHSN7IjzGQN7y+KI1vP3Kz+Ap1dHJUgl85SxQ==}
+  reachat@1.2.0:
+    resolution: {integrity: sha512-QIntfemcGL3hUfvcRmYy4Cyo4gIjPc+Q+35BX3KQunao+aeBKqFoi9vYT+gEYpAGjBoeEXw+KfcT4qpGwBK9Jw==}
     peerDependencies:
       react: '>=18'
       react-dom: '>=18'
@@ -6807,6 +6813,9 @@ packages:
 
   remark-math@5.1.1:
     resolution: {integrity: sha512-cE5T2R/xLVtfFI4cCePtiRn+e6jKMtFDR3P8V3qpv8wpKjwvHoBA4eJzvX+nVrnlNy0911bdGmuspCSwetfYHw==}
+
+  remark-math@6.0.0:
+    resolution: {integrity: sha512-MMqgnP74Igy+S3WwnhQ7kqGlEerTETXMvJhrUzDikVZ2/uogJCb+WHUg97hK9/jcfc0dkD73s3LN8zU49cTEtA==}
 
   remark-mdx@2.1.5:
     resolution: {integrity: sha512-A8vw5s+BgOa968Irt8BO7DfWJTE0Fe7Ge3hX8zzDB1DnwMZTNdK6qF2IcFao+/7nzk1vSysKcFp+3ku4vhMpaQ==}
@@ -14630,6 +14639,18 @@ snapshots:
       longest-streak: 3.1.0
       mdast-util-to-markdown: 1.3.0
 
+  mdast-util-math@3.0.0:
+    dependencies:
+      '@types/hast': 3.0.3
+      '@types/mdast': 4.0.3
+      devlop: 1.1.0
+      longest-streak: 3.1.0
+      mdast-util-from-markdown: 2.0.0
+      mdast-util-to-markdown: 2.1.0
+      unist-util-remove-position: 5.0.0
+    transitivePeerDependencies:
+      - supports-color
+
   mdast-util-mdx-expression@1.3.1:
     dependencies:
       '@types/estree-jsx': 1.0.0
@@ -14987,6 +15008,16 @@ snapshots:
       micromark-util-symbol: 1.0.1
       micromark-util-types: 1.0.2
       uvu: 0.5.6
+
+  micromark-extension-math@3.1.0:
+    dependencies:
+      '@types/katex': 0.16.7
+      devlop: 1.1.0
+      katex: 0.16.9
+      micromark-factory-space: 2.0.0
+      micromark-util-character: 2.0.1
+      micromark-util-symbol: 2.0.0
+      micromark-util-types: 2.0.0
 
   micromark-extension-mdx-expression@1.0.3:
     dependencies:
@@ -16315,7 +16346,7 @@ snapshots:
       - '@types/react'
       - prop-types
 
-  reachat@1.1.0(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(remark-rehype@11.1.0):
+  reachat@1.2.0(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(remark-rehype@11.1.0):
     dependencies:
       '@radix-ui/react-slot': 1.1.0(@types/react@18.0.25)(react@18.2.0)
       date-fns: 3.6.0
@@ -16327,7 +16358,9 @@ snapshots:
       react-markdown: 9.0.1(@types/react@18.0.25)(react@18.2.0)
       react-syntax-highlighter: 15.5.0(react@18.2.0)
       reakeys: 2.0.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      rehype-katex: 7.0.0
       remark-gfm: 4.0.0
+      remark-math: 6.0.0
       remark-youtube: 1.3.2(remark-rehype@11.1.0)
     transitivePeerDependencies:
       - '@types/react'
@@ -16688,6 +16721,15 @@ snapshots:
       mdast-util-math: 2.0.2
       micromark-extension-math: 2.0.2
       unified: 10.1.2
+
+  remark-math@6.0.0:
+    dependencies:
+      '@types/mdast': 4.0.3
+      mdast-util-math: 3.0.0
+      micromark-extension-math: 3.1.0
+      unified: 11.0.4
+    transitivePeerDependencies:
+      - supports-color
 
   remark-mdx@2.1.5:
     dependencies:
