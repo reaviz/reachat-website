@@ -39,8 +39,8 @@ importers:
         specifier: ^0.0.2
         version: 0.0.2(next@14.0.3(@babel/core@7.23.5)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       reachat:
-        specifier: ^1.4.1
-        version: 1.4.1(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(remark-rehype@11.1.0)
+        specifier: ^1.4.2
+        version: 1.4.2(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(remark-rehype@11.1.0)
       react:
         specifier: ^18
         version: 18.2.0
@@ -6561,8 +6561,8 @@ packages:
       react: '>=16'
       react-dom: '>=16'
 
-  reachat@1.4.1:
-    resolution: {integrity: sha512-njJ4BaUAPtCRoun7x4ME0248gWkwMSKusbEpQkAxyJUNzgXmpaPL7kN80NVijO32Q2I6G1GUCNGH9GKYfWo5xA==}
+  reachat@1.4.2:
+    resolution: {integrity: sha512-Pqsi70w3rdPue0YAYE4lLN+2LS4FCe/gU9KfYh/Yrrpr9AjQ5MV2clS958wcqmY5yr44tka5HFvSNPQp1W+ODA==}
     peerDependencies:
       react: '>=18'
       react-dom: '>=18'
@@ -16354,7 +16354,7 @@ snapshots:
       - '@types/react'
       - prop-types
 
-  reachat@1.4.1(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(remark-rehype@11.1.0):
+  reachat@1.4.2(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(remark-rehype@11.1.0):
     dependencies:
       '@radix-ui/react-slot': 1.1.0(@types/react@18.0.25)(react@18.2.0)
       date-fns: 3.6.0
