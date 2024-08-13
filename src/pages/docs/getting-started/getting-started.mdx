@@ -32,8 +32,15 @@ const handleNewSession = () => {
 
 return (
   <Chat sessions={sessions} onNewSession={handleNewSession}>
-    <SessionsList />
-    <SessionMessagePanel />
+    <SessionsList>
+      <NewSessionButton />
+      <SessionGroups />
+    </SessionsList>
+    <SessionMessagePanel>
+      <SessionMessagesHeader />
+      <SessionMessages />
+      <ChatInput />
+    </SessionMessagePanel>
   </Chat>
 );
 ```
@@ -55,8 +62,15 @@ return (
     onNewSession={handleNewSession}
     onSelectSession={setActiveSessionId}
   >
-    <SessionsList />
-    <SessionMessagePanel />
+    <SessionsList>
+      <NewSessionButton />
+      <SessionGroups />
+    </SessionsList>
+    <SessionMessagePanel>
+      <SessionMessagesHeader />
+      <SessionMessages />
+      <ChatInput />
+    </SessionMessagePanel>
   </Chat>
 );
 ```
@@ -85,8 +99,15 @@ return (
     onSelectSession={setActiveSessionId}
     onDeleteSession={handleDeleteSession}
   >
-    <SessionsList />
-    <SessionMessagePanel />
+    <SessionsList>
+      <NewSessionButton />
+      <SessionGroups />
+    </SessionsList>
+    <SessionMessagePanel>
+      <SessionMessagesHeader />
+      <SessionMessages />
+      <ChatInput />
+    </SessionMessagePanel>
   </Chat>
 );
 ```
@@ -138,8 +159,15 @@ return (
     onSendMessage={handleNewMessage}
     isLoading={loading}
   >
-    <SessionsList />
-    <SessionMessagePanel />
+    <SessionsList>
+      <NewSessionButton />
+      <SessionGroups />
+    </SessionsList>
+    <SessionMessagePanel>
+      <SessionMessagesHeader />
+      <SessionMessages />
+      <ChatInput />
+    </SessionMessagePanel>
   </Chat>
 );
 
@@ -216,8 +244,15 @@ Then pass the exported `chatTheme` to your `<Chat />` component.
   isLoading={loading}
   theme={chatTheme}
 >
-  <SessionsList />
-  <SessionMessagePanel />
+  <SessionsList>
+    <NewSessionButton />
+    <SessionGroups />
+  </SessionsList>
+  <SessionMessagePanel>
+    <SessionMessagesHeader />
+    <SessionMessages />
+    <ChatInput />
+  </SessionMessagePanel>
 </Chat>
 ```
 

@@ -8,25 +8,62 @@ Below is example markup that creates a custom session empty message and also
 provides a custom session list item.
 
 ```tsx
-const CustomSessionMessage: FC<any> = ({
-  question,
-  response
-}) => (
-  <div className="p-4 border border-blue-500 rounded mb-4">
+const CustomMessageQuestion: FC<any> = ({ question, files }) => (
+  <>
     <span className="text-lg font-semibold text-blue-500">
       This is my question: {question}
     </span>
-    <br />
-    This is the response: {response}
-  </div>
+    <MessageFiles files={files}>
+      <CustomMessageFile />
+    </MessageFiles>
+  </>
 );
 
-const CustomSessionListItem: FC<SessionListItemProps> = ({ session }) => {
+const CustomMessageResponse: FC<any> = ({ response }) => (
+  <blockquote className="border-l border-blue-500 pl-2">
+    This is the response: {response}
+  </blockquote>
+);
+
+const CustomMessageFile: FC<any> = ({ name, type }) => (
+  <Chip size="small" className="rounded-full border border-gray-700">
+    {name || type}
+  </Chip>
+);
+
+const CustomMessageSource: FC<any> = ({ title, url, image }) => {
+  const { theme } = useContext(ChatContext);
+  return (
+    <Chip
+      size="small"
+      className="rounded-full border border-blue-500 border-opacity-50"
+      onClick={() => alert('take me to ' + url)}
+      start={
+        image && (
+          <img
+            src={image}
+            alt={title}
+            className={cn(theme.messages.message.sources.source.image)}
+          />
+        )
+      }
+    >
+      {title || url}
+    </Chip>
+  );
+};
+
+const CustomSessionListItem: FC<SessionListItemProps> = ({
+  session,
+  children,
+  ...rest
+}) => {
   const [open, setOpen] = useState(false);
   const btnRef = useRef(null);
   return (
     <>
       <ListItem
+        {...rest}
         end={
           <IconButton
             ref={btnRef}
@@ -43,7 +80,12 @@ const CustomSessionListItem: FC<SessionListItemProps> = ({ session }) => {
       >
         <span className="truncate">{session.title}</span>
       </ListItem>
-      <Menu open={open} onClose={() => setOpen(false)} reference={btnRef}>
+      <Menu
+        open={open}
+        onClose={() => setOpen(false)}
+        reference={btnRef}
+        appendToBody={false}
+      >
         <Card disablePadding>
           <List>
             <ListItem onClick={() => alert('rename')}>Rename</ListItem>
@@ -74,12 +116,19 @@ export const CustomComponents = () => {
         borderRadius: 5
       }}
     >
-      <Sessions sessions={fakeSessions}>
+      <Chat
+        sessions={[
+          ...fakeSessions,
+          ...sessionsWithFiles,
+          ...sessionWithSources
+        ]}
+        activeSessionId="1"
+      >
         <SessionsList>
           <NewSessionButton>
             <button className="text-blue-500">New Session</button>
           </NewSessionButton>
-          <Divider />
+          <Divider variant="secondary" />
           <SessionGroups>
             {groups =>
               groups.map(({ heading, sessions }) => (
@@ -94,13 +143,41 @@ export const CustomComponents = () => {
             }
           </SessionGroups>
         </SessionsList>
-        <div className="flex-1 h-full flex flex-col">
+        <SessionMessagePanel>
+          <SessionMessagesHeader>
+            <CustomMessagesHeader />
+          </SessionMessagesHeader>
           <SessionMessages>
-            <CustomSessionMessage />
+            {conversations =>
+              conversations.map((conversation, index) => (
+                <SessionMessage
+                  conversation={conversation}
+                  isLast={index === conversations.length - 1}
+                  key={conversation.id}
+                >
+                  <MessageQuestion
+                    question={conversation.question}
+                    files={conversation.files}
+                  >
+                    <CustomMessageQuestion />
+                  </MessageQuestion>
+                  <MessageResponse response={conversation.response}>
+                    <CustomMessageResponse />
+                  </MessageResponse>
+                  <MessageSources sources={conversation.sources}>
+                    <CustomMessageSource />
+                  </MessageSources>
+                  <MessageActions
+                    question={conversation.question}
+                    response={conversation.response}
+                  />
+                </SessionMessage>
+              ))
+            }
           </SessionMessages>
-          <SessionInput />
-        </div>
-      </Sessions>
+          <ChatInput />
+        </SessionMessagePanel>
+      </Chat>
     </div>
   );
 };
