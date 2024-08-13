@@ -33,14 +33,14 @@ importers:
         specifier: ^1.131.4
         version: 1.131.4
       reablocks:
-        specifier: ^8.4.5
-        version: 8.4.5(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: ^8.4.7
+        version: 8.4.7(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       reablocks-docs-theme:
         specifier: ^0.0.2
         version: 0.0.2(next@14.0.3(@babel/core@7.23.5)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       reachat:
-        specifier: ^1.4.0
-        version: 1.4.0(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(remark-rehype@11.1.0)
+        specifier: ^1.4.1
+        version: 1.4.1(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(remark-rehype@11.1.0)
       react:
         specifier: ^18
         version: 18.2.0
@@ -6555,14 +6555,14 @@ packages:
       react: '>=16.13.1'
       react-dom: '>=16.13.1'
 
-  reablocks@8.4.5:
-    resolution: {integrity: sha512-xizohyvTrjnEsvsquBGItRahrL7RMTpq9rkQtZVXbd90bUuDHfJ1a8bNHnEWYkaVrlu0xF0bKttGvr68daZp8A==}
+  reablocks@8.4.7:
+    resolution: {integrity: sha512-f0WIoT7MDNEoxqwMs6gUTpDt2gCjGR8EvzepbJrWUSNYHdVPvj2Tg5slWPdPwNGOwSDC0mhaePySNSUl5XWhkQ==}
     peerDependencies:
       react: '>=16'
       react-dom: '>=16'
 
-  reachat@1.4.0:
-    resolution: {integrity: sha512-ye+fXLaMSvfUixh3JAAO+cOcGo2+Wv+vrY4AsBYcNGsbO37UI5egNl1wDCfFjzeB9lhAkCaJBR4IijDQv/lloQ==}
+  reachat@1.4.1:
+    resolution: {integrity: sha512-njJ4BaUAPtCRoun7x4ME0248gWkwMSKusbEpQkAxyJUNzgXmpaPL7kN80NVijO32Q2I6G1GUCNGH9GKYfWo5xA==}
     peerDependencies:
       react: '>=18'
       react-dom: '>=18'
@@ -16325,7 +16325,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  reablocks@8.4.5(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  reablocks@8.4.7(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@floating-ui/react': 0.26.16(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@marko19907/string-to-color': 1.0.0
@@ -16354,14 +16354,14 @@ snapshots:
       - '@types/react'
       - prop-types
 
-  reachat@1.4.0(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(remark-rehype@11.1.0):
+  reachat@1.4.1(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(remark-rehype@11.1.0):
     dependencies:
       '@radix-ui/react-slot': 1.1.0(@types/react@18.0.25)(react@18.2.0)
       date-fns: 3.6.0
       framer-motion: 10.18.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       katex: 0.16.11
       mdast-util-find-and-replace: 3.0.1
-      reablocks: 8.4.5(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      reablocks: 8.4.7(@types/react@18.0.25)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-markdown: 9.0.1(@types/react@18.0.25)(react@18.2.0)
