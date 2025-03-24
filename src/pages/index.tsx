@@ -63,6 +63,13 @@ export default function Home() {
       </Head>
       <main
         className={`flex min-h-screen w-full flex-col items-center overflow-y-hidden bg-gradient-to-b from-[#11111F] from-50% via-[#11111F] to-[#121212] ${inter.className} antiasliased overflow-x-hidden text-white`}
+        style={
+          {
+            "--tw-gradient-from": "#11111F",
+            "--tw-gradient-via": "#11111F",
+            "--tw-gradient-to": "#121212",
+          } as React.CSSProperties
+        }
       >
         <div className="pointer-events-none absolute top-0 h-screen w-full bg-gradient-to-b from-[#00000020] to-transparent" />
         <header
@@ -90,7 +97,11 @@ export default function Home() {
                 <h3 className="text-content text-center text-4xl font-bold !leading-[150%] md:text-[60px] md:!leading-[120%]">
                   Build Chat Experiences <br />
                   <span className="md:text-[90px]">
-                    <span className="md:bg-opacity-50 md:bg-gradient-to-b md:from-white md:to-neutral-400 md:bg-clip-text md:text-transparent">
+                    <span 
+                      className="md:bg-opacity-50 md:bg-gradient-to-b md:bg-clip-text md:text-transparent"
+                      style={{
+                        backgroundImage: 'linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(163, 163, 163, 1) 100%)'
+                      }}>
                       In Hours, Not Weeks
                     </span>
                   </span>
