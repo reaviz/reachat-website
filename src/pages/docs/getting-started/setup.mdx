@@ -16,21 +16,16 @@ Install reachat in your project by following the steps below.
 
 Open your terminal, navigate to your project's root directory, and use the reablocks-cli to initialize reablocks in your project:
 ```sh copy
-npx reablocks-cli@latest init
-```
-
-If you don't already have Tailwind installed in your project, include it:
-```sh copy
-npm install -D tailwindcss
-npx tailwindcss init
+npm install tailwindcss @tailwindcss/cli
 ```
 
 Then add the following Tailwind directives to your main CSS file:
 ```css copy
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 ```
+
+Then install reablocks:
+[Reablocks Setup](https://reablocks.dev/docs/getting-started/setup#3-install-reablocks)
 
 Finally, wrap your application with the `ThemeProvider` component from `reablocks`.
 

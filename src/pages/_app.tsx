@@ -30,6 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <ExternalDocs projectAnnotationsList={[reactAnnotations, previewAnnotations]}>
       <Unstyled>
         <ThemeProvider theme={theme}>
+          <link rel="stylesheet" href="../../reablocks/properties.css" />
           <Component {...pageProps} />
         </ThemeProvider>
       </Unstyled>

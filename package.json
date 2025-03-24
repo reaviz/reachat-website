@@ -9,7 +9,9 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "copy:styles": "cpx \"node_modules/reablocks/dist/index.css\" \"public/reablocks\" && cpx \"node_modules/reachat/dist/index.css\" \"public/reachat\"",
+    "postinstall": "pnpm run copy:styles && node scripts/extract-properties.js"
   },
   "dependencies": {
     "@mdx-js/mdx": "^3.0.1",
@@ -18,14 +20,15 @@
     "date-fns": "^3.6.0",
     "motion": "^11.18.0",
     "next": "^14",
-    "nextra": "^2.13.4",
+    "nextra": "^3.3.1",
     "posthog-js": "^1.131.4",
-    "reablocks": "^8.4.7",
+    "reablocks": "^9.0.0",
     "reablocks-docs-theme": "^0.0.2",
-    "reachat": "^1.5.1",
+    "reachat": "^2.0.0-beta.2",
     "react": "^18",
     "react-dom": "^18",
     "react-live-runner": "^1.0.7",
+    "react-shadow": "^20.6.0",
     "react-syntax-highlighter": "^15.5.0",
     "sharp": "^0.33.3",
     "tailwind-merge": "^2.2.2"
@@ -47,6 +50,7 @@
     "cpx": "^1.5.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.1",
+    "nextra-theme-docs": "^3.3.1",
     "postcss": "^8",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.13",

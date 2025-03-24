@@ -6,7 +6,7 @@ export const PropsTable = ({ name }) => {
   const keys = Object.keys(data?.props ?? {});
 
   return (
-    <Card className="mt-5 p-3">
+    <Card className="mt-5 p-3 border-[#242433]">
       <table className="w-full text-base">
         <thead className="border-b-[1px] border-[rgba(241,245,249,0.2)]">
           <tr className="opacity-60">
