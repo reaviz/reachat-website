@@ -1,65 +1,75 @@
 import {
   Chat,
-  SessionsList,
-  SessionsGroup,
-  SessionListItem,
-  NewSessionButton,
-  SessionMessages,
-  SessionGroups,
   ChatInput,
+  NewSessionButton,
+  SessionGroups,
   SessionMessagePanel,
+  SessionMessages,
   SessionMessagesHeader,
-  SessionMessage,
+  SessionsList
 } from "reachat";
+import ShadowWrapper from "../../../utils/shadow-wrapper/shadow-wrapper";
 
 # Companion
-The companion view is a compact view designed to sit in a sidebar or similar 
+The companion view is a compact view designed to sit in a sidebar or similar
 location. It offers the same chat experience as the console view, but is designed
 to be more compact and less cluttered.
 
 Below is a bare-bones example of a console chat. The only difference between this experience and the console
 experience is setting `viewType="companion"` on the `<Chat />` component.
 
-<div style={{ width: 350, height: '500px', backgroundColor: '#02020F', padding: 20, borderRadius: 5, margin: '20px auto' }}>
-  <Chat
-    sessions={[
-      {
-        id: '1',
-        title: 'Session 1',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        conversations: [
-          {
-            id: '1',
-            question: 'What is React?',
-            response: 'React is a JavaScript library for building user interfaces.',
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: '2',
-            question: 'What is JSX?',
-            response: 'JSX is a syntax extension for JavaScript.',
-            createdAt: new Date(),
-            updatedAt: new Date()
-          }
-        ]
-      }
-    ]}
-    viewType="companion"
-    onDeleteSession={() => alert("delete!")}
+<ShadowWrapper>
+  <div
+    className='wrapper'
+    style={{
+      width: 350,
+      height: '500px',
+      padding: 20,
+      borderRadius: 5,
+      margin: '20px auto'
+    }}
   >
-    <SessionsList>
-      <NewSessionButton />
-      <SessionGroups />
-    </SessionsList>
-    <SessionMessagePanel>
-      <SessionMessagesHeader />
-      <SessionMessages />
-      <ChatInput />
-    </SessionMessagePanel>
-  </Chat>
-</div>
+
+    <Chat
+      sessions={[
+        {
+          id: '1',
+          title: 'Session 1',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          conversations: [
+            {
+              id: '1',
+              question: 'What is React?',
+              response: 'React is a JavaScript library for building user interfaces.',
+              createdAt: new Date(),
+              updatedAt: new Date()
+            },
+            {
+              id: '2',
+              question: 'What is JSX?',
+              response: 'JSX is a syntax extension for JavaScript.',
+              createdAt: new Date(),
+              updatedAt: new Date()
+            }
+          ]
+        }
+      ]}
+      viewType="companion"
+      onDeleteSession={() => alert("delete!")}
+    >
+      <SessionsList>
+        <NewSessionButton />
+        <SessionGroups />
+      </SessionsList>
+      <SessionMessagePanel>
+        <SessionMessagesHeader />
+        <SessionMessages />
+        <ChatInput />
+      </SessionMessagePanel>
+    </Chat>
+  </div>
+</ShadowWrapper>
 
 Below is the code for the above example.
 
@@ -104,7 +114,7 @@ viewType="companion"
   </Chat>
 ```
 
-For more information on how to set up a console chat, please refer to the 
+For more information on how to set up a console chat, please refer to the
 [getting started documentation](/docs/getting-started/getting-started). For
-more examples of how to use Reachat, please refer to the 
+more examples of how to use Reachat, please refer to the
 [storybook demos](https://storybook.reachat.dev).

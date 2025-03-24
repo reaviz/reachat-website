@@ -5,9 +5,6 @@
 /* Import styles for reablocks nextra theme  */
 @import "node_modules/reablocks-docs-theme/style.css";
 
-/* Import pre generated styles for default reablocks theme  */
-@import "node_modules/reablocks/dist/index.css";
-
 html.light {
   --background: #ffffff;
   --tooltip-background: #f7f7fa;
@@ -39,6 +36,11 @@ body {
 
 .nextra-nav-container-blur {
   display: none;
+}
+
+.nextra-sidebar-container > .nextra-sidebar-footer {
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 .docblock-code-toggle {
