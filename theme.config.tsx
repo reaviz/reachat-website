@@ -1,11 +1,18 @@
+import { useConfig } from "nextra-theme-docs";
 import { Pre, Code } from "nextra/components";
 import { useRouter } from "next/router";
 import { DocsThemeConfig } from "reablocks-docs-theme";
 import Link from "next/link";
 
-// eslint-disable-next-line import/no-anonymous-default-export
-const config: DocsThemeConfig = {
-  head: (
+const Header = () => {
+  const { title: defaultTitle, normalizePagesResult } = useConfig();
+  const router = useRouter();
+  const activePage = normalizePagesResult.flatDirectories.find(
+    (page) => page.route === router.pathname,
+  );
+  const title = activePage?.title || defaultTitle;
+
+  return (
     <>
       <meta property="og:image" content="https://reachat.dev/preview.png" />
       <meta
@@ -24,8 +31,13 @@ const config: DocsThemeConfig = {
         name="twitter:description"
         content="Open-source UI Building Blocks for LLM and ChatUIs for ReactJS"
       />
+      <title>{title}</title>
     </>
-  ),
+  );
+};
+
+const config: DocsThemeConfig = {
+  head: () => Header(),
   logo: (
     <svg height="25" viewBox="0 0 795 140" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M18.3191 17.5C10.2662 17.5 3.73579 24.0304 3.73579 32.0833V102.083L30.2775 84.5833H82.4858C90.5387 84.5833 97.0691 78.0529 97.0691 70V17.5H18.3191Z" fill="url(#paint0_linear_182_647)"/>
