@@ -1,0 +1,9 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "Reachat",
+  "description": "Reachat is a set o building blocks for LLM UIs. Maintained by @goodcodeus.",
+  "folders": ["src/pages/docs"],
+  "excludeFolders": [],
+  "excludeFiles": [],
+  "rules": []
+}
