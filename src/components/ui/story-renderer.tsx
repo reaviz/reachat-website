@@ -22,11 +22,11 @@ export const StoryRenderer: FC<StoryRendererProps> = ({
         .then(storyModule => ({
           default: () => (
             <BaseStoryRenderer
-              wrapperClassName="p-0 ![&+div]:h-4 min-h-[600px] relative"
+              wrapperClassName="bg-gray-100/50 dark:bg-transparent p-0 ![&+div]:h-4 min-h-[600px] relative"
               storyModule={storyModule}
               storyName={name}
               storyPath={path}
-              storybookUrl="https://storybook.reablocks.dev"
+              storybookUrl="https://storybook.reachat.dev"
               storybookKey={storybookKey}
             />
           )
