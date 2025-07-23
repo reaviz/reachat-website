@@ -1,3 +1,5 @@
+'use client';
+
 import { useViewportDimensions } from "@/hooks/useViewportDimensions";
 import { FC, ReactNode, useRef } from "react";
 import { Transition, UseInViewOptions, motion, useInView } from 'motion/react';

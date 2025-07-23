@@ -96,11 +96,11 @@ export const TracingBeams = ({
         ref={ref}
         className={cn("relative flex-1", containerClassName)}
       >
-        <div className={cn("absolute -right-2 md:right-8 z-50", className)}>
+        <div className={cn("absolute -right-2 md:right-3 z-50", className)}>
           <svg
             viewBox={`0 0 20 ${svgHeight}`}
             width="20"
-            height={svgHeight} // Set the SVG height
+            height={svgHeight}
             aria-hidden="true"
           >
             <motion.path

@@ -1,12 +1,14 @@
+'use client';
+
 import metadata from 'reachat/docs.json';
-import { Card } from 'reablocks';
+import { Card, theme } from 'reablocks';
 
 export const PropsTable = ({ name }) => {
   const data: any = metadata.find((m) => m.displayName === name);
   const keys = Object.keys(data?.props ?? {});
 
   return (
-    <Card className="mt-5 p-3 border-[#242433]">
+    <Card className="mt-5 p-3 border-[#242433]" theme={theme.components.card}>
       <table className="w-full text-base">
         <thead className="border-b-[1px] border-[rgba(241,245,249,0.2)]">
           <tr className="opacity-60">

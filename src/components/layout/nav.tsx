@@ -1,8 +1,8 @@
 import { motion } from 'motion/react';
-import Image from "next/image";
 import Link from "next/link";
 import { FC, useState } from "react";
 import { cn } from "@/utils/cn";
+import LogoIcon from '../../../public/logo.svg';
 
 const navLinks = [
   {
@@ -34,13 +34,7 @@ export const Nav: FC = () => {
       <div className="absolute left-4 top-3 flex-1 md:left-24 md:top-7">
         <a href="#">
           <span className="sr-only">reachat</span>
-          <Image
-            draggable={false}
-            src="/logo.svg"
-            alt="reachat logo"
-            width={122}
-            height={24}
-          />
+          <LogoIcon className='h-fit w-[150px] text-white' />
         </a>
       </div>
       <div className="absolute right-4 top-3 flex md:hidden">
