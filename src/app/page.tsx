@@ -37,18 +37,6 @@ export const metadata: Metadata = {
  */
 const Home: FC = () => {
   return (
-    <>
-    <Head>
-      <title>reachat - Build Chat Experiences in Hours, Not Weeks.</title>
-      <meta
-        name="description"
-        content={
-          "Open-source UI Building Blocks for LLM and ChatUIs for ReactJS"
-        }
-      />
-      <link rel="icon" href="/favicon.ico" />
-      <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    </Head>
     <main
       className={`flex min-h-screen w-full flex-col items-center overflow-y-hidden bg-gradient-to-b from-[#11111F] from-50% via-[#11111F] to-[#121212] ${inter.className} antiasliased overflow-x-hidden text-white`}
     >
@@ -309,7 +297,6 @@ const Home: FC = () => {
         />
       </TracingBeams>
     </main>
-  </>
   );
 };
 

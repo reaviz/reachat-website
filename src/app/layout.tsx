@@ -2,7 +2,7 @@ import { Footer, LandingFooter, Layout, Navbar } from 'reablocks-docs-theme';
 import { Head } from 'nextra/components';
 import { getPageMap } from 'nextra/page-map';
 import type { Metadata } from 'next';
-import type { FC, PropsWithChildren, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import LogoIcon from '../../public/logo.svg';
 
 import 'reablocks-docs-theme/style.css';
