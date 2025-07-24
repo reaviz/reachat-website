@@ -43,7 +43,7 @@ export const TracingBeams = ({
   );
 
   return (
-    <div className="flex flex-1 overflow-visible">
+    <div className="w-full md:w-auto flex flex-1 overflow-visible">
       <motion.div
         ref={ref}
         className={cn("relative flex-1", containerClassName)}
@@ -91,16 +91,16 @@ export const TracingBeams = ({
           </svg>
         </div>
       </motion.div>
-      <div ref={contentRef}>{children}</div>
+      <div ref={contentRef} className="2xl:max-w-[1440px]">{children}</div>
       <motion.div
         ref={ref}
         className={cn("relative flex-1", containerClassName)}
       >
-        <div className={cn("absolute -right-2 md:right-8 z-50", className)}>
+        <div className={cn("absolute -right-2 md:right-3 z-50", className)}>
           <svg
             viewBox={`0 0 20 ${svgHeight}`}
             width="20"
-            height={svgHeight} // Set the SVG height
+            height={svgHeight}
             aria-hidden="true"
           >
             <motion.path
