@@ -43,7 +43,7 @@ export const TracingBeams = ({
   );
 
   return (
-    <div className="flex flex-1 overflow-visible">
+    <div className="w-full md:w-auto flex flex-1 overflow-visible">
       <motion.div
         ref={ref}
         className={cn("relative flex-1", containerClassName)}
@@ -91,7 +91,7 @@ export const TracingBeams = ({
           </svg>
         </div>
       </motion.div>
-      <div ref={contentRef}>{children}</div>
+      <div ref={contentRef} className="2xl:max-w-[1440px]">{children}</div>
       <motion.div
         ref={ref}
         className={cn("relative flex-1", containerClassName)}

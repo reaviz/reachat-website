@@ -26,7 +26,7 @@ export const Nav: FC = () => {
   return (
     <nav
       className={cn(
-        "relative flex h-fit w-full max-w-[1440px] items-center p-6 transition-[box-shadow] md:justify-center",
+        "container relative flex h-fit w-full 2xl:max-w-[1440px] items-center p-6 transition-[box-shadow] md:justify-center",
         isNavOpen && "shadow-xl",
       )}
       aria-label="Global"
@@ -91,7 +91,7 @@ export const Nav: FC = () => {
           >
             <Link
               href={href}
-              className="text-base font-semibold leading-6 text-content-secondary transition-colors hover:text-content-primary"
+              className="text-mist-gray hover:text-white text-base leading-6 font-semibold transition-colors"
               target={target}
             >
               {label}

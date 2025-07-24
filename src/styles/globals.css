@@ -78,11 +78,17 @@
     #0d0dd2 0%,
     rgba(23, 23, 255, 0.1) 100%
   );
+  --gradient-line: linear-gradient(
+    90deg,
+    rgba(38, 38, 49, 0) 19.91%,
+    #87aeff 100%
+  );
+  --gradient-code: linear-gradient(180deg, rgba(54, 70, 109, 0.90) 0%, rgba(45, 58, 93, 0.90) 100%);
 
   .theme-light,
   &.theme-light,
-  [data-theme='light'],
-  &[data-theme='light'] {
+  [data-theme="light"],
+  &[data-theme="light"] {
     --reablocks-theme: light;
 
     /* Primary colors */
@@ -142,13 +148,13 @@
 
 /* Define theme tokens */
 @theme inline {
-  /* --breakpoint-2xl: 1440px; */
+  --breakpoint-2xl: 1440px;
 
   /* Fonts */
   --font-sans: Inter, sans-serif;
   --font-mono: Fira Code, monospace;
 
-  --shadow-code: 0px_4px_16px_0px_rgba(0,0,0,0.25);
+  --shadow-code: 0px_4px_16px_0px_rgba (0, 0, 0, 0.25);
 
   /* Font sizes */
   --text-xs: 0.625rem; /* 10px */
@@ -385,8 +391,8 @@
   /* Named colors */
   --color-black-pearl: #02020f;
   --color-athens-gray: #f7f7fa;
-  --color-athens-dark-navy-overlay: #0909194D;
-  --color-mist-gray: #ADAFBD;
+  --color-athens-dark-navy-overlay: #0909194d;
+  --color-mist-gray: #adafbd;
   --color-mystic: #e6e6f0;
   --color-vulcan: #11111f;
   --color-charade: #242433;
@@ -409,4 +415,10 @@ body {
 
 .story-container > div:nth-child(2) {
   @apply bg-gray-100/50 dark:bg-transparent;
+}
+
+.container {
+  @media (width >= 1440px) {
+    max-width: 1440px;
+  }
 }

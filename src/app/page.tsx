@@ -60,7 +60,7 @@ const Home: FC = () => {
                 Build Chat Experiences <br />
                 <span className="md:text-[90px]">
                   <span 
-                    className="md:bg-opacity-50 md:bg-gradient-to-b md:bg-clip-text md:text-transparent"
+                    className="bg-opacity-50 bg-gradient-to-b bg-clip-text text-transparent"
                     style={{
                       backgroundImage: 'linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(163, 163, 163, 1) 100%)'
                     }}>
@@ -69,7 +69,7 @@ const Home: FC = () => {
                 </span>
               </h3>
 
-              <div className="bg-gradient-line h-px w-[45%] self-start" />
+              <div className="bg-(image:--gradient-line) h-px w-[45%] self-start" />
 
               <div className="relative">
                 <AnimateIn className="absolute left-[-25px] z-0 mt-[50px] md:mt-[100px] h-[50%] xl:h-[70%] w-[calc(100%+50px)] rounded-full bg-[#2310FF] bg-opacity-50 blur-3xl backdrop-blur-3xl" />
@@ -223,7 +223,6 @@ const Home: FC = () => {
                   alt="popup"
                   width={500}
                   height={500}
-                  objectFit="contain"
                   className="shadow-card -translate-x-2.5 rounded-xl md:translate-x-0"
                 />
               </AnimateIn>
@@ -244,13 +243,13 @@ const Home: FC = () => {
             </div>
             <div className="flex flex-col gap-x-4 gap-y-8 md:flex-row">
               <div className="flex flex-1 flex-col gap-2 md:text-xl">
-                <p className="bg-gradient-code w-fit rounded-r-[30px] rounded-bl-[30px] px-5 py-2.5 font-semibold md:text-xl">
+                <p className="bg-(image:--gradient-code) w-fit rounded-r-[30px] rounded-bl-[30px] px-5 py-2.5 font-semibold md:text-xl">
                   1. <code>npm i reachat</code>
                 </p>
-                <p className="bg-gradient-code w-fit rounded-r-[30px] rounded-bl-[30px] px-5 py-2.5 font-semibold md:text-xl">
+                <p className="bg-(image:--gradient-code) w-fit rounded-r-[30px] rounded-bl-[30px] px-5 py-2.5 font-semibold md:text-xl">
                   2. Include <code>reachat</code> in your project
                 </p>
-                <p className="bg-gradient-code w-fit rounded-r-[30px] rounded-bl-[30px] px-5 py-2.5 font-semibold md:text-xl">
+                <p className="bg-(image:--gradient-code) w-fit rounded-r-[30px] rounded-bl-[30px] px-5 py-2.5 font-semibold md:text-xl">
                   3. Connect your backend
                 </p>
               </div>
