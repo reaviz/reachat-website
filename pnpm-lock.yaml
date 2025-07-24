@@ -63,8 +63,8 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react-syntax-highlighter:
-        specifier: ^15.5.0
-        version: 15.5.0(react@19.1.0)
+        specifier: ^15.6.1
+        version: 15.6.1(react@19.1.0)
       tailwind-merge:
         specifier: ^2.2.2
         version: 2.3.0
@@ -5572,11 +5572,6 @@ packages:
     peerDependencies:
       react: '*'
       react-dom: '*'
-
-  react-syntax-highlighter@15.5.0:
-    resolution: {integrity: sha512-+zq2myprEnQmH5yw6Gqc8lD55QHnpKaU8TOcFeC/Lg/MQSs8UknEA0JC4nTZGFAXC2J2Hyj/ijJ7NlabyPi2gg==}
-    peerDependencies:
-      react: '>= 0.14.0'
 
   react-syntax-highlighter@15.6.1:
     resolution: {integrity: sha512-OqJ2/vL7lEeV5zTJyG7kmARppUjiB9h9udl4qHQjjgEos66z00Ia0OckwYfRxCSFrW8RJIBnsBwQsHZbVPspqg==}
@@ -13254,15 +13249,6 @@ snapshots:
     dependencies:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
-
-  react-syntax-highlighter@15.5.0(react@19.1.0):
-    dependencies:
-      '@babel/runtime': 7.24.5
-      highlight.js: 10.7.3
-      lowlight: 1.20.0
-      prismjs: 1.29.0
-      react: 19.1.0
-      refractor: 3.6.0
 
   react-syntax-highlighter@15.6.1(react@19.1.0):
     dependencies:
