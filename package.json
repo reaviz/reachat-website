@@ -30,7 +30,7 @@
     "posthog-js": "^1.256.2",
     "posthog-node": "^5.2.1",
     "reablocks": "^9.1.3",
-    "reablocks-docs-theme": "^2.2.0",
+    "reablocks-docs-theme": "^2.2.1",
     "reachat": "^2.0.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
