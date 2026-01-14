@@ -1,0 +1,262 @@
+import {
+  Chat,
+  SessionMessagePanel,
+  SessionMessagesHeader,
+  SessionMessages,
+  SessionMessage,
+  ChatInput,
+} from "reachat";
+
+# Mentions
+reachat 2.1 introduces rich text input with @ mentions support powered by [Tiptap v3](https://tiptap.dev/). Users can mention people, teams, or any entity by typing `@` followed by a search query.
+
+## Overview
+
+The mention feature provides:
+- Floating suggestion popup with keyboard navigation
+- Dynamic/async search for mentions
+- Customizable mention items with icons and descriptions
+- Custom rendering for mention suggestions
+- Full keyboard support (arrow keys, enter, escape)
+
+## Basic Usage
+
+To enable mentions, configure the `RichTextInput` component with a `mentions` prop:
+
+```tsx
+import { RichTextInput } from 'reachat';
+
+const mentionItems = [
+  { id: '1', label: 'John Doe', description: 'Product Manager' },
+  { id: '2', label: 'Jane Smith', description: 'Engineering Lead' },
+  { id: '3', label: 'Engineering Team', description: 'Team mention' }
+];
+
+<RichTextInput
+  mentions={{
+    trigger: '@',
+    items: mentionItems
+  }}
+  onSubmit={(value) => console.log(value)}
+/>
+```
+
+## Configuration Options
+
+The `mentions` prop accepts a `SuggestionConfig` object with the following options:
+
+### Static Items
+
+```tsx
+<RichTextInput
+  mentions={{
+    trigger: '@',
+    items: [
+      {
+        id: 'user1',
+        label: 'Alice Johnson',
+        description: 'Senior Developer',
+        icon: <UserIcon />
+      },
+      {
+        id: 'user2',
+        label: 'Bob Williams',
+        description: 'Design Lead'
+      }
+    ],
+    maxResults: 5
+  }}
+/>
+```
+
+### Dynamic Search
+
+For large datasets or remote data sources, use the `onSearch` callback:
+
+```tsx
+<RichTextInput
+  mentions={{
+    trigger: '@',
+    onSearch: async (query) => {
+      const response = await fetch(`/api/users?q=${query}`);
+      const users = await response.json();
+      return users.map(user => ({
+        id: user.id,
+        label: user.name,
+        description: user.role,
+        metadata: { email: user.email }
+      }));
+    },
+    maxResults: 10
+  }}
+/>
+```
+
+### Custom Selection Handler
+
+Control what happens when a mention is selected:
+
+```tsx
+<RichTextInput
+  mentions={{
+    trigger: '@',
+    items: mentionItems,
+    onSelect: (item, insertText) => {
+      // Custom logic before inserting
+      console.log('Mentioned:', item);
+
+      // Insert custom format
+      insertText(`@${item.label} `);
+    }
+  }}
+/>
+```
+
+### Custom Rendering
+
+Customize how mentions appear in the suggestion list:
+
+```tsx
+<RichTextInput
+  mentions={{
+    trigger: '@',
+    items: mentionItems,
+    renderItem: (item, isHighlighted) => (
+      <div style={{
+        padding: '8px 12px',
+        backgroundColor: isHighlighted ? '#f0f0f0' : 'transparent',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px'
+      }}>
+        {item.icon}
+        <div>
+          <div style={{ fontWeight: 'bold' }}>{item.label}</div>
+          <div style={{ fontSize: '12px', color: '#666' }}>
+            {item.description}
+          </div>
+        </div>
+      </div>
+    ),
+    renderEmpty: (query) => (
+      <div style={{ padding: '8px 12px', color: '#999' }}>
+        No users found matching "{query}"
+      </div>
+    )
+  }}
+/>
+```
+
+## Using with ChatInput
+
+The `ChatInput` component automatically supports mentions when configured:
+
+```tsx
+import { Chat, ChatInput } from 'reachat';
+
+<Chat
+  sessions={sessions}
+  activeSessionId={activeId}
+>
+  <SessionMessagePanel>
+    <SessionMessagesHeader />
+    <SessionMessages />
+    <ChatInput
+      mentions={{
+        trigger: '@',
+        onSearch: searchUsers,
+        renderItem: (item, isHighlighted) => (
+          <MentionItemComponent item={item} highlighted={isHighlighted} />
+        )
+      }}
+    />
+  </SessionMessagePanel>
+</Chat>
+```
+
+## Advanced Examples
+
+### Multiple Trigger Characters
+
+You can combine mentions with commands and other triggers:
+
+```tsx
+<RichTextInput
+  mentions={{
+    trigger: '@',
+    items: userMentions
+  }}
+  commands={{
+    trigger: '/',
+    items: slashCommands
+  }}
+/>
+```
+
+### Metadata and Custom Actions
+
+Store additional data with mentions:
+
+```tsx
+const mentions = {
+  trigger: '@',
+  items: [
+    {
+      id: 'channel1',
+      label: 'general',
+      description: 'General discussion',
+      metadata: {
+        type: 'channel',
+        memberCount: 150
+      }
+    }
+  ],
+  onSelect: (item, insertText) => {
+    if (item.metadata?.type === 'channel') {
+      // Special handling for channel mentions
+      insertText(`#${item.label} `);
+    } else {
+      insertText(`@${item.label} `);
+    }
+  }
+};
+```
+
+### Keyboard Navigation
+
+Users can navigate the mention list using:
+- **Arrow Up/Down**: Move selection
+- **Enter**: Select current item
+- **Escape**: Close suggestion popup
+- **Continue typing**: Filter results
+
+## API Reference
+
+### SuggestionConfig Interface
+
+```typescript
+interface SuggestionConfig<T extends SuggestionItem = SuggestionItem> {
+  trigger?: string;
+  items?: T[];
+  onSearch?: (query: string) => Promise<T[]> | T[];
+  onSelect?: (item: T, insertText: (text: string) => void) => void;
+  maxResults?: number;
+  renderItem?: (item: T, isHighlighted: boolean) => ReactNode;
+  renderEmpty?: (query: string) => ReactNode;
+}
+```
+
+### MentionItem Interface
+
+```typescript
+interface MentionItem extends SuggestionItem {
+  id: string;
+  label: string;
+  description?: string;
+  icon?: ReactElement;
+  value?: string; // Custom value to insert
+  metadata?: Record<string, unknown>;
+}
+```
+
+For more examples and interactive demos, visit the [storybook demos](https://storybook.reachat.dev).

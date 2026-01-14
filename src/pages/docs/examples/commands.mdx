@@ -1,0 +1,370 @@
+import {
+  Chat,
+  SessionMessagePanel,
+  SessionMessagesHeader,
+  SessionMessages,
+  SessionMessage,
+  ChatInput,
+} from "reachat";
+
+# Slash Commands
+reachat 2.1 introduces slash command support with the same powerful suggestion system as mentions. Users can trigger commands by typing `/` followed by a command name.
+
+## Overview
+
+The slash command feature provides:
+- Floating suggestion popup with keyboard navigation
+- Command filtering as you type
+- Support for both text insertion and custom actions
+- Customizable command items with shortcuts and descriptions
+- Full keyboard support (arrow keys, enter, escape)
+
+## Basic Usage
+
+To enable slash commands, configure the `RichTextInput` component with a `commands` prop:
+
+```tsx
+import { RichTextInput } from 'reachat';
+
+const commands = [
+  {
+    id: 'summarize',
+    label: 'Summarize',
+    description: 'Summarize the conversation',
+    shortcut: '⌘S'
+  },
+  {
+    id: 'translate',
+    label: 'Translate',
+    description: 'Translate text to another language'
+  },
+  {
+    id: 'help',
+    label: 'Help',
+    description: 'Show available commands'
+  }
+];
+
+<RichTextInput
+  commands={{
+    trigger: '/',
+    items: commands
+  }}
+  onSubmit={(value) => console.log(value)}
+/>
+```
+
+## Configuration Options
+
+The `commands` prop accepts a `SuggestionConfig` object with the following options:
+
+### Command Types
+
+Commands can either insert text or trigger custom actions:
+
+```tsx
+<RichTextInput
+  commands={{
+    trigger: '/',
+    items: [
+      {
+        id: 'insert-template',
+        label: 'Bug Report',
+        description: 'Insert bug report template',
+        type: 'insert',
+        value: '**Bug Description:**\n\n**Steps to Reproduce:**\n\n**Expected:**\n\n**Actual:**'
+      },
+      {
+        id: 'clear-chat',
+        label: 'Clear',
+        description: 'Clear the current conversation',
+        type: 'action'
+      }
+    ],
+    onSelect: (item, insertText) => {
+      if (item.type === 'action') {
+        // Handle custom action
+        if (item.id === 'clear-chat') {
+          handleClearChat();
+        }
+      } else {
+        // Insert text
+        insertText(item.value || item.label);
+      }
+    }
+  }}
+/>
+```
+
+### Dynamic Commands
+
+Load commands dynamically based on context:
+
+```tsx
+<RichTextInput
+  commands={{
+    trigger: '/',
+    onSearch: async (query) => {
+      // Fetch commands from API or compute based on context
+      const allCommands = await fetchAvailableCommands();
+
+      // Filter based on user query
+      return allCommands
+        .filter(cmd =>
+          cmd.label.toLowerCase().includes(query.toLowerCase())
+        )
+        .slice(0, 10);
+    }
+  }}
+/>
+```
+
+### Custom Rendering
+
+Customize the appearance of command suggestions:
+
+```tsx
+<RichTextInput
+  commands={{
+    trigger: '/',
+    items: commands,
+    renderItem: (item, isHighlighted) => (
+      <div style={{
+        padding: '8px 12px',
+        backgroundColor: isHighlighted ? '#e3f2fd' : 'transparent',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          {item.icon}
+          <div>
+            <div style={{ fontWeight: 'bold' }}>/{item.label}</div>
+            <div style={{ fontSize: '12px', color: '#666' }}>
+              {item.description}
+            </div>
+          </div>
+        </div>
+        {item.shortcut && (
+          <kbd style={{
+            padding: '2px 6px',
+            borderRadius: '4px',
+            backgroundColor: '#f5f5f5',
+            fontSize: '11px'
+          }}>
+            {item.shortcut}
+          </kbd>
+        )}
+      </div>
+    )
+  }}
+/>
+```
+
+## Using with ChatInput
+
+The `ChatInput` component automatically supports commands when configured:
+
+```tsx
+import { Chat, ChatInput } from 'reachat';
+
+const slashCommands = [
+  {
+    id: 'summarize',
+    label: 'Summarize',
+    description: 'Summarize the conversation',
+    type: 'action'
+  },
+  {
+    id: 'export',
+    label: 'Export',
+    description: 'Export conversation to file',
+    type: 'action'
+  }
+];
+
+<Chat
+  sessions={sessions}
+  activeSessionId={activeId}
+>
+  <SessionMessagePanel>
+    <SessionMessagesHeader />
+    <SessionMessages />
+    <ChatInput
+      commands={{
+        trigger: '/',
+        items: slashCommands,
+        onSelect: (item, insertText) => {
+          handleCommand(item.id);
+        }
+      }}
+    />
+  </SessionMessagePanel>
+</Chat>
+```
+
+## Common Command Patterns
+
+### Text Templates
+
+Insert predefined text templates:
+
+```tsx
+const templateCommands = [
+  {
+    id: 'meeting-notes',
+    label: 'Meeting Notes',
+    description: 'Insert meeting notes template',
+    type: 'insert',
+    value: `# Meeting Notes - ${new Date().toLocaleDateString()}
+
+**Attendees:**
+
+**Agenda:**
+
+**Discussion:**
+
+**Action Items:**
+
+**Next Steps:**`
+  }
+];
+```
+
+### Quick Actions
+
+Trigger actions without inserting text:
+
+```tsx
+const actionCommands = [
+  {
+    id: 'new-session',
+    label: 'New Chat',
+    description: 'Start a new conversation',
+    type: 'action',
+    shortcut: '⌘N'
+  },
+  {
+    id: 'search',
+    label: 'Search',
+    description: 'Search in conversations',
+    type: 'action',
+    shortcut: '⌘K'
+  }
+];
+
+<RichTextInput
+  commands={{
+    trigger: '/',
+    items: actionCommands,
+    onSelect: (item) => {
+      switch (item.id) {
+        case 'new-session':
+          createNewSession();
+          break;
+        case 'search':
+          openSearchModal();
+          break;
+      }
+    }
+  }}
+/>
+```
+
+### Context-Aware Commands
+
+Show different commands based on application state:
+
+```tsx
+const getContextCommands = (hasSelection: boolean) => {
+  const baseCommands = [
+    { id: 'help', label: 'Help', description: 'Show help' }
+  ];
+
+  if (hasSelection) {
+    return [
+      ...baseCommands,
+      {
+        id: 'explain',
+        label: 'Explain',
+        description: 'Explain selected text'
+      },
+      {
+        id: 'improve',
+        label: 'Improve',
+        description: 'Improve selected text'
+      }
+    ];
+  }
+
+  return baseCommands;
+};
+
+<RichTextInput
+  commands={{
+    trigger: '/',
+    items: getContextCommands(hasTextSelection)
+  }}
+/>
+```
+
+## Combining with Mentions
+
+You can use both mentions and commands simultaneously:
+
+```tsx
+<RichTextInput
+  mentions={{
+    trigger: '@',
+    items: userMentions,
+    onSearch: searchUsers
+  }}
+  commands={{
+    trigger: '/',
+    items: slashCommands,
+    onSelect: handleCommand
+  }}
+  onSubmit={handleSubmit}
+/>
+```
+
+## Keyboard Navigation
+
+Users can navigate the command list using:
+- **Arrow Up/Down**: Move selection
+- **Enter**: Execute selected command
+- **Escape**: Close command popup
+- **Continue typing**: Filter commands
+
+## API Reference
+
+### SlashCommandItem Interface
+
+```typescript
+interface SlashCommandItem extends SuggestionItem {
+  id: string;
+  label: string;
+  description?: string;
+  icon?: ReactElement;
+  shortcut?: string; // Display keyboard shortcut hint
+  type?: 'insert' | 'action'; // Command behavior
+  value?: string; // Text to insert (for 'insert' type)
+  metadata?: Record<string, unknown>;
+}
+```
+
+### SuggestionConfig Interface
+
+```typescript
+interface SuggestionConfig<T extends SuggestionItem = SuggestionItem> {
+  trigger?: string; // Default: '/'
+  items?: T[];
+  onSearch?: (query: string) => Promise<T[]> | T[];
+  onSelect?: (item: T, insertText: (text: string) => void) => void;
+  maxResults?: number; // Default: 10
+  renderItem?: (item: T, isHighlighted: boolean) => ReactNode;
+  renderEmpty?: (query: string) => ReactNode;
+}
+```
+
+For more examples and interactive demos, visit the [storybook demos](https://storybook.reachat.dev).

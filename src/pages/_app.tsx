@@ -17,12 +17,12 @@ export default function App({ Component, pageProps }: AppProps) {
       /** noop */
     }
   }, []);
-  
+
   if (Component.name === 'Home') {
     return (
-      <Unstyled>
+      <ThemeProvider theme={theme}>
         <Component {...pageProps} />
-      </Unstyled>
+      </ThemeProvider>
     );
   }
 

@@ -1,5 +1,11 @@
 {
   "console": "Console",
   "companion": "Companion",
-  "providers": "Providers"
+  "chat": "Chat",
+  "providers": "Providers",
+  "charts": "Charts",
+  "mentions": "Mentions",
+  "commands": "Commands",
+  "status": "Message Status",
+  "suggestions": "Suggestions"
 }

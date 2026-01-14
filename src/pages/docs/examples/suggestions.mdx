@@ -1,0 +1,403 @@
+import {
+  Chat,
+  SessionMessagePanel,
+  SessionMessagesHeader,
+  SessionMessages,
+  SessionMessage,
+  ChatInput,
+} from "reachat";
+
+# Chat Suggestions
+reachat 2.1 introduces the `ChatSuggestions` component for displaying clickable suggestion chips that help users start or continue conversations with pre-defined prompts.
+
+## Overview
+
+The `ChatSuggestions` component provides:
+- Clickable suggestion chips
+- Custom rendering support
+- Automatic click handling
+- Responsive layout
+- Easy integration with chat input
+
+## Basic Usage
+
+Display a list of suggestions:
+
+```tsx
+import { ChatSuggestions } from 'reachat';
+
+const suggestions = [
+  { id: '1', content: 'Explain quantum computing' },
+  { id: '2', content: 'Write a Python function' },
+  { id: '3', content: 'Help me debug this code' }
+];
+
+<ChatSuggestions
+  suggestions={suggestions}
+  onSuggestionClick={(content) => {
+    console.log('Clicked:', content);
+  }}
+/>
+```
+
+## Using with Chat
+
+Integrate suggestions with the chat interface:
+
+<div style={{ width: 350, height: '500px', backgroundColor: '#02020F', padding: 20, borderRadius: 5, margin: '20px auto' }}>
+  <Chat
+    sessions={[
+      {
+        id: '1',
+        title: 'New Chat',
+        createdAt: new Date('2024-01-15T10:00:00Z'),
+        updatedAt: new Date('2024-01-15T10:00:00Z'),
+        conversations: []
+      }
+    ]}
+    activeSessionId="1"
+    viewType="chat"
+  >
+    <SessionMessagePanel>
+      <SessionMessagesHeader />
+      <SessionMessages>
+        {(conversations) => (
+          <>
+            {conversations.length === 0 && (
+              <div style={{ padding: '20px' }}>
+                <h3 style={{ marginBottom: '16px', color: '#fff' }}>
+                  How can I help you today?
+                </h3>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '16px' }}>
+                  {['Explain how React works', 'Write a sorting algorithm', 'Review my code'].map((suggestion, i) => (
+                    <button
+                      key={i}
+                      style={{
+                        padding: '8px 16px',
+                        borderRadius: '16px',
+                        background: 'rgba(255, 255, 255, 0.1)',
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        color: '#fff',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {suggestion}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            {conversations.map((conversation) => (
+              <SessionMessage
+                key={conversation.id}
+                conversation={conversation}
+              />
+            ))}
+          </>
+        )}
+      </SessionMessages>
+      <ChatInput />
+    </SessionMessagePanel>
+  </Chat>
+</div>
+
+## Dynamic Suggestions
+
+Generate suggestions based on context:
+
+```tsx
+import { useState, useEffect } from 'react';
+import { ChatSuggestions } from 'reachat';
+
+function ContextualSuggestions({ conversationHistory }) {
+  const [suggestions, setSuggestions] = useState([]);
+
+  useEffect(() => {
+    // Generate suggestions based on conversation context
+    if (conversationHistory.length === 0) {
+      setSuggestions([
+        { id: '1', content: 'What can you help me with?' },
+        { id: '2', content: 'Tell me about your capabilities' },
+        { id: '3', content: 'Show me examples' }
+      ]);
+    } else {
+      // Context-aware suggestions
+      setSuggestions([
+        { id: '1', content: 'Tell me more about that' },
+        { id: '2', content: 'Can you explain differently?' },
+        { id: '3', content: 'Show me an example' }
+      ]);
+    }
+  }, [conversationHistory]);
+
+  return (
+    <ChatSuggestions
+      suggestions={suggestions}
+      onSuggestionClick={handleSuggestionClick}
+    />
+  );
+}
+```
+
+## Custom Rendering
+
+Customize the appearance of suggestion chips:
+
+```tsx
+import { ChatSuggestions } from 'reachat';
+
+<ChatSuggestions
+  suggestions={suggestions}
+  onSuggestionClick={handleClick}
+>
+  {({ suggestion, onClick }) => (
+    <button
+      onClick={onClick}
+      style={{
+        padding: '12px 16px',
+        borderRadius: '8px',
+        border: '1px solid #333',
+        backgroundColor: '#1a1a1a',
+        color: '#fff',
+        cursor: 'pointer',
+        transition: 'all 0.2s'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundColor = '#2a2a2a';
+        e.currentTarget.style.borderColor = '#555';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = '#1a1a1a';
+        e.currentTarget.style.borderColor = '#333';
+      }}
+    >
+      {suggestion.content}
+    </button>
+  )}
+</ChatSuggestions>
+```
+
+## Integration Patterns
+
+### Empty State Suggestions
+
+Show suggestions when there are no messages:
+
+```tsx
+import { Chat, ChatSuggestions, SessionMessages } from 'reachat';
+
+<Chat sessions={sessions} activeSessionId={activeId}>
+  <SessionMessagePanel>
+    <SessionMessages>
+      {(conversations) => (
+        <>
+          {conversations.length === 0 && (
+            <div className="empty-state">
+              <h2>Start a conversation</h2>
+              <ChatSuggestions
+                suggestions={[
+                  { id: '1', content: 'How do I get started?' },
+                  { id: '2', content: 'Show me examples' },
+                  { id: '3', content: 'What features are available?' }
+                ]}
+                onSuggestionClick={startConversation}
+              />
+            </div>
+          )}
+          {conversations.map(conv => (
+            <SessionMessage key={conv.id} conversation={conv} />
+          ))}
+        </>
+      )}
+    </SessionMessages>
+    <ChatInput />
+  </SessionMessagePanel>
+</Chat>
+```
+
+### Follow-up Suggestions
+
+Display suggestions after each response:
+
+```tsx
+import { useState } from 'react';
+import { ChatSuggestions } from 'reachat';
+
+function MessageWithSuggestions({ message, onSuggestionClick }) {
+  const followUpSuggestions = [
+    { id: '1', content: 'Tell me more' },
+    { id: '2', content: 'Show me an example' },
+    { id: '3', content: 'How does this work?' }
+  ];
+
+  return (
+    <div>
+      <div className="message-content">
+        {message.response}
+      </div>
+      <ChatSuggestions
+        suggestions={followUpSuggestions}
+        onSuggestionClick={onSuggestionClick}
+      />
+    </div>
+  );
+}
+```
+
+### Category-Based Suggestions
+
+Organize suggestions by category:
+
+```tsx
+const suggestionsByCategory = {
+  'Getting Started': [
+    { id: '1', content: 'What is reachat?' },
+    { id: '2', content: 'How do I install it?' }
+  ],
+  'Features': [
+    { id: '3', content: 'Show me chart examples' },
+    { id: '4', content: 'How do mentions work?' }
+  ],
+  'Help': [
+    { id: '5', content: 'View documentation' },
+    { id: '6', content: 'Get support' }
+  ]
+};
+
+<div>
+  {Object.entries(suggestionsByCategory).map(([category, suggestions]) => (
+    <div key={category} style={{ marginBottom: '24px' }}>
+      <h3>{category}</h3>
+      <ChatSuggestions
+        suggestions={suggestions}
+        onSuggestionClick={handleClick}
+      />
+    </div>
+  ))}
+</div>
+```
+
+## Complete Example
+
+Full integration with chat input:
+
+```tsx
+import { useState } from 'react';
+import { Chat, ChatSuggestions, ChatInput, SessionMessages } from 'reachat';
+
+function ChatWithSuggestions() {
+  const [sessions, setSessions] = useState([{
+    id: '1',
+    title: 'New Chat',
+    createdAt: new Date('2024-01-15T10:00:00Z'),
+    conversations: []
+  }]);
+
+  const suggestions = [
+    { id: '1', content: 'Explain React hooks' },
+    { id: '2', content: 'Write a REST API' },
+    { id: '3', content: 'Debug my code' },
+    { id: '4', content: 'Optimize performance' }
+  ];
+
+  const handleSuggestionClick = (content) => {
+    // Add suggestion as a new message
+    const newConversation = {
+      id: Date.now().toString(),
+      question: content,
+      response: `Let me help you with: ${content}`,
+      createdAt: new Date('2024-01-15T10:00:00Z')
+    };
+
+    setSessions(prev => prev.map(session =>
+      session.id === '1'
+        ? {
+            ...session,
+            conversations: [...session.conversations, newConversation]
+          }
+        : session
+    ));
+  };
+
+  const handleSubmit = (message) => {
+    // Handle regular message submission
+    const newConversation = {
+      id: Date.now().toString(),
+      question: message,
+      response: 'Response to your question...',
+      createdAt: new Date('2024-01-15T10:00:00Z')
+    };
+
+    setSessions(prev => prev.map(session =>
+      session.id === '1'
+        ? {
+            ...session,
+            conversations: [...session.conversations, newConversation]
+          }
+        : session
+    ));
+  };
+
+  return (
+    <Chat sessions={sessions} activeSessionId="1" viewType="chat">
+      <SessionMessagePanel>
+        <SessionMessagesHeader />
+        <SessionMessages>
+          {(conversations) => (
+            <>
+              {conversations.length === 0 && (
+                <div style={{ padding: '40px 20px', textAlign: 'center' }}>
+                  <h2>How can I help you today?</h2>
+                  <ChatSuggestions
+                    suggestions={suggestions}
+                    onSuggestionClick={handleSuggestionClick}
+                  />
+                </div>
+              )}
+              {conversations.map(conv => (
+                <SessionMessage key={conv.id} conversation={conv} />
+              ))}
+            </>
+          )}
+        </SessionMessages>
+        <ChatInput onSubmit={handleSubmit} />
+      </SessionMessagePanel>
+    </Chat>
+  );
+}
+```
+
+## API Reference
+
+### ChatSuggestionsProps
+
+```typescript
+interface ChatSuggestionsProps {
+  suggestions: Suggestion[]; // Array of suggestions
+  className?: string; // Custom CSS class
+  onSuggestionClick?: (content: string) => void; // Click handler
+  children?: ReactElement; // Custom render function
+}
+```
+
+### Suggestion Interface
+
+```typescript
+interface Suggestion {
+  id: string; // Unique identifier
+  content: string; // Suggestion text
+}
+```
+
+### Custom Render Function
+
+When using the `children` prop, you receive:
+
+```typescript
+{
+  suggestion: Suggestion; // The suggestion data
+  onClick: () => void; // Pre-configured click handler
+}
+```
+
+For more examples and interactive demos, visit the [storybook demos](https://storybook.reachat.dev).

@@ -1,12 +1,16 @@
 # Themeing
 
-You can theme reachat by passing a custom `theme` to the `Session` component.
+You can theme reachat by passing a custom `theme` to the `Chat` component.
 
 ```tsx
 export default function App() {
   return <Chat theme={theme} ...rest of your props... />;
 }
 ```
+
+## Theme Interface
+
+reachat 2.1 introduces an enhanced theming system with support for new components like MessageStatus, ChatSuggestions, Charts, and the new mentions/commands input features.
 
 The theme interface is as follows:
 
@@ -16,6 +20,37 @@ export interface ChatTheme {
   console: string;
   companion: string;
   empty: string;
+  appbar: string;
+
+  // MessageStatus component theming (new in 2.1)
+  status: {
+    base: string;
+    header: string;
+    icon: {
+      base: string;
+      loading: string;
+      complete: string;
+      error: string;
+    };
+    text: {
+      base: string;
+      loading: string;
+      complete: string;
+      error: string;
+    };
+    steps: {
+      base: string;
+      step: {
+        base: string;
+        icon: string;
+        text: string;
+        loading: string;
+        complete: string;
+        error: string;
+      };
+    };
+  };
+
   sessions: {
     base: string;
     console: string;
@@ -28,6 +63,7 @@ export interface ChatTheme {
       delete: string;
     };
   };
+
   messages: {
     base: string;
     console: string;
@@ -46,6 +82,10 @@ export interface ChatTheme {
       cursor: string;
       overlay: string;
       expand: string;
+      scrollToBottom: {
+        container: string;
+        button: string;
+      };
       files: {
         base: string;
         file: {
@@ -85,6 +125,8 @@ export interface ChatTheme {
       };
     };
   };
+
+  // Enhanced input theming with mentions/commands support (new in 2.1)
   input: {
     base: string;
     upload: string;
@@ -94,11 +136,73 @@ export interface ChatTheme {
       send: string;
       stop: string;
     };
+    popup: {
+      base: string;
+      content: string;
+      item: string;
+      itemHighlighted: string;
+      itemIcon: string;
+      itemContent: string;
+      itemLabel: string;
+      itemDescription: string;
+      itemShortcut: string;
+      empty: string;
+      loading: string;
+    };
+    tag: {
+      base: string;
+      mention: string;
+      command: string;
+    };
+    editor: {
+      base: string;
+      container: string;
+      placeholder: string;
+    };
+  };
+
+  // ChatSuggestions component theming (new in 2.1)
+  suggestions: {
+    base: string;
+    item: {
+      base: string;
+      icon: string;
+      text: string;
+    };
+  };
+
+  // Chart rendering theming (new in 2.1)
+  chart: {
+    base: string;
+    title: string;
+    content: string;
+    error: {
+      base: string;
+      title: string;
+      code: string;
+    };
+    warning: {
+      base: string;
+      title: string;
+    };
   };
 }
 ```
 
-Below is an example theme:
+## New in 2.1
+
+- **appbar**: Theme for the app bar component
+- **status**: Complete theming for the MessageStatus component with loading, complete, and error states
+- **messages.message.scrollToBottom**: Theme for the scroll-to-bottom button
+- **input.popup**: Theming for mentions and commands popup menus
+- **input.tag**: Theming for mention and command tags in the input
+- **input.editor**: Enhanced input editor theming
+- **suggestions**: Theming for the ChatSuggestions component
+- **chart**: Theming for chart rendering with error and warning states
+
+## Example Theme
+
+Below is an example theme with all the new 2.1 fields:
 
 ```ts
 export const chatTheme: ChatTheme = {
@@ -106,6 +210,37 @@ export const chatTheme: ChatTheme = {
   console: 'flex w-full gap-4 h-full',
   companion: 'w-full h-full overflow-hidden',
   empty: 'text-center flex-1',
+  appbar: 'flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-800',
+
+  // MessageStatus theming
+  status: {
+    base: 'flex items-start gap-2 p-3 rounded-lg bg-gray-50 dark:bg-gray-900/50',
+    header: 'flex items-center gap-2',
+    icon: {
+      base: 'w-4 h-4',
+      loading: 'text-blue-500 animate-spin',
+      complete: 'text-green-500',
+      error: 'text-red-500'
+    },
+    text: {
+      base: 'text-sm font-medium',
+      loading: 'text-gray-600 dark:text-gray-400',
+      complete: 'text-green-600 dark:text-green-400',
+      error: 'text-red-600 dark:text-red-400'
+    },
+    steps: {
+      base: 'ml-6 mt-2 space-y-1',
+      step: {
+        base: 'flex items-center gap-2 text-sm',
+        icon: 'w-3 h-3',
+        text: 'text-gray-600 dark:text-gray-400',
+        loading: 'text-blue-500',
+        complete: 'text-green-500',
+        error: 'text-red-500'
+      }
+    }
+  },
+
   sessions: {
     base: 'overflow-auto',
     console:
@@ -153,6 +288,10 @@ export const chatTheme: ChatTheme = {
       overlay: `overflow-y-hidden max-h-[350px] after:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:h-16 after:bg-gradient-to-b after:from-transparent dark:after:to-gray-900 after:to-gray-200`,
       cursor: 'inline-block w-1 h-4 bg-current',
       expand: 'absolute bottom-1 right-1 z-10',
+      scrollToBottom: {
+        container: 'absolute bottom-20 right-4 z-10',
+        button: 'p-2 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 shadow-lg'
+      },
       files: {
         base: 'mb-2 flex flex-wrap gap-3 ',
         file: {
@@ -218,6 +357,56 @@ export const chatTheme: ChatTheme = {
         'dark:text-white dark:bg-gray-800 hover:dark:bg-gray-700'
       ].join(' '),
       stop: 'px-2 py-2 bg-red-500 text-white rounded-full hover:bg-red-700 '
+    },
+    // Mentions and commands popup theming
+    popup: {
+      base: 'absolute bottom-full mb-2 left-0 w-80 max-h-64 overflow-y-auto rounded-lg shadow-lg border border-gray-200 dark:border-gray-700',
+      content: 'bg-white dark:bg-gray-900',
+      item: 'flex items-center gap-3 px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer',
+      itemHighlighted: 'bg-gray-100 dark:bg-gray-800',
+      itemIcon: 'w-5 h-5 text-gray-500 dark:text-gray-400',
+      itemContent: 'flex-1 min-w-0',
+      itemLabel: 'text-sm font-medium text-gray-900 dark:text-gray-100',
+      itemDescription: 'text-xs text-gray-500 dark:text-gray-400 truncate',
+      itemShortcut: 'text-xs text-gray-400 dark:text-gray-500',
+      empty: 'px-3 py-6 text-center text-sm text-gray-500 dark:text-gray-400',
+      loading: 'px-3 py-6 text-center text-sm text-gray-500 dark:text-gray-400'
+    },
+    tag: {
+      base: 'inline-flex items-center gap-1 px-2 py-0.5 rounded text-sm font-medium',
+      mention: 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300',
+      command: 'bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300'
+    },
+    editor: {
+      base: 'flex-1',
+      container: 'w-full',
+      placeholder: 'text-gray-400 dark:text-gray-500'
+    }
+  },
+
+  // ChatSuggestions theming
+  suggestions: {
+    base: 'flex flex-wrap gap-2',
+    item: {
+      base: 'flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 cursor-pointer transition-colors',
+      icon: 'w-4 h-4 text-gray-500 dark:text-gray-400',
+      text: 'text-sm text-gray-700 dark:text-gray-300'
+    }
+  },
+
+  // Chart theming
+  chart: {
+    base: 'my-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-900/50',
+    title: 'text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2',
+    content: 'w-full',
+    error: {
+      base: 'p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800',
+      title: 'text-sm font-semibold text-red-700 dark:text-red-400 mb-2',
+      code: 'text-xs text-red-600 dark:text-red-500 font-mono'
+    },
+    warning: {
+      base: 'p-4 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800',
+      title: 'text-sm font-semibold text-yellow-700 dark:text-yellow-400'
     }
   }
 };

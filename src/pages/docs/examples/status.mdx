@@ -1,0 +1,349 @@
+import {
+  Chat,
+  SessionMessagePanel,
+  SessionMessagesHeader,
+  SessionMessages,
+  SessionMessage,
+  ChatInput,
+} from "reachat";
+
+# Message Status
+reachat 2.1 introduces the `MessageStatus` component for displaying loading, complete, and error states with optional multi-step progress indicators, similar to Claude's tool status UI.
+
+## Overview
+
+The `MessageStatus` component provides:
+- Visual status indicators (loading, complete, error)
+- Animated state transitions
+- Multi-step progress display
+- Customizable icons
+- Support for nested status steps
+
+## Basic Usage
+
+Display a simple status message:
+
+```tsx
+import { MessageStatus } from 'reachat';
+
+<MessageStatus
+  status="loading"
+  text="Processing your request..."
+/>
+```
+
+## Status States
+
+The component supports three status states:
+
+### Loading State
+
+```tsx
+<MessageStatus
+  status="loading"
+  text="Analyzing data..."
+/>
+```
+
+### Complete State
+
+```tsx
+<MessageStatus
+  status="complete"
+  text="Analysis complete"
+/>
+```
+
+### Error State
+
+```tsx
+<MessageStatus
+  status="error"
+  text="Failed to process request"
+/>
+```
+
+## Multi-Step Status
+
+Display progress across multiple steps:
+
+```tsx
+<MessageStatus
+  status="loading"
+  text="Processing request"
+  steps={[
+    { id: '1', text: 'Validating input', status: 'complete' },
+    { id: '2', text: 'Fetching data', status: 'complete' },
+    { id: '3', text: 'Analyzing results', status: 'loading' },
+    { id: '4', text: 'Generating report', status: 'loading' }
+  ]}
+/>
+```
+
+## Using in Conversations
+
+Embed status indicators in conversation responses:
+
+<div style={{ width: 350, height: '500px', backgroundColor: '#02020F', padding: 20, borderRadius: 5, margin: '20px auto' }}>
+  <Chat
+    sessions={[
+      {
+        id: '1',
+        title: 'Status Demo',
+        createdAt: new Date('2024-01-15T10:00:00Z'),
+        updatedAt: new Date('2024-01-15T10:00:00Z'),
+        conversations: [
+          {
+            id: '1',
+            question: 'Analyze this dataset',
+            response: 'I\'ll analyze the dataset for you.',
+            createdAt: new Date('2024-01-15T10:00:00Z'),
+            updatedAt: new Date('2024-01-15T10:00:00Z')
+          }
+        ]
+      }
+    ]}
+    activeSessionId="1"
+    viewType="chat"
+  >
+    <SessionMessagePanel>
+      <SessionMessagesHeader />
+      <SessionMessages>
+        {(conversations) => (
+          <>
+            {conversations.map((conversation) => (
+              <SessionMessage
+                key={conversation.id}
+                conversation={conversation}
+              />
+            ))}
+            {/* MessageStatus would be rendered here in the actual response */}
+            <div style={{ padding: '16px', color: '#999', fontStyle: 'italic' }}>
+              Loading status indicator would appear here...
+            </div>
+          </>
+        )}
+      </SessionMessages>
+      <ChatInput />
+    </SessionMessagePanel>
+  </Chat>
+</div>
+
+## Advanced Examples
+
+### Dynamic Status Updates
+
+Update status as operations progress:
+
+```tsx
+import { useState, useEffect } from 'react';
+import { MessageStatus } from 'reachat';
+
+function AnalysisStatus() {
+  const [steps, setSteps] = useState([
+    { id: '1', text: 'Initializing', status: 'loading' },
+    { id: '2', text: 'Processing data', status: 'loading' },
+    { id: '3', text: 'Generating insights', status: 'loading' }
+  ]);
+
+  useEffect(() => {
+    // Simulate progress
+    const timers = [
+      setTimeout(() => updateStep('1', 'complete'), 1000),
+      setTimeout(() => updateStep('2', 'complete'), 2000),
+      setTimeout(() => updateStep('3', 'complete'), 3000)
+    ];
+
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
+  const updateStep = (id: string, status: string) => {
+    setSteps(prev => prev.map(step =>
+      step.id === id ? { ...step, status } : step
+    ));
+  };
+
+  const allComplete = steps.every(s => s.status === 'complete');
+
+  return (
+    <MessageStatus
+      status={allComplete ? 'complete' : 'loading'}
+      text={allComplete ? 'Analysis complete' : 'Running analysis'}
+      steps={steps}
+    />
+  );
+}
+```
+
+### Error Handling
+
+Display errors with specific step failures:
+
+```tsx
+<MessageStatus
+  status="error"
+  text="Analysis failed"
+  steps={[
+    { id: '1', text: 'Load dataset', status: 'complete' },
+    { id: '2', text: 'Validate schema', status: 'complete' },
+    { id: '3', text: 'Run computation', status: 'error' }
+  ]}
+/>
+```
+
+### Custom Icons
+
+Provide custom icons for status states:
+
+```tsx
+import { CheckCircle, XCircle, Loader } from 'lucide-react';
+
+<MessageStatus
+  status="loading"
+  text="Custom status indicator"
+  icon={<Loader className="animate-spin" />}
+/>
+```
+
+### Nested in Markdown
+
+Include status indicators in markdown responses:
+
+```tsx
+const conversationWithStatus = {
+  id: '1',
+  question: 'Run the analysis',
+  response: `I'm running the analysis now.
+
+<MessageStatus
+  status="loading"
+  text="Analyzing data"
+  steps={[
+    { id: '1', text: 'Loading dataset', status: 'complete' },
+    { id: '2', text: 'Computing statistics', status: 'loading' }
+  ]}
+/>
+
+I'll let you know when it's complete.`,
+  createdAt: new Date('2024-01-15T10:00:00Z')
+};
+```
+
+## Integration with Custom Components
+
+Use with custom markdown components:
+
+```tsx
+import { Chat, MessageStatus } from 'reachat';
+
+<Chat
+  markdownComponents={{
+    MessageStatus: (props) => (
+      <MessageStatus
+        {...props}
+        className="my-custom-status"
+      />
+    )
+  }}
+>
+  {/* ... */}
+</Chat>
+```
+
+## Real-World Example
+
+Complete example with API integration:
+
+```tsx
+import { useState } from 'react';
+import { Chat, MessageStatus, ChatInput } from 'reachat';
+
+function ChatWithStatus() {
+  const [status, setStatus] = useState(null);
+
+  const handleSubmit = async (message) => {
+    setStatus({
+      status: 'loading',
+      text: 'Processing request',
+      steps: [
+        { id: '1', text: 'Sending request', status: 'loading' },
+        { id: '2', text: 'Waiting for response', status: 'loading' }
+      ]
+    });
+
+    try {
+      // Update first step
+      setStatus(prev => ({
+        ...prev,
+        steps: prev.steps.map((s, i) =>
+          i === 0 ? { ...s, status: 'complete' } : s
+        )
+      }));
+
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        body: JSON.stringify({ message })
+      });
+
+      // Update second step
+      setStatus(prev => ({
+        ...prev,
+        steps: prev.steps.map((s, i) =>
+          i === 1 ? { ...s, status: 'complete' } : s
+        )
+      }));
+
+      const data = await response.json();
+
+      setStatus({
+        status: 'complete',
+        text: 'Response received',
+        steps: prev.steps
+      });
+
+    } catch (error) {
+      setStatus({
+        status: 'error',
+        text: 'Request failed',
+        steps: prev.steps.map(s => ({ ...s, status: 'error' }))
+      });
+    }
+  };
+
+  return (
+    <Chat sessions={sessions}>
+      <SessionMessagePanel>
+        <SessionMessages />
+        {status && <MessageStatus {...status} />}
+        <ChatInput onSubmit={handleSubmit} />
+      </SessionMessagePanel>
+    </Chat>
+  );
+}
+```
+
+## API Reference
+
+### MessageStatusProps
+
+```typescript
+interface MessageStatusProps {
+  status?: 'loading' | 'complete' | 'error'; // Default: 'loading'
+  text: string; // Main status text
+  steps?: MessageStatusStep[]; // Optional sub-steps
+  icon?: ReactNode; // Custom icon
+  className?: string; // Additional CSS class
+}
+```
+
+### MessageStatusStep
+
+```typescript
+interface MessageStatusStep {
+  id: string; // Unique identifier
+  text: string; // Step description
+  status?: 'loading' | 'complete' | 'error'; // Default: 'loading'
+}
+```
+
+For more examples and interactive demos, visit the [storybook demos](https://storybook.reachat.dev).

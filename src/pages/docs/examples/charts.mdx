@@ -1,0 +1,131 @@
+# Charts
+reachat 2.1 introduces built-in chart rendering support powered by [reaviz](https://reaviz.dev). Charts can be embedded directly in markdown responses using fenced code blocks with the `chart` language identifier.
+
+## Supported Chart Types
+The following chart types are supported:
+- `bar` - Bar charts
+- `line` - Line charts
+- `area` - Area charts
+- `pie` - Pie charts
+- `radialBar` - Radial bar charts
+- `radialArea` - Radial area charts
+- `sparkline` - Compact sparkline charts
+
+## Chart Configuration
+
+Charts are configured using a JSON object with the following structure:
+
+```json
+{
+  "type": "bar",
+  "data": [
+    { "key": "Label 1", "data": 10 },
+    { "key": "Label 2", "data": 20 },
+    { "key": "Label 3", "data": 15 }
+  ],
+  "title": "Optional Chart Title",
+  "width": 400,
+  "height": 300
+}
+```
+
+### Configuration Options
+
+- `type` (required): The chart type (bar, line, area, pie, radialBar, radialArea, sparkline)
+- `data` (required): Array of data points with `key` and `data` properties
+- `title` (optional): Chart title to display above the chart
+- `width` (optional): Chart width in pixels (default: 400)
+- `height` (optional): Chart height in pixels (default: 300)
+
+## Examples
+
+### Line Chart
+
+```chart
+{
+  "type": "line",
+  "data": [
+    { "key": "Week 1", "data": 100 },
+    { "key": "Week 2", "data": 120 },
+    { "key": "Week 3", "data": 90 },
+    { "key": "Week 4", "data": 140 }
+  ],
+  "title": "Weekly Progress"
+}
+```
+
+### Pie Chart
+
+```chart
+{
+  "type": "pie",
+  "data": [
+    { "key": "Product A", "data": 35 },
+    { "key": "Product B", "data": 25 },
+    { "key": "Product C", "data": 20 },
+    { "key": "Product D", "data": 20 }
+  ],
+  "title": "Product Distribution"
+}
+```
+
+### Area Chart
+
+```chart
+{
+  "type": "area",
+  "data": [
+    { "key": "Q1", "data": 1000 },
+    { "key": "Q2", "data": 1500 },
+    { "key": "Q3", "data": 1200 },
+    { "key": "Q4", "data": 1800 }
+  ],
+  "title": "Quarterly Revenue"
+}
+```
+
+### Sparkline
+
+```chart
+{
+  "type": "sparkline",
+  "data": [
+    { "key": "1", "data": 10 },
+    { "key": "2", "data": 15 },
+    { "key": "3", "data": 8 },
+    { "key": "4", "data": 20 },
+    { "key": "5", "data": 12 }
+  ]
+}
+```
+
+## Custom Markdown Components
+
+You can customize chart rendering by providing custom components through the `markdownComponents` prop:
+
+```tsx
+import { Chat, ChartRenderer } from 'reachat';
+
+<Chat
+  markdownComponents={{
+    chart: (props) => (
+      <ChartRenderer
+        {...props}
+        className="my-custom-chart"
+      />
+    )
+  }}
+>
+  {/* ... */}
+</Chat>
+```
+
+## Error Handling
+
+If a chart configuration is invalid or cannot be parsed, reachat will display a user-friendly error message instead of the chart. Common errors include:
+- Invalid JSON syntax
+- Missing required fields (type, data)
+- Invalid chart type
+- Malformed data structure
+
+For more examples and advanced usage, visit the [storybook demos](https://storybook.reachat.dev).

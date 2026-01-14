@@ -37,6 +37,9 @@ export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
+    // Set dark mode class on html element
+    document.documentElement.classList.add('dark');
+
     const handleScroll = () => {
       const isScrolledCheck = window.scrollY > 80;
       setIsScrolled(isScrolledCheck);

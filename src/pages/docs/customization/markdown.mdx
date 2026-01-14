@@ -4,9 +4,12 @@ You can use the `remarkPlugins` prop to add custom plugins to the markdown parse
 Any plugin that is supported by remark should work here as well.
 
 ### Pre-packaged plugins
-Out of the box, we provide a sample plugin but we plan to expand this later on.
+Out of the box, we provide several plugins:
 
-- [CVE Plugin](https://github.com/reaviz/reachat/blob/master/src/Markdown/plugins/remarkCve.ts)
+- [Chart Plugin](https://github.com/reaviz/reachat/blob/master/src/Markdown/plugins/remarkChart.ts) - Render charts in markdown (new in v2.1)
+- [CVE Plugin](https://github.com/reaviz/reachat/blob/master/src/Markdown/plugins/remarkCve.ts) - Automatically link CVE identifiers
+
+The Chart plugin is enabled by default and supports rendering charts using fenced code blocks. See the [Charts documentation](/docs/examples/charts) for more details.
 
 You can view the [Storybook Stories](https://storybook.reachat.dev) for more examples.
 
@@ -76,3 +79,57 @@ export function App() {
   );
 }
 ```
+
+## Custom Markdown Components (New in v2.1)
+
+You can customize how specific markdown elements are rendered using the `markdownComponents` prop. This is useful for overriding the default rendering of charts, code blocks, or other markdown elements.
+
+### Basic Usage
+
+```tsx
+import { Chat, ChartRenderer } from 'reachat';
+
+<Chat
+  markdownComponents={{
+    // Custom chart rendering
+    chart: (props) => (
+      <ChartRenderer {...props} className="custom-chart" />
+    ),
+    // Custom code block rendering
+    code: ({ node, inline, className, children, ...props }) => {
+      const match = /language-(\w+)/.exec(className || '');
+      return !inline && match ? (
+        <SyntaxHighlighter
+          language={match[1]}
+          PreTag="div"
+          {...props}
+        >
+          {String(children).replace(/\n$/, '')}
+        </SyntaxHighlighter>
+      ) : (
+        <code className={className} {...props}>
+          {children}
+        </code>
+      );
+    }
+  }}
+>
+  {/* ... */}
+</Chat>
+```
+
+### Available Component Overrides
+
+You can override any standard markdown element:
+
+- `chart` - Chart rendering (reachat-specific)
+- `code` / `pre` - Code blocks
+- `a` - Links
+- `img` - Images
+- `table` / `thead` / `tbody` / `tr` / `td` / `th` - Tables
+- `h1` through `h6` - Headings
+- `p` - Paragraphs
+- `ul` / `ol` / `li` - Lists
+- And many more standard markdown elements
+
+For a complete list of available overrides, see the [react-markdown components documentation](https://github.com/remarkjs/react-markdown#appendix-b-components).
