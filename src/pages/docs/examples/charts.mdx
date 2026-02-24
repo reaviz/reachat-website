@@ -1,0 +1,257 @@
+# Charts
+
+reachat includes built-in chart rendering powered by [reaviz](https://reaviz.dev),
+registered through the [Component Catalog](/docs/examples/component-catalog).
+The LLM emits a JSON spec inside a `` ```component `` fenced code block and reachat
+renders the chart automatically.
+
+## Setup
+
+Install `reaviz` (optional peer dependency) and register the chart definition
+using `createChartComponentDef`:
+
+```bash
+npm install reaviz
+```
+
+```tsx
+import {
+  Chat,
+  SessionMessages,
+  ChatInput,
+  SessionMessagePanel,
+  componentCatalog,
+  createChartComponentDef
+} from 'reachat';
+
+const catalog = componentCatalog({
+  Chart: createChartComponentDef()
+});
+
+function App() {
+  return (
+    <Chat
+      sessions={sessions}
+      activeSessionId={activeId}
+      components={catalog}
+    >
+      <SessionMessagePanel>
+        <SessionMessages />
+        <ChatInput />
+      </SessionMessagePanel>
+    </Chat>
+  );
+}
+```
+
+Don't forget to include the system prompt in your LLM call so the model knows
+how to emit chart specs:
+
+```ts
+const systemPrompt = catalog.systemPrompt();
+```
+
+## Supported Chart Types
+
+| Type         | Best for                          |
+| ------------ | --------------------------------- |
+| `bar`        | Comparisons across categories     |
+| `line`       | Trends over time                  |
+| `area`       | Cumulative data / volume          |
+| `pie`        | Proportions / distribution        |
+| `radialBar`  | Radial comparisons                |
+| `radialArea` | Radial cumulative data            |
+| `sparkline`  | Compact inline mini-charts        |
+
+## Configuration
+
+Charts are configured via the standard component catalog JSON spec format:
+
+```json
+{
+  "type": "Chart",
+  "props": {
+    "type": "bar",
+    "data": [
+      { "key": "Label 1", "data": 10 },
+      { "key": "Label 2", "data": 20 }
+    ],
+    "title": "Optional Chart Title",
+    "width": 400,
+    "height": 300
+  }
+}
+```
+
+### Props
+
+| Prop     | Type                | Required | Default | Description                    |
+| -------- | ------------------- | -------- | ------- | ------------------------------ |
+| `type`   | Chart type string   | Yes      | —       | One of the supported types     |
+| `data`   | `ChartDataItem[]`   | Yes      | —       | Array of `{ key, data }` items |
+| `title`  | `string`            | No       | —       | Title displayed above chart    |
+| `width`  | `number`            | No       | `400`   | Width in pixels                |
+| `height` | `number`            | No       | `300`   | Height in pixels               |
+
+## Examples
+
+### Bar Chart
+
+````
+```component
+{
+  "type": "Chart",
+  "props": {
+    "type": "bar",
+    "data": [
+      { "key": "JavaScript", "data": 35 },
+      { "key": "Python", "data": 28 },
+      { "key": "TypeScript", "data": 22 },
+      { "key": "Go", "data": 15 },
+      { "key": "Rust", "data": 10 }
+    ],
+    "width": 450,
+    "height": 300,
+    "title": "Programming Language Popularity"
+  }
+}
+```
+````
+
+### Line Chart
+
+````
+```component
+{
+  "type": "Chart",
+  "props": {
+    "type": "line",
+    "data": [
+      { "key": "Jan", "data": 100 },
+      { "key": "Feb", "data": 150 },
+      { "key": "Mar", "data": 180 },
+      { "key": "Apr", "data": 220 },
+      { "key": "May", "data": 280 },
+      { "key": "Jun", "data": 350 }
+    ],
+    "width": 450,
+    "height": 250,
+    "title": "Monthly Revenue Growth"
+  }
+}
+```
+````
+
+### Area Chart
+
+````
+```component
+{
+  "type": "Chart",
+  "props": {
+    "type": "area",
+    "data": [
+      { "key": "Week 1", "data": 50 },
+      { "key": "Week 2", "data": 80 },
+      { "key": "Week 3", "data": 65 },
+      { "key": "Week 4", "data": 95 },
+      { "key": "Week 5", "data": 120 },
+      { "key": "Week 6", "data": 140 }
+    ],
+    "width": 450,
+    "height": 250,
+    "title": "Weekly User Engagement"
+  }
+}
+```
+````
+
+### Pie Chart
+
+````
+```component
+{
+  "type": "Chart",
+  "props": {
+    "type": "pie",
+    "data": [
+      { "key": "Desktop", "data": 45 },
+      { "key": "Mobile", "data": 35 },
+      { "key": "Tablet", "data": 15 },
+      { "key": "Other", "data": 5 }
+    ],
+    "width": 350,
+    "height": 300,
+    "title": "Device Usage Distribution"
+  }
+}
+```
+````
+
+### Sparkline
+
+````
+```component
+{
+  "type": "Chart",
+  "props": {
+    "type": "sparkline",
+    "data": [
+      { "key": "1", "data": 10 },
+      { "key": "2", "data": 25 },
+      { "key": "3", "data": 15 },
+      { "key": "4", "data": 35 },
+      { "key": "5", "data": 30 },
+      { "key": "6", "data": 45 },
+      { "key": "7", "data": 40 }
+    ],
+    "width": 200,
+    "height": 50
+  }
+}
+```
+````
+
+## Combining with Other Components
+
+Since charts are registered through the component catalog, you can mix them with
+any other custom components in the same catalog:
+
+```tsx
+import { componentCatalog, createChartComponentDef } from 'reachat';
+import { z } from 'zod';
+
+const catalog = componentCatalog({
+  Chart: createChartComponentDef(),
+  DataCard: {
+    description: 'Displays a single metric',
+    props: z.object({
+      title: z.string(),
+      value: z.number(),
+      unit: z.string().optional()
+    }),
+    component: ({ title, value, unit }) => (
+      <div className="data-card">
+        <span className="label">{title}</span>
+        <span className="value">
+          {value}
+          {unit}
+        </span>
+      </div>
+    )
+  },
+  Row: {
+    description: 'Horizontal flex layout for side-by-side children',
+    props: z.object({}),
+    component: ({ children }) => (
+      <div className="flex gap-3 flex-wrap">{children}</div>
+    )
+  }
+});
+```
+
+The LLM can then compose charts alongside other components using nested children.
+See the [Component Catalog](/docs/examples/component-catalog) docs for more on
+layouts, nesting, and interactive components.
+
+For more examples and live demos, visit the [storybook](https://storybook.reachat.dev).
