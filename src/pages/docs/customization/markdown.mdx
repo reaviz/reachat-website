@@ -11,6 +11,36 @@ Out of the box, we provide several plugins:
 
 You can view the [Storybook Stories](https://storybook.reachat.dev) for more examples.
 
+### CVE Plugin
+
+The `remarkCve` plugin automatically detects
+[CVE identifiers](https://cve.mitre.org) in chat messages and converts them into
+clickable links to the MITRE CVE database.
+
+#### Usage
+
+```tsx
+import { Chat, remarkCve } from 'reachat';
+
+<Chat remarkPlugins={[remarkCve]}>
+  <SessionMessages />
+  <ChatInput />
+</Chat>
+```
+
+#### What It Does
+
+Any text matching the pattern `CVE-YYYY-NNNNN` (e.g., `CVE-2021-44228`) is
+automatically replaced with a link to its MITRE entry:
+
+| Input                | Output                                                                                             |
+| -------------------- | -------------------------------------------------------------------------------------------------- |
+| `CVE-2021-44228`     | [CVE-2021-44228](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228)                   |
+| `CVE-2021-34527`     | [CVE-2021-34527](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-34527)                   |
+
+The plugin matches identifiers with years in the 1900–2099 range and 4–7 digit
+sequence numbers, covering the full CVE numbering scheme.
+
 ### Redact Plugin
 
 The `remarkRedact` plugin automatically detects and masks sensitive data in chat messages

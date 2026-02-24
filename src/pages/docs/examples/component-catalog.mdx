@@ -164,36 +164,12 @@ const definitions = {
 ### Built-in Chart Component
 
 reachat ships a ready-made chart component definition powered by
-[reaviz](https://github.com/reaviz/reaviz). Both `zod` and `reaviz` must be
-installed:
+[reaviz](https://github.com/reaviz/reaviz) that you can register in your
+catalog with `createChartComponentDef()`. It supports bar, line, area, pie,
+and sparkline chart types out of the box.
 
-```tsx
-import { componentCatalog, createChartComponentDef } from 'reachat';
-
-const catalog = componentCatalog({
-  Chart: createChartComponentDef()
-});
-```
-
-The LLM can then emit:
-
-```json
-{
-  "type": "Chart",
-  "props": {
-    "type": "bar",
-    "data": [
-      { "key": "Q1", "data": 100 },
-      { "key": "Q2", "data": 200 },
-      { "key": "Q3", "data": 150 }
-    ],
-    "title": "Quarterly Revenue"
-  }
-}
-```
-
-Supported chart types: `bar`, `line`, `area`, `pie`, `radialBar`, `radialArea`,
-`sparkline`.
+See the [Charts](/docs/examples/charts) page for setup, configuration, and
+examples.
 
 ## JSON Spec Format
 
