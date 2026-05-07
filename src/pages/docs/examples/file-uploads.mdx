@@ -105,43 +105,6 @@ between based on the file's `type` (MIME) field:
 All renderers are exported individually if you'd rather compose your own file
 UI; see the [Custom Components](/docs/customization/custom) guide.
 
-## Live preview
-
-<div style={{ width: '100%', minHeight: '500px', backgroundColor: '#02020F', padding: 20, borderRadius: 5, margin: '20px 0' }}>
-  <Chat
-    sessions={[
-      {
-        id: '1',
-        title: 'Files demo',
-        createdAt: new Date('2024-01-15T10:00:00Z'),
-        updatedAt: new Date('2024-01-15T10:00:00Z'),
-        conversations: [
-          {
-            id: '1',
-            question: 'Can you summarize these reports?',
-            response: 'Sure — here is a summary of the three reports you sent.',
-            files: [
-              { name: 'q3-results.pdf', type: 'application/pdf', url: '#' },
-              { name: 'forecast.csv', type: 'text/csv', url: '#' },
-              { name: 'chart.png', type: 'image/png', url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400' },
-            ],
-            createdAt: new Date('2024-01-15T10:00:00Z'),
-            updatedAt: new Date('2024-01-15T10:00:00Z'),
-          },
-        ],
-      },
-    ]}
-    activeSessionId="1"
-    viewType="chat"
-  >
-    <SessionMessagePanel>
-      <SessionMessagesHeader />
-      <SessionMessages />
-      <ChatInput allowMultipleFiles allowedFiles={["image/*", "application/pdf", "text/csv"]} />
-    </SessionMessagePanel>
-  </Chat>
-</div>
-
 ## Theming
 
 File chips on questions are themed via `messages.message.files.{base, file}`.
