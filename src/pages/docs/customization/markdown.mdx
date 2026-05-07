@@ -1,15 +1,27 @@
-## Markdown Plugins
-reachat uses [remark](https://github.com/remarkjs/remark) to parse and render markdown.
-You can use the `remarkPlugins` prop to add custom plugins to the markdown parser.
-Any plugin that is supported by remark should work here as well.
+# Markdown
+
+reachat uses [react-markdown](https://github.com/remarkjs/react-markdown) and
+[remark](https://github.com/remarkjs/remark) to parse and render markdown.
+By default, responses are rendered with GitHub-flavored markdown, math (KaTeX),
+and YouTube embeds. Code blocks pass through `<CodeHighlighter>` for syntax
+highlighting and a copy button.
+
+You can extend the pipeline two ways:
+
+- **`remarkPlugins`** — add or replace remark plugins on the `<Chat>` component
+- **`markdownComponents`** — override how individual elements (`code`, `a`,
+  `table`, etc.) render
+
+## Plugins
 
 ### Pre-packaged plugins
-Out of the box, we provide several plugins:
 
-- [CVE Plugin](https://github.com/reaviz/reachat/blob/master/src/Markdown/plugins/remarkCve.ts) - Automatically link CVE identifiers
-- [Redact Plugin](https://github.com/reaviz/reachat/blob/master/src/Markdown/plugins/remarkRedact.ts) - Mask sensitive data (SSNs, credit cards, etc.)
+reachat ships two opt-in plugins out of the box:
 
-You can view the [Storybook Stories](https://storybook.reachat.dev) for more examples.
+- [CVE Plugin](https://github.com/reaviz/reachat/blob/master/src/Markdown/plugins/remarkCve.ts) — auto-links CVE identifiers to the MITRE database
+- [Redact Plugin](https://github.com/reaviz/reachat/blob/master/src/Markdown/plugins/remarkRedact.ts) — masks sensitive data (SSNs, credit cards, etc.)
+
+See the [storybook demos](https://storybook.reachat.dev) for live examples.
 
 ### CVE Plugin
 
@@ -18,6 +30,8 @@ The `remarkCve` plugin automatically detects
 clickable links to the MITRE CVE database.
 
 #### Usage
+
+`remarkCve` is opt-in — pass it via `remarkPlugins` to enable it:
 
 ```tsx
 import { Chat, remarkCve } from 'reachat';
@@ -87,7 +101,7 @@ import { Chat, remarkRedact, commonRedactMatchers } from 'reachat';
 const customMatchers = [
   {
     name: 'Email',
-    pattern: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g
+    pattern: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g
   },
   {
     name: 'Phone',
@@ -229,13 +243,43 @@ import { Chat } from 'reachat';
 
 You can override any standard markdown element:
 
-- `code` / `pre` - Code blocks
-- `a` - Links
-- `img` - Images
-- `table` / `thead` / `tbody` / `tr` / `td` / `th` - Tables
-- `h1` through `h6` - Headings
-- `p` - Paragraphs
-- `ul` / `ol` / `li` - Lists
-- And many more standard markdown elements
+- `code` / `pre` — Code blocks
+- `a` — Links
+- `img` — Images
+- `table` / `thead` / `tbody` / `tr` / `td` / `th` — Tables
+- `h1` through `h6` — Headings
+- `p` — Paragraphs
+- `ul` / `ol` / `li` — Lists
+- …and any other element supported by react-markdown
 
-For a complete list of available overrides, see the [react-markdown components documentation](https://github.com/remarkjs/react-markdown#appendix-b-components).
+For a complete list, see the
+[react-markdown components documentation](https://github.com/remarkjs/react-markdown#appendix-b-components).
+
+## Code Highlighting
+
+Fenced code blocks are rendered through reachat's `<CodeHighlighter>`, which:
+
+- Picks the language from the standard `language-…` className
+- Renders with a copy-to-clipboard button
+- Supports a per-language `theme` map for custom token classes
+- Ships with `light` and `dark` theme presets you can import
+
+```tsx
+import { CodeHighlighter, light, dark } from 'reachat';
+```
+
+Both presets are simple objects mapping highlighter token names to Tailwind
+class strings — extend or override them as needed.
+
+The class names applied around code blocks (toolbar, copy button, code styling)
+are configurable via the chat theme under
+`messages.message.markdown.{code,inlineCode,toolbar,copy}`. See the
+[theme guide](/docs/customization/theme) for the full list of markdown-related
+tokens.
+
+## LLM-Driven Components
+
+If you want the LLM to render real React components in responses (charts,
+cards, layouts), use the [Component Catalog](/docs/examples/component-catalog).
+The catalog ships its own remark plugin and component overrides; pass it to
+the `components` prop on `<Chat>` and reachat wires the rest in for you.

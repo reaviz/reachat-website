@@ -1,0 +1,170 @@
+# Migrating to 3.x
+
+The 3.x line of reachat is a substantial release. This guide covers what
+changed, what broke, and what to do about it. If you're already on 3.x and
+upgrading minor versions, jump to the [Changelog](/docs/changelog) instead.
+
+## Quick checklist
+
+If you're moving from 2.x → 3.x, expect to touch:
+
+1. **React 19** — bump your app's React peer dependency.
+2. **reablocks 10** — bump reablocks; check any custom `<Button>` adornments.
+3. **Mentions / commands API** — old `MentionPluginConfig` /
+   `SlashCommandPluginConfig` types are deprecated in favor of unified
+   `SuggestionConfig<T>` with a `trigger` field.
+4. **Charts** — charts are now registered through the
+   [Component Catalog](/docs/examples/component-catalog) using
+   `createChartComponentDef()`.
+5. **No bundled `@tiptap/*`** — these are now direct dependencies of reachat;
+   you can remove them from your own `package.json` if you only had them to
+   support reachat's input.
+
+The next sections walk through each change in detail.
+
+## React 19
+
+reachat 3.1 requires React 19 (it still works on React 18 in most setups, but
+peer deps target 19). If you're on 18 and ready to upgrade:
+
+```sh
+npm install react@^19 react-dom@^19
+```
+
+Most React 18 code runs unchanged on 19. Watch for the well-known breakages
+(stricter `ref` behaviour, automatic batching of state setters, etc.) — see
+[React's official upgrade guide](https://react.dev/blog/2024/12/05/react-19).
+
+## reablocks 10
+
+reachat 3.1 was rebuilt on top of [reablocks 10](https://reablocks.dev). The
+public reachat API didn't change as a result — but if you're customizing
+buttons in your own components, the `Button` adornment props were renamed:
+
+| reablocks 9       | reablocks 10 |
+| ----------------- | ------------ |
+| `startAdornment`  | `start`      |
+| `endAdornment`    | `end`        |
+
+Update your own code accordingly. reachat's internal usage already uses the
+new names.
+
+## Unified mentions and commands API
+
+Pre-3.x, mentions and slash commands had separate configuration types
+(`MentionPluginConfig`, `SlashCommandPluginConfig`, `InputPluginItem`,
+`InputTrigger`). 3.x consolidates these into a single
+[`SuggestionConfig<T>`](/docs/examples/mentions#api-reference) with a
+`trigger` field.
+
+Before:
+
+```tsx
+<RichTextInput
+  plugins={[
+    {
+      trigger: '@',
+      items: users,
+      // ...
+    }
+  ]}
+/>
+```
+
+After:
+
+```tsx
+<ChatInput
+  mentions={{
+    trigger: '@',
+    items: users,
+    onSelect: (item) => console.log(item)
+  }}
+  commands={{
+    trigger: '/',
+    items: slashCommands,
+    onSelect: (item) => runCommand(item.id)
+  }}
+/>
+```
+
+The old types are still exported for backward compatibility, but they alias to
+the new shape — migrate when convenient. Full reference:
+[Mentions](/docs/examples/mentions) and [Slash Commands](/docs/examples/commands).
+
+## Charts via the Component Catalog
+
+In 2.x, charts shipped as standalone components. In 3.x they're registered
+through the [Component Catalog](/docs/examples/component-catalog) using
+`createChartComponentDef()` so the LLM can emit chart specs directly in
+fenced code blocks.
+
+Before:
+
+```tsx
+import { Chart } from 'reachat';
+
+<Chart type="bar" data={...} />
+```
+
+After:
+
+```tsx
+import {
+  Chat,
+  componentCatalog,
+  createChartComponentDef
+} from 'reachat';
+
+const catalog = componentCatalog({
+  Chart: createChartComponentDef()
+});
+
+<Chat sessions={sessions} components={catalog}>
+  {/* ... */}
+</Chat>
+```
+
+The LLM then produces:
+
+````
+```component
+{
+  "type": "Chart",
+  "props": {
+    "type": "bar",
+    "data": [{ "key": "A", "data": 10 }, { "key": "B", "data": 20 }]
+  }
+}
+```
+````
+
+See the [Charts](/docs/examples/charts) page for the full set of supported
+chart types and props.
+
+## Tiptap is now a direct dep
+
+reachat 3.1 promoted `@tiptap/suggestion` and `@tiptap/extensions` to direct
+dependencies. If you previously installed them yourself in order to extend the
+input, you can remove them from your `package.json` — reachat ships them.
+
+## What's new in 3.x
+
+While you're upgrading, take advantage of these additions:
+
+- **Component Catalog** (3.0) — let the LLM render any React component you
+  register. See [Component Catalog](/docs/examples/component-catalog).
+- **`useAgUi` hook** (3.x) — drop-in support for any
+  [AG-UI](https://docs.ag-ui.com) compatible agent. See
+  [AG-UI](/docs/examples/ag-ui).
+- **`autoScroll` on `<SessionMessages>`** (3.2) — auto-pin to the bottom of
+  the conversation while streaming.
+- **`allowMultipleFiles`** on `<ChatInput>` (3.2) — multi-file uploads. See
+  [File Uploads](/docs/examples/file-uploads).
+- **`onMessageChange` and `className`** on `<ChatInput>` (3.2.1) —
+  controlled-input draft persistence and styling overrides.
+- **`PartialChatTheme`** export (3.2) — easier deep-partial theme overrides.
+- **Expanded markdown theme tokens** (3.2) — including `h1`–`h6`, `inlineCode`,
+  and `hr` under `messages.message.markdown`.
+
+For the full release-by-release list, see the [Changelog](/docs/changelog).

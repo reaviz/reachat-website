@@ -36,19 +36,21 @@ import img from '../../icons/preview.png';
 </div>
 
 ### What is reachat?
-Reachat was born out of the recognition that building robust, feature-rich chat interfaces 
-is more complex than it appears. Reachat handles the intricacies of message rendering, 
-user interactions, and layout management, allowing developers to focus on their unique application 
-logic. Despite its comprehensive feature set, reachat remains highly customizable, enabling you to 
+Reachat was born out of the recognition that building robust, feature-rich chat interfaces
+is more complex than it appears. Reachat handles the intricacies of message rendering,
+user interactions, and layout management, allowing developers to focus on their unique application
+logic. Despite its comprehensive feature set, reachat remains highly customizable, enabling you to
 tailor every aspect to your specific needs without sacrificing ease of use or performance.
 
 ### Why reachat?
 
 - **Highly Customizable**: reachat is built on top of Tailwind CSS allowing you to customize every aspect of the chat UI to your specific needs.
-- **Rich Media Support**: reachat supports markdown rendering, image and video embeds and custom remark plugins.
-- **Flexible and Extensible**: reachat leverages slots to allow developers to swap out components without loosing all the magic of the library.
-- **Multi-Provider Support**: reachat isn't coupled to any specific provider or data model. Its simply a set of building blocks that can be used to build chat UIs for any data source.
-- **Open Source**: reablocks is open-source and free to use and we plan to keep it that way. You can use it in your personal or commercial projects.
+- **Rich Media Support**: markdown rendering with KaTeX math, image and video embeds, multi-file uploads, and a pluggable remark plugin pipeline.
+- **LLM-Driven UI**: the [Component Catalog](/docs/examples/component-catalog) lets the model render real React components — charts, cards, layouts — straight from the response.
+- **Provider-Agnostic**: reachat isn't coupled to any specific backend or model. Plug in OpenAI, Anthropic, your own API, or use the built-in [`useAgUi`](/docs/examples/ag-ui) hook for the [AG-UI protocol](https://docs.ag-ui.com).
+- **Mentions & Slash Commands**: built-in `@` mentions and `/` slash commands powered by Tiptap, with sync or async data sources.
+- **Flexible and Extensible**: reachat leverages slots so you can swap out any component without losing the rest of the library's behavior.
+- **Open Source**: reachat is Apache 2.0 licensed, free to use in personal or commercial projects.
 
 ### How do I get started?
 To get started with reachat, check out the [Getting Started](/docs/getting-started/setup) page.

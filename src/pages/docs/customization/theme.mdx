@@ -1,16 +1,48 @@
-# Themeing
+# Theming
 
 You can theme reachat by passing a custom `theme` to the `Chat` component.
 
 ```tsx
+import { Chat, chatTheme } from 'reachat';
+
 export default function App() {
-  return <Chat theme={theme} ...rest of your props... />;
+  return <Chat theme={chatTheme} {...rest} />;
 }
+```
+
+reachat exports three things you'll typically reach for when theming:
+
+- **`chatTheme`** — the full default theme (Tailwind class strings, with
+  light + `dark:` variants)
+- **`ChatTheme`** — the full theme interface
+- **`PartialChatTheme`** — a deep-`Partial<ChatTheme>` for incremental overrides
+
+For most apps you'll want to spread `chatTheme` and override just the bits you
+need:
+
+```tsx
+import { chatTheme, type PartialChatTheme } from 'reachat';
+import { twMerge } from 'tailwind-merge';
+
+const theme: PartialChatTheme = {
+  ...chatTheme,
+  messages: {
+    ...chatTheme.messages,
+    message: {
+      ...chatTheme.messages.message,
+      question: twMerge(chatTheme.messages.message.question, 'text-purple-300')
+    }
+  }
+};
 ```
 
 ## Theme Interface
 
-reachat 2.1 introduces an enhanced theming system with support for new components like MessageStatus, ChatSuggestions, Charts, and the new mentions/commands input features.
+reachat ships a comprehensive theming system covering every visible piece of
+the chat — sessions list, message bubbles, the markdown pipeline, the rich-text
+input (mentions/commands popup, tag chips, editor), the `MessageStatus`
+indicator, `ChatSuggestions`, charts, and any LLM-driven Component Catalog
+output.
 
 The theme interface is as follows:
 
@@ -22,7 +54,7 @@ export interface ChatTheme {
   empty: string;
   appbar: string;
 
-  // MessageStatus component theming (new in 2.1)
+  // MessageStatus component theming
   status: {
     base: string;
     header: string;
@@ -104,17 +136,25 @@ export interface ChatTheme {
         };
       };
       markdown: {
+        hr: string;
         p: string;
         a: string;
         table: string;
         th: string;
         td: string;
         code: string;
+        inlineCode: string;
         toolbar: string;
         li: string;
         ul: string;
         ol: string;
         copy: string;
+        h1: string;
+        h2: string;
+        h3: string;
+        h4: string;
+        h5: string;
+        h6: string;
       };
       footer: {
         base: string;
@@ -126,7 +166,7 @@ export interface ChatTheme {
     };
   };
 
-  // Enhanced input theming with mentions/commands support (new in 2.1)
+  // ChatInput, mentions/commands popup, tag chips, editor
   input: {
     base: string;
     upload: string;
@@ -161,7 +201,7 @@ export interface ChatTheme {
     };
   };
 
-  // ChatSuggestions component theming (new in 2.1)
+  // ChatSuggestions component theming
   suggestions: {
     base: string;
     item: {
@@ -171,7 +211,7 @@ export interface ChatTheme {
     };
   };
 
-  // Chart rendering theming (new in 2.1)
+  // Chart rendering theming (used by createChartComponentDef)
   chart: {
     base: string;
     title: string;
@@ -186,23 +226,40 @@ export interface ChatTheme {
       title: string;
     };
   };
+
+  // Wrapper around Component Catalog-rendered components
+  component: {
+    base: string;
+  };
 }
 ```
 
-## New in 2.1
+## Theme keys cheat sheet
 
-- **appbar**: Theme for the app bar component
-- **status**: Complete theming for the MessageStatus component with loading, complete, and error states
-- **messages.message.scrollToBottom**: Theme for the scroll-to-bottom button
-- **input.popup**: Theming for mentions and commands popup menus
-- **input.tag**: Theming for mention and command tags in the input
-- **input.editor**: Enhanced input editor theming
-- **suggestions**: Theming for the ChatSuggestions component
-- **chart**: Theming for chart rendering with error and warning states
+| Top-level key | Covers |
+| ------------- | ------ |
+| `base`, `console`, `companion`, `empty` | Layout containers per view type |
+| `appbar` | `<AppBar>` header slot |
+| `sessions` | Sessions list, session items, group headings, new-session button |
+| `messages` | Message panel header, content, back button, show-more |
+| `messages.message` | Question/response bubbles, streaming cursor, expand overlay |
+| `messages.message.files` | File attachment chips on questions |
+| `messages.message.sources` | Citation/source cards |
+| `messages.message.markdown` | All markdown elements rendered in a response |
+| `messages.message.footer` | Copy / upvote / downvote / refresh action buttons |
+| `messages.message.scrollToBottom` | Floating scroll-to-bottom button |
+| `input` | Outer input shell (`base`, `upload`, `input`, `actions`) |
+| `input.popup` | Mention/command suggestion popup |
+| `input.tag` | Inline mention and command chips inside the editor |
+| `input.editor` | Tiptap editor styling and placeholder |
+| `suggestions` | `<ChatSuggestions>` chip list |
+| `status` | `<MessageStatus>` icon, text, multi-step list |
+| `chart` | Chart container, error, and warning states |
+| `component` | Wrapper around Component Catalog output |
 
 ## Example Theme
 
-Below is an example theme with all the new 2.1 fields:
+Below is a complete example theme covering every section of the interface:
 
 ```ts
 export const chatTheme: ChatTheme = {

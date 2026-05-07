@@ -84,8 +84,8 @@ if the session we are deleting is the one that is currently active.
 ```tsx copy
 const handleDeleteSession = (id: string) => {
   setSessions(sessions.filter((session) => session.id !== id));
-  if (id === activeId) {
-    setActiveId(undefined)
+  if (id === activeSessionId) {
+    setActiveSessionId(undefined);
   }
 };
 
@@ -129,7 +129,7 @@ const [loading, setLoading] = useState<boolean>(false);
 
 const handleNewMessage = (message: string) => {
   setLoading(true);
-  const current = sessions.find((s) => s.id === activeId);
+  const current = sessions.find((s) => s.id === activeSessionId);
   if (current) {
     const newMessage: Conversation = {
       id: `${current.id}-${current.conversations.length}`,
@@ -142,7 +142,10 @@ const handleNewMessage = (message: string) => {
       ...current,
       conversations: [...current.conversations, newMessage],
     };
-    setSessions([...sessions.filter((s) => s.id !== activeId), updated]);
+    setSessions([
+      ...sessions.filter((s) => s.id !== activeSessionId),
+      updated,
+    ]);
   }
   setLoading(false);
 };
@@ -261,10 +264,12 @@ Then pass the exported `chatTheme` to your `<Chat />` component.
 That's the basics of getting things off the ground. But there's plenty more you can do
 with the Reachat building blocks. It handles the hard bits for you:
 
-- Markdown display with custom plugins
-- File uploads
-- Source display
-- Scroll interactions
+- Markdown display with custom remark plugins
+- Multi-file uploads with type-aware renderers (images, CSV, PDF, etc.)
+- Source citations
+- Auto-scroll and scroll-to-bottom interactions
+- `@` mentions and `/` slash commands
+- LLM-driven UI via the [Component Catalog](/docs/examples/component-catalog)
 - Mobile/companion mode
 
 so you can focus on building out a chat experience tailored to your users.
@@ -276,7 +281,8 @@ the previous example that you can clone and run locally to get you started.
 
 ### Advanced options
 
-If that's not enough for your needs, the components that are used within the app are
-customizable through Slots. You can learn more about custom components in our
+Most components in the chat tree are slot-based — you can swap them out for your
+own React components without giving up the rest of reachat's behavior. See the
+[Custom Components](/docs/customization/custom) guide and the matching
 [storybook demo](https://storybook.reachat.dev/?path=/story/demos-console--custom-components)
-and [docs](/docs/customizations/custom).
+for examples.
