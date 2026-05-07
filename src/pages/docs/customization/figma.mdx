@@ -1,6 +1,33 @@
-## Figma
+# Figma
+
+The reachat design source is published as a free Figma community file. Use it
+as a reference when extending the chat UI, designing new variants, or matching
+your product's branding to the components reachat ships.
 
 <iframe width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2FjEzjT3jZsccZ3Hi6eqSUUL%2FReachat-Landing-Page-%255BPUBLIC%255D%3Fnode-id%3D1-24%26t%3DbTQNLAbLrUdg7bXf-1" allowfullscreen></iframe>
 
-The design for the website and the console are available for free on
-the [Figma marketplace](https://www.figma.com/community/file/1401162540082414292).
+## What's in the file
+
+- **Console layout** — full-width sessions sidebar + message panel
+- **Companion layout** — compact sidebar fits inside an app shell
+- **Chat layout** — single-pane embed
+- **Component variants** — sessions list items, message bubbles, sources,
+  files, the input, suggestion chips, and status indicators
+- **Color and type tokens** — names align with the chat theme keys, so
+  re-styling in code follows the same shape as re-styling in Figma
+
+## Using the file
+
+1. Open the [Figma community file](https://www.figma.com/community/file/1401162540082414292)
+   and click **Duplicate** to copy it into your own workspace.
+2. Replace the color and type tokens with your brand's tokens.
+3. Mirror the changes in code via the [theme guide](/docs/customization/theme) —
+   the structure of the theme object follows the structure of the design file.
+
+## Custom layouts
+
+If you need a layout that isn't in the file (e.g. a fully custom message
+bubble or a multi-pane workspace), use the file as a foundation and build on
+top of it. Components in reachat are slot-based, so you can swap out individual
+pieces without giving up the rest of the chat behavior — see the
+[Custom Components](/docs/customization/custom) guide for the code side.

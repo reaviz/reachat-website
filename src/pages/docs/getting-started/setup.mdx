@@ -2,37 +2,53 @@ import { Steps } from "nextra/components";
 
 # Getting Started
 
+## Requirements
+
+reachat targets modern React projects. Make sure your app meets these peer
+requirements before installing:
+
+- **React 19** (also supports React 18 in most cases)
+- **reablocks 10**
+- **Tailwind CSS 3+**
+
 ## Installing
 
 Install reachat in your project by following the steps below.
 
 <Steps>
 ### 1. **Install the package**
-   ```sh copy npm2yarn
-   npm i reachat --save
-   ```
 
-### 2. **Install Reablocks and Tailwind**
+```sh copy npm2yarn
+npm i reachat --save
+```
 
-Open your terminal, navigate to your project's root directory, and use the reablocks-cli to initialize reablocks in your project:
+### 2. **Install reablocks and Tailwind**
+
+reachat is built on top of [reablocks](https://reablocks.dev) and Tailwind CSS.
+Use the reablocks CLI to scaffold both at once:
+
 ```sh copy
 npx reablocks-cli@latest init
 ```
 
-If you don't already have Tailwind installed in your project, include it:
+If your project already has Tailwind installed, the CLI will detect it and skip
+the bootstrap. Otherwise it will install Tailwind, generate `tailwind.config.js`,
+and add the required directives to your CSS entry point. If you'd rather wire
+Tailwind manually:
+
 ```sh copy
 npm install -D tailwindcss
 npx tailwindcss init
 ```
 
-Then add the following Tailwind directives to your main CSS file:
 ```css copy
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 ```
 
-Finally, wrap your application with the `ThemeProvider` component from `reablocks`.
+Finally, wrap your application with the `ThemeProvider` component from
+`reablocks`:
 
 ```tsx copy
 import { ThemeProvider, theme } from 'reablocks';
@@ -46,13 +62,11 @@ export const App = () => (
 
 ### 3. **Include Chat components in your project**
 
-```tsx
+```tsx copy
 import {
   Chat,
   ChatInput,
-  Conversation,
   NewSessionButton,
-  Session,
   SessionGroups,
   SessionListItem,
   SessionMessage,
@@ -99,41 +113,27 @@ export default function App() {
 }
 ```
 
-### 3. **Connect your provider**
+### 4. **Connect your backend**
 
-See Demos/Open AI for an example of how to connect your provider.
+reachat is provider-agnostic — wire it up to whichever backend or model you
+prefer:
 
-</Steps>
-
-## Developing
-
-You can also develop Reachat locally by cloning the repository and running the development server.
-
-<Steps>
-### 1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-repo/reachat.git
-   cd reachat
-   ```
-
-### 2. **Install dependencies**
-
-```sh copy npm2yarn
-npm install
-```
-
-### 3. **Start the development server**
-
-```bash
-npm run start
-```
-
-### 4. **Open your browser**
-
-Navigate to `http://localhost:3000` to see Reachat in action.
+- [OpenAI example](/docs/examples/providers) — direct OpenAI SDK integration
+- [AG-UI hook](/docs/examples/ag-ui) — drop-in support for any
+  [AG-UI](https://docs.ag-ui.com) compatible agent
+- [Component Catalog](/docs/examples/component-catalog) — let your LLM emit
+  real React components in responses
 
 </Steps>
 
 ## Example Repo
-To see a complete example of how to use Reachat, 
-check out the [example repo](https://github.com/reaviz/reachat-example).
+
+For a complete working app, see the
+[reachat-example](https://github.com/reaviz/reachat-example) repository.
+
+## Next steps
+
+- Walk through the [first chatbot tutorial](/docs/getting-started/getting-started)
+- Explore the [examples](/docs/examples/console)
+- Customize the look with the [theme guide](/docs/customization/theme)
+- Migrating from 2.x? See the [migration guide](/docs/customization/migration)

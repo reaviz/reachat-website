@@ -1,0 +1,151 @@
+import {
+  Chat,
+  ChatInput,
+  SessionMessage,
+  SessionMessagePanel,
+  SessionMessages,
+  SessionMessagesHeader,
+} from "reachat";
+
+# File Uploads
+
+reachat supports attaching files to user messages out of the box. The
+`<ChatInput>` component provides the upload UI; the file metadata flows through
+your `onFileUpload` handler and is rendered on questions via
+`<MessageFiles>`/`<MessageFile>` with type-aware previews for images, CSVs, and
+PDFs.
+
+## Enabling uploads
+
+Wire an `onFileUpload` handler on `<Chat>`:
+
+```tsx
+<Chat
+  sessions={sessions}
+  activeSessionId={activeId}
+  onFileUpload={(file) => uploadToServer(file)}
+  onSendMessage={handleSendMessage}
+>
+  <SessionMessagePanel>
+    <SessionMessagesHeader />
+    <SessionMessages />
+    <ChatInput />
+  </SessionMessagePanel>
+</Chat>
+```
+
+## Multiple files per message
+
+Set `allowMultipleFiles` on `<ChatInput>` to let users attach more than one
+file before sending. With multi-file enabled, your handler receives an array
+of `File`s instead of a single `File`:
+
+```tsx
+<Chat
+  sessions={sessions}
+  activeSessionId={activeId}
+  onFileUpload={(file) => {
+    const files = Array.isArray(file) ? file : [file];
+    return Promise.all(files.map(uploadToServer));
+  }}
+>
+  <SessionMessagePanel>
+    <SessionMessagesHeader />
+    <SessionMessages />
+    <ChatInput allowMultipleFiles />
+  </SessionMessagePanel>
+</Chat>
+```
+
+## Restricting file types
+
+Pass an `allowedFiles` array to limit the file picker to specific MIME types
+or extensions:
+
+```tsx
+<ChatInput
+  allowMultipleFiles
+  allowedFiles={["image/*", "application/pdf", "text/csv"]}
+/>
+```
+
+## Persisting attachments on conversations
+
+Once an upload completes, attach the resulting URL/metadata to the conversation
+so it's rendered alongside the question. Each `Conversation` has a `files`
+field of type [`ConversationFile[]`](/docs/api/models#conversationfile):
+
+```tsx
+const handleSendMessage = async (message: string) => {
+  const newConversation = {
+    id: Date.now().toString(),
+    question: message,
+    response: '',
+    files: pendingUploads,        // ConversationFile[]
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
+  setSessions(prev => updateSession(prev, activeId, newConversation));
+};
+```
+
+## File renderers
+
+reachat ships type-aware renderers that the default `<MessageFile>` picks
+between based on the file's `type` (MIME) field:
+
+| MIME type prefix         | Renderer               | What it shows                                        |
+| ------------------------ | ---------------------- | ---------------------------------------------------- |
+| `image/*`                | `ImageFileRenderer`    | Inline thumbnail, full-screen preview on click       |
+| `text/csv`               | `CSVFileRenderer`      | Parses up to 6 rows in a preview modal, with download |
+| `application/pdf`        | `PDFFileRenderer`      | Opens the PDF in a new tab                           |
+| Any other type           | `DefaultFileRenderer`  | Generic file chip with icon and filename             |
+
+All renderers are exported individually if you'd rather compose your own file
+UI; see the [Custom Components](/docs/customization/custom) guide.
+
+## Live preview
+
+<div style={{ width: '100%', minHeight: '500px', backgroundColor: '#02020F', padding: 20, borderRadius: 5, margin: '20px 0' }}>
+  <Chat
+    sessions={[
+      {
+        id: '1',
+        title: 'Files demo',
+        createdAt: new Date('2024-01-15T10:00:00Z'),
+        updatedAt: new Date('2024-01-15T10:00:00Z'),
+        conversations: [
+          {
+            id: '1',
+            question: 'Can you summarize these reports?',
+            response: 'Sure — here is a summary of the three reports you sent.',
+            files: [
+              { name: 'q3-results.pdf', type: 'application/pdf', url: '#' },
+              { name: 'forecast.csv', type: 'text/csv', url: '#' },
+              { name: 'chart.png', type: 'image/png', url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400' },
+            ],
+            createdAt: new Date('2024-01-15T10:00:00Z'),
+            updatedAt: new Date('2024-01-15T10:00:00Z'),
+          },
+        ],
+      },
+    ]}
+    activeSessionId="1"
+    viewType="chat"
+  >
+    <SessionMessagePanel>
+      <SessionMessagesHeader />
+      <SessionMessages />
+      <ChatInput allowMultipleFiles allowedFiles={["image/*", "application/pdf", "text/csv"]} />
+    </SessionMessagePanel>
+  </Chat>
+</div>
+
+## Theming
+
+File chips on questions are themed via `messages.message.files.{base, file}`.
+See the [theme guide](/docs/customization/theme) for the full list of tokens.
+
+For more examples and live demos, visit the
+[storybook demos](https://storybook.reachat.dev).

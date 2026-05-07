@@ -2,41 +2,43 @@ import { PropsTable } from '@/components/ui/props-table';
 import diagram from './architecture.png';
 
 # Components API
+
 ## Diagram
+
 Below is a diagram of the components that make up the package.
 
 <br />
 <img src={diagram.src} alt="Architecture" width="75%" style={{ margin: '0 auto' }} />
 
-## Components
-Below is the API for the components.
+## Root
 
 ### Chat
 <PropsTable name="Chat" />
 
-### ChatInput
-<PropsTable name="ChatInput" />
+### AppBar
+<PropsTable name="AppBar" />
 
-### RichTextInput
-<PropsTable name="RichTextInput" />
+### ChatBubble
+<PropsTable name="ChatBubble" />
 
-### MentionList
-<PropsTable name="MentionList" />
+## Sessions
 
-### SessionList
-<PropsTable name="SessionList" />
+### SessionsList
+<PropsTable name="SessionsList" />
 
-### SessionListItem
-<PropsTable name="SessionListItem" />
+### NewSessionButton
+<PropsTable name="NewSessionButton" />
 
 ### SessionGroups
 <PropsTable name="SessionGroups" />
 
-### SessionGroup
-<PropsTable name="SessionGroup" />
+### SessionsGroup
+<PropsTable name="SessionsGroup" />
 
-### NewSessionButton
-<PropsTable name="NewSessionButton" />
+### SessionListItem
+<PropsTable name="SessionListItem" />
+
+## Messages
 
 ### SessionMessages
 <PropsTable name="SessionMessages" />
@@ -53,20 +55,20 @@ Below is the API for the components.
 ### SessionEmpty
 <PropsTable name="SessionEmpty" />
 
-### MessageSources
-<PropsTable name="MessageSources" />
-
-### MessageSource
-<PropsTable name="MessageSource" />
-
-### MessageActions
-<PropsTable name="MessageActions" />
-
 ### MessageQuestion
 <PropsTable name="MessageQuestion" />
 
 ### MessageResponse
 <PropsTable name="MessageResponse" />
+
+### MessageActions
+<PropsTable name="MessageActions" />
+
+### MessageSources
+<PropsTable name="MessageSources" />
+
+### MessageSource
+<PropsTable name="MessageSource" />
 
 ### MessageFiles
 <PropsTable name="MessageFiles" />
@@ -74,8 +76,29 @@ Below is the API for the components.
 ### MessageFile
 <PropsTable name="MessageFile" />
 
+## Input
+
+### ChatInput
+<PropsTable name="ChatInput" />
+
+### RichTextInput
+<PropsTable name="RichTextInput" />
+
+### MentionList
+<PropsTable name="MentionList" />
+
+### FileInput
+<PropsTable name="FileInput" />
+
+## Suggestions
+
 ### ChatSuggestions
 <PropsTable name="ChatSuggestions" />
+
+### ChatSuggestion
+<PropsTable name="ChatSuggestion" />
+
+## Status
 
 ### MessageStatus
 <PropsTable name="MessageStatus" />
@@ -83,8 +106,51 @@ Below is the API for the components.
 ### MessageStatusItem
 <PropsTable name="MessageStatusItem" />
 
+### StatusIcon
+<PropsTable name="StatusIcon" />
+
+## Markdown
+
+### Markdown
+<PropsTable name="Markdown" />
+
+### CodeHighlighter
+<PropsTable name="CodeHighlighter" />
+
+### TableComponent
+<PropsTable name="TableComponent" />
+
+### TableHeaderCell
+<PropsTable name="TableHeaderCell" />
+
+### TableDataCell
+<PropsTable name="TableDataCell" />
+
+## Component Catalog
+
 ### ComponentRenderer
 <PropsTable name="ComponentRenderer" />
 
 ### ComponentError
 <PropsTable name="ComponentError" />
+
+### ChartRenderer
+<PropsTable name="ChartRenderer" />
+
+## File Renderers
+
+`MessageFile` routes attachments to one of these renderers based on the file's
+MIME type. They are also exported individually if you want to compose your own
+file UI.
+
+### ImageFileRenderer
+<PropsTable name="ImageFileRenderer" />
+
+### CSVFileRenderer
+<PropsTable name="CSVFileRenderer" />
+
+### PDFFileRenderer
+<PropsTable name="PDFFileRenderer" />
+
+### DefaultFileRenderer
+<PropsTable name="DefaultFileRenderer" />

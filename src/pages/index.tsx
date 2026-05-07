@@ -25,7 +25,7 @@ import { useEffect, useState } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "reablocks - Build Chat Experiences in Hours, Not Weeks.",
+  title: "reachat - Build Chat Experiences in Hours, Not Weeks.",
   description: "Open-source UI Building Blocks for LLM / Chat UIs",
   icons: {
     icon: "/favicon.ico",

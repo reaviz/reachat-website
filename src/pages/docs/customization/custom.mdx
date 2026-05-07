@@ -1,9 +1,13 @@
-## Custom Components
-reachat is completely customizable. You can change the look and feel of the chat by
-customizing the theme or by providing your own components. Components can even be overriden using
-[slots](https://radix-ui.com/docs/primitives/slots).
+# Custom Components
 
-### Custom Components Example
+reachat is completely customizable. You can change the look and feel of the
+chat by tweaking the theme or by replacing entire components via the slot
+pattern (similar to [Radix's `Slot`](https://radix-ui.com/docs/primitives/slot)).
+Pass a child to any composable component (e.g. `<MessageQuestion>`,
+`<SessionListItem>`, `<NewSessionButton>`) and reachat will render your child
+in place while still passing through the props it would have rendered itself.
+
+## Custom Components Example
 Below is example markup that creates a custom session empty message and also
 provides a custom session list item.
 
@@ -183,37 +187,50 @@ export const CustomComponents = () => {
 };
 ```
 
-### Using SessionContext
-The `SessionContext` hook provides access to the current session state and methods to
-interact with it. Here's how you can use it:
+## Using ChatContext
+
+reachat exposes a `ChatContext` that custom components can subscribe to via
+React's `useContext` hook. This is how you reach into the active chat from
+deep inside a slot — to dispatch a message, read the active session, check
+loading state, etc.
 
 ```tsx
-import { useSessionContext } from 'reachat';
+import { useContext } from 'react';
+import { ChatContext } from 'reachat';
 
 const CustomSendButton = () => {
-  const { sendMessage } = useSessionContext();
-  const handleSend = () => {
-    sendMessage('Hello, AI!');
-    return <button onClick={handleSend}>Send Custom Message</button>;
-  };
+  const { sendMessage } = useContext(ChatContext);
+  return (
+    <button onClick={() => sendMessage?.('Hello, AI!')}>
+      Send Custom Message
+    </button>
+  );
 };
 ```
 
-The `SessionContext` hook provides the following properties and methods:
+`ChatContext` provides the following properties and methods:
 
 ```ts
-export interface SessionContextProps {
+export interface ChatContextProps {
   sessions: Session[];
   activeSessionId: string | null;
-  theme?: ChatTheme;
-  isLoading?: boolean;
   activeSession?: Session | null;
-  remarkPlugins?: PluggableList[];
+  disabled?: boolean;
+  isLoading?: boolean;
+  isCompact?: boolean;
+  viewType?: 'chat' | 'companion' | 'console';
+  theme?: ChatTheme;
+  remarkPlugins?: Plugin[];
+  markdownComponents?: Components;
   selectSession?: (sessionId: string) => void;
   deleteSession?: (sessionId: string) => void;
   createSession?: () => void;
+  sendMessage?: (message: string) => void;
+  stopMessage?: () => void;
+  fileUpload?: (file: File | File[]) => void;
 }
 ```
 
-By using these overrides and the `SessionContext` hook, you can create a fully customized chat
-experience while still leveraging the core functionality of reachat.
+By combining slot overrides with `ChatContext`, you can build a fully
+customized chat experience while still leveraging the rest of reachat's
+behavior.

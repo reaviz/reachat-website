@@ -1,5 +1,8 @@
 # API Models
-Below is the API for the `sessions` and `conversations` data.
+
+reachat is data-shape driven — every component reads from a small set of
+TypeScript interfaces. Below are the public model types you'll use when wiring
+up sessions, conversations, attachments, citations, and starter prompts.
 
 ## `Session`
 ```ts
@@ -101,18 +104,68 @@ export interface ConversationFile {
   name: string;
 
   /**
-   * Type of the file
+   * Type of the file (MIME type, e.g. "image/png", "text/csv")
    */
   type?: string;
 
   /**
-   * Size of the file
+   * Size of the file in bytes
    */
   size?: number;
 
   /**
-   * URL of the file
+   * URL of the file (used by file renderers)
    */
   url?: string;
+}
+```
+
+## `Template`
+
+Templates power the starter-prompt UI rendered by `<SessionsList templates>`.
+Each template appears as a clickable card when no session is active.
+
+```ts
+import type { ReactElement } from 'react';
+
+export interface Template {
+  /**
+   * Unique identifier for the template
+   */
+  id: string;
+
+  /**
+   * Title of the template (shown on the card)
+   */
+  title: string;
+
+  /**
+   * Message to be sent when the template is selected
+   */
+  message: string;
+
+  /**
+   * Optional icon shown next to the title
+   */
+  icon?: ReactElement;
+}
+```
+
+## `Suggestion`
+
+Suggestions power the `<ChatSuggestions>` chip list — a row of clickable
+prompts you can render inline in the message panel.
+
+```ts
+export interface Suggestion {
+  /**
+   * Unique identifier for the suggestion
+   */
+  id: string;
+
+  /**
+   * The display text for the suggestion
+   */
+  content: string;
 }
 ```
