@@ -24,6 +24,7 @@
     "reablocks-docs-theme": "2.3.2",
     "reachat": "^3.2.2",
     "react": "^19.1.0",
+    "react-compiler-runtime": "^19.1.0-rc.2",
     "react-dom": "^19.1.0",
     "reaviz": "^16.1.4",
     "sharp": "^0.33.3",

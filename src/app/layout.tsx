@@ -1,5 +1,5 @@
-import { Layout } from 'reablocks-docs-theme';
-import { Head } from 'nextra/components';
+import { Layout, LastUpdated } from 'reablocks-docs-theme';
+import { Head, Search } from 'nextra/components';
 import { getPageMap } from 'nextra/page-map';
 import type { Metadata } from 'next';
 import type { PropsWithChildren } from 'react';
@@ -39,6 +39,15 @@ export default async function RootLayout({ children }: PropsWithChildren) {
           editLink="Edit this page on GitHub"
           sidebar={{ defaultMenuCollapseLevel: 3, autoCollapse: false }}
           footer={<Footer />}
+          // The theme eagerly creates its default `lastUpdated`/`search` elements
+          // with its prebuilt (production) jsx-runtime, which React 19's dev
+          // renderer rejects (500 in `next dev`). Passing elements created by the
+          // app's own runtime avoids that. In production we let the theme use its
+          // own (nicely styled) Search default.
+          lastUpdated={<LastUpdated />}
+          search={
+            process.env.NODE_ENV === 'development' ? <Search /> : undefined
+          }
           nextThemes={{ defaultTheme: 'dark' }}
         >
           <Providers>{children}</Providers>
