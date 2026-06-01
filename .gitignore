@@ -90,6 +90,10 @@ out
 # Vercel build output (used by Cloudflare Pages)
 .vercel
 
+# Pagefind search index (generated on build)
+_pagefind/
+/public/_pagefind
+
 # Nuxt.js build / generate output
 .nuxt
 dist
