@@ -1,0 +1,124 @@
+@import 'tailwindcss';
+
+/* Precompiled reablocks component styles (needed for inline reachat/reablocks
+ * components rendered in the docs examples). The docs chrome styles come from
+ * `reablocks-docs-theme/style.css`, imported ahead of this file in layout.tsx. */
+@import 'reablocks/dist/index.css';
+
+@source './**/*.{ts,tsx}';
+@source '../../node_modules/reablocks';
+@source '../../node_modules/reachat';
+
+/* Website design tokens, ported from the old tailwind.config.ts */
+@theme {
+  --breakpoint-2xl: 1440px;
+
+  --font-sans: Inter, sans-serif;
+  --font-inter: Inter, sans-serif;
+
+  /* 14px base scale (matches the v3 fontSize overrides) */
+  --text-sm: 0.75rem;
+  --text-sm--line-height: 1rem;
+  --text-base: 0.875rem;
+  --text-base--line-height: 1.25rem;
+  --text-lg: 1rem;
+  --text-lg--line-height: 1.5rem;
+
+  /* Blue palette */
+  --color-blue-100: #e7efff;
+  --color-blue-200: #c3d7ff;
+  --color-blue-300: #87aeff;
+  --color-blue-400: #4c86ff;
+  --color-blue-500: #105eff;
+  --color-blue-600: #0d4ed2;
+  --color-blue-700: #0a3da6;
+  --color-blue-800: #082d79;
+  --color-blue-900: #051c4c;
+  --color-blue-950: #041028;
+
+  /* Semantic colors used across the site */
+  --color-primary: #105eff;
+  --color-primary-hover: #4c86ff;
+  --color-secondary: #87aeff;
+  --color-content-primary: #f2f3f7;
+  --color-content-secondary: #c6cbd9;
+
+  --shadow-button: 0px 4px 16px 0px rgba(0, 0, 0, 0.25);
+  --shadow-card: 0px 4px 16px 0px rgba(0, 0, 0, 0.25);
+}
+
+/* Custom background gradients (Tailwind v4 has no bg-image theme namespace,
+ * so these are authored as plain utility classes). */
+.bg-gradient-line {
+  background-image: linear-gradient(
+    90deg,
+    rgba(38, 38, 49, 0) 19.91%,
+    #87aeff 100%
+  );
+}
+.bg-gradient-code {
+  background-image: linear-gradient(
+    180deg,
+    rgba(54, 70, 109, 0.9) 0%,
+    rgba(45, 58, 93, 0.9) 100%
+  );
+}
+
+/* Light / dark background variables */
+html.light {
+  --background: #ffffff;
+  --tooltip-background: #f7f7fa;
+  --tooltip-color: #3d3d4d;
+  --foreground-rgb: 0, 0, 0;
+}
+
+html.dark {
+  --background: #11101f;
+  --tooltip-background: #00050be6;
+  --tooltip-color: #fff;
+  --foreground-rgb: 255, 255, 255;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background-color: var(--background);
+  --tooltip-spacing: 5px;
+  --tooltip-border-radius: 5px;
+}
+
+/* Code sample styling retained from the previous theme */
+.rb-code {
+  color: #029cfd !important;
+}
+
+.rb-code-block {
+  margin-top: 1px;
+  background: transparent;
+}
+
+.rb-code-block code {
+  display: block !important;
+}
+
+pre.highlighter code {
+  display: block;
+}
+
+.prismjs > div {
+  white-space: pre-wrap !important;
+}
+
+input {
+  --tw-ring-opacity: 0 !important;
+  --tw-ring-offset-shadow: none !important;
+}
+
+svg {
+  overflow: visible;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
