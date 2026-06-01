@@ -94,6 +94,9 @@ out
 _pagefind/
 /public/_pagefind
 
+# Wrangler local state (created by `pnpm preview`)
+.wrangler/
+
 # Nuxt.js build / generate output
 .nuxt
 dist
