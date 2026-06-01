@@ -1,16 +1,4 @@
-import {
-  Chat,
-  SessionsList,
-  SessionsGroup,
-  SessionListItem,
-  NewSessionButton,
-  SessionMessages,
-  SessionGroups,
-  ChatInput,
-  SessionMessagePanel,
-  SessionMessagesHeader,
-  SessionMessage,
-} from "reachat";
+import { CompanionExample } from '@/components/examples/companion';
 
 # Companion
 The companion view is a compact view designed to sit in a sidebar or similar 
@@ -20,46 +8,7 @@ to be more compact and less cluttered.
 Below is a bare-bones example of a console chat. The only difference between this experience and the console
 experience is setting `viewType="companion"` on the `<Chat />` component.
 
-<div style={{ width: 350, height: '500px', backgroundColor: '#02020F', padding: 20, borderRadius: 5, margin: '20px auto' }}>
-  <Chat
-    sessions={[
-      {
-        id: '1',
-        title: 'Session 1',
-        createdAt: new Date('2024-01-15T10:00:00Z'),
-        updatedAt: new Date('2024-01-15T10:00:00Z'),
-        conversations: [
-          {
-            id: '1',
-            question: 'What is React?',
-            response: 'React is a JavaScript library for building user interfaces.',
-            createdAt: new Date('2024-01-15T10:00:00Z'),
-            updatedAt: new Date('2024-01-15T10:00:00Z')
-          },
-          {
-            id: '2',
-            question: 'What is JSX?',
-            response: 'JSX is a syntax extension for JavaScript.',
-            createdAt: new Date('2024-01-15T10:00:00Z'),
-            updatedAt: new Date('2024-01-15T10:00:00Z')
-          }
-        ]
-      }
-    ]}
-    viewType="companion"
-    onDeleteSession={() => alert("delete!")}
-  >
-    <SessionsList>
-      <NewSessionButton />
-      <SessionGroups />
-    </SessionsList>
-    <SessionMessagePanel>
-      <SessionMessagesHeader />
-      <SessionMessages />
-      <ChatInput />
-    </SessionMessagePanel>
-  </Chat>
-</div>
+<CompanionExample />
 
 Below is the code for the above example.
 

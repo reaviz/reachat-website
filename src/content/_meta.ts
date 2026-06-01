@@ -5,13 +5,12 @@ const meta: MetaRecord = {
     type: 'page',
     display: 'hidden',
     theme: {
-      layout: 'raw',
-      sidebar: false,
-      pagination: false,
-      footer: false,
       navbar: false,
+      footer: false,
+      sidebar: false,
       toc: false,
-      breadcrumb: false
+      breadcrumb: false,
+      pagination: false
     }
   },
   docs: {
@@ -21,8 +20,7 @@ const meta: MetaRecord = {
   storybook: {
     title: 'Storybook',
     type: 'page',
-    href: 'https://storybook.reachat.dev',
-    newWindow: true
+    href: 'https://storybook.reachat.dev'
   },
   support: {
     title: 'Support',

@@ -1,3 +1,5 @@
+'use client';
+
 import metadata from 'reachat/docs.json';
 import { Card } from 'reablocks';
 

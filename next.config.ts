@@ -1,3 +1,4 @@
+import path from 'node:path';
 import type { NextConfig } from 'next';
 
 import nextra from 'nextra';
@@ -9,6 +10,9 @@ const withNextra = nextra({
 
 const nextConfig: NextConfig = withNextra({
   reactStrictMode: true,
+  // Pin the workspace root so a stray lockfile elsewhere on the machine doesn't
+  // make Next infer the wrong tracing root (also keeps the Cloudflare build correct).
+  outputFileTracingRoot: path.join(import.meta.dirname),
   images: {
     unoptimized: true
   },

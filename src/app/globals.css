@@ -3,7 +3,7 @@
 /* Precompiled reablocks component styles (needed for inline reachat/reablocks
  * components rendered in the docs examples). The docs chrome styles come from
  * `reablocks-docs-theme/style.css`, imported ahead of this file in layout.tsx. */
-@import 'reablocks/dist/index.css';
+@import 'reablocks/index.css';
 
 @source './**/*.{ts,tsx}';
 @source '../../node_modules/reablocks';
