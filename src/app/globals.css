@@ -1,9 +1,19 @@
 @import 'tailwindcss';
 
-/* Precompiled reablocks component styles (needed for inline reachat/reablocks
- * components rendered in the docs examples). The docs chrome styles come from
- * `reablocks-docs-theme/style.css`, imported ahead of this file in layout.tsx. */
-@import 'reablocks/index.css';
+/* Custom variants */
+@custom-variant dark (&:where(.theme-dark, .theme-dark *, [data-theme=dark], [data-theme=dark] *));
+@custom-variant light (&:where(.theme-light, .theme-light *, [data-theme=light], [data-theme=light] *));
+@custom-variant disabled-within (&:has(input:is(:disabled), textarea:is(:disabled), button:is(:disabled)));
+ 
+
+/* NOTE: `reablocks/index.css` (the precompiled reablocks component styles) is a
+ * full Tailwind build of its own. It is intentionally NOT imported here — when
+ * pulled into this shared stylesheet its `@layer utilities` merges *after* the
+ * app's, so its unconditional `.flex`/`.hidden`/`.block` overrode our responsive
+ * `md:` display variants and broke every responsive show/hide on the landing
+ * (header stuck mobile, footer rendering both variants). It is now imported only
+ * in the docs route group (`app/(docs)/layout.tsx`), where the inline
+ * reachat/reablocks demos actually need it and the landing never loads it. */
 
 @source './**/*.{ts,tsx}';
 @source '../../node_modules/reablocks';

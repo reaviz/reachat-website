@@ -1,3 +1,5 @@
+import { PropsTable } from '@/components/ui/props-table';
+
 # Mentions
 reachat ships rich text input with `@` mention support powered by [Tiptap](https://tiptap.dev/). Users can mention people, teams, channels — anything you want — by typing `@` followed by a search query.
 
@@ -225,29 +227,10 @@ Users can navigate the mention list using:
 
 ### SuggestionConfig Interface
 
-```typescript
-interface SuggestionConfig<T extends SuggestionItem = SuggestionItem> {
-  trigger?: string;
-  items?: T[];
-  onSearch?: (query: string) => Promise<T[]> | T[];
-  onSelect?: (item: T, insertText: (text: string) => void) => void;
-  maxResults?: number;
-  renderItem?: (item: T, isHighlighted: boolean) => ReactNode;
-  renderEmpty?: (query: string) => ReactNode;
-}
-```
+<PropsTable typeName="SuggestionConfig" />
 
 ### MentionItem Interface
 
-```typescript
-interface MentionItem extends SuggestionItem {
-  id: string;
-  label: string;
-  description?: string;
-  icon?: ReactElement;
-  value?: string; // Custom value to insert
-  metadata?: Record<string, unknown>;
-}
-```
+<PropsTable typeName="MentionItem" />
 
 For more examples and interactive demos, visit the [storybook demos](https://storybook.reachat.dev).

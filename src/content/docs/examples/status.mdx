@@ -1,4 +1,5 @@
 import { StatusExample } from '@/components/examples/status';
+import { PropsTable } from '@/components/ui/props-table';
 
 # Message Status
 The `MessageStatus` component displays loading, complete, and error states with
@@ -30,6 +31,15 @@ import { MessageStatus } from 'reachat';
 ## Status States
 
 The component supports three status states:
+
+```mermaid
+stateDiagram-v2
+    [*] --> loading: operation starts
+    loading --> complete: success
+    loading --> error: failure
+    complete --> [*]
+    error --> [*]
+```
 
 ### Loading State
 
@@ -309,24 +319,10 @@ function ChatWithStatus() {
 
 ### MessageStatusProps
 
-```typescript
-interface MessageStatusProps {
-  status?: 'loading' | 'complete' | 'error'; // Default: 'loading'
-  text: string; // Main status text
-  steps?: MessageStatusStep[]; // Optional sub-steps
-  icon?: ReactNode; // Custom icon
-  className?: string; // Additional CSS class
-}
-```
+<PropsTable name="MessageStatus" />
 
 ### MessageStatusStep
 
-```typescript
-interface MessageStatusStep {
-  id: string; // Unique identifier
-  text: string; // Step description
-  status?: 'loading' | 'complete' | 'error'; // Default: 'loading'
-}
-```
+<PropsTable typeName="MessageStatusStep" />
 
 For more examples and interactive demos, visit the [storybook demos](https://storybook.reachat.dev).

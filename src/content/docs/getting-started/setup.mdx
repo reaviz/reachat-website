@@ -9,7 +9,7 @@ requirements before installing:
 
 - **React 19** (also supports React 18 in most cases)
 - **reablocks 10**
-- **Tailwind CSS 3+**
+- **Tailwind CSS 4+**
 
 ## Installing
 
@@ -24,28 +24,33 @@ npm i reachat --save
 
 ### 2. **Install reablocks and Tailwind**
 
-reachat is built on top of [reablocks](https://reablocks.dev) and Tailwind CSS.
-Use the reablocks CLI to scaffold both at once:
+reachat is built on top of [reablocks](https://reablocks.dev) and
+[Tailwind CSS v4](https://tailwindcss.com). Use the reablocks CLI to scaffold
+both at once:
 
 ```sh copy
 npx reablocks-cli@latest init
 ```
 
-If your project already has Tailwind installed, the CLI will detect it and skip
-the bootstrap. Otherwise it will install Tailwind, generate `tailwind.config.js`,
-and add the required directives to your CSS entry point. If you'd rather wire
-Tailwind manually:
-
-```sh copy
-npm install -D tailwindcss
-npx tailwindcss init
-```
+If your project already has Tailwind set up, the CLI detects it and skips the
+bootstrap. Otherwise it installs Tailwind v4 and wires the imports into your CSS
+entry point. To wire it up manually instead, install Tailwind per the
+[v4 installation guide](https://tailwindcss.com/docs/installation), then add the
+following to your CSS entry point:
 
 ```css copy
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import 'reablocks/index.css';
+
+/* Let Tailwind scan reablocks and reachat for the utility classes they use.
+ * Paths are relative to this CSS file — adjust if yours lives elsewhere. */
+@source '../node_modules/reablocks';
+@source '../node_modules/reachat';
 ```
+
+Tailwind v4 is configured entirely in CSS — no JavaScript config file is needed.
+Customize design tokens with the `@theme` directive; see the
+[theme guide](/docs/customization/theme).
 
 Finally, wrap your application with the `ThemeProvider` component from
 `reablocks`:

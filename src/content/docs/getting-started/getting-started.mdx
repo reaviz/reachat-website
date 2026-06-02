@@ -180,24 +180,16 @@ return (
 
 Besides functionality, of course, styling would be one of the first things that
 comes to mind. There is a default theme that you can customize with basic colors by
-updating the `tailwind.config.js` colors palette.
+defining design tokens in your CSS with Tailwind v4's `@theme` directive.
 
-For example, if we wanted to change the default blue to a purple, we could update the
-primary color palette like this:
+For example, if we wanted to change the default blue to a purple, we could
+override the primary color tokens like this:
 
-```js copy
-theme: {
-  extend: {
-    colors: {
-      primary: {
-        DEFAULT: colorPalette.purple[500],
-        active: colorPalette.purple[500],
-        hover: colorPalette.purple[600],
-        inactive: colorPalette.purple[200]
-      },
-      ...
-    }
-  }
+```css copy
+@theme {
+  --color-primary: #a855f7;        /* purple-500 */
+  --color-primary-hover: #9333ea;  /* purple-600 */
+  --color-secondary: #d8b4fe;      /* purple-300 */
 }
 ```
 

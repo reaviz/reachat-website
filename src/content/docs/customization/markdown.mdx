@@ -1,3 +1,5 @@
+import { PropsTable } from '@/components/ui/props-table';
+
 # Markdown
 
 reachat uses [react-markdown](https://github.com/remarkjs/react-markdown) and
@@ -123,19 +125,19 @@ const customMatchers = [
 
 #### RedactMatcher Interface
 
-```ts
-interface RedactMatcher {
-  name: string;
-  pattern: RegExp;
-  validate?: (match: string) => boolean;
-}
-```
-
-- `name` — Label for the matcher (e.g., "SSN", "Email")
-- `pattern` — Regular expression to match sensitive data (use the `g` flag)
-- `validate` — Optional function that receives the matched value; return `true` to redact, `false` to skip
+<PropsTable typeName="RedactMatcher" />
 
 ### Writing your own plugin
+
+At a high level, a remark plugin walks and rewrites the markdown syntax tree:
+
+```mermaid
+flowchart LR
+    A[Markdown text] --> B[remark parses to mdast]
+    B --> C[findAndReplace matches CVE regex]
+    C --> D[Replace matches with link nodes]
+    D --> E[react-markdown renders links]
+```
 
 We will build a plugin that will identify and render CVE links. Below is a sample response:
 

@@ -1,3 +1,5 @@
+import { PropsTable } from '@/components/ui/props-table';
+
 # AG-UI Protocol
 
 reachat ships a `useAgUi` hook that connects to any
@@ -67,53 +69,28 @@ function App() {
 4. Sessions and conversations are managed internally — a new session is
    auto-created on first message if none is active.
 
-```
-Browser                          Agent Endpoint
-  │                                    │
-  │  POST {threadId, messages, ...}    │
-  │ ──────────────────────────────────>│
-  │                                    │
-  │  SSE: TEXT_MESSAGE_START           │
-  │ <──────────────────────────────────│
-  │  SSE: TEXT_MESSAGE_CONTENT (delta) │
-  │ <──────────────────────────────────│
-  │  SSE: TEXT_MESSAGE_CONTENT (delta) │
-  │ <──────────────────────────────────│
-  │  SSE: TEXT_MESSAGE_END             │
-  │ <──────────────────────────────────│
-  │  SSE: RUN_FINISHED                 │
-  │ <──────────────────────────────────│
+```mermaid
+sequenceDiagram
+    participant B as Browser
+    participant A as Agent Endpoint
+    B->>A: POST { threadId, messages, ... }
+    Note over A: Run starts
+    A-->>B: SSE: TEXT_MESSAGE_START
+    A-->>B: SSE: TEXT_MESSAGE_CONTENT (delta)
+    A-->>B: SSE: TEXT_MESSAGE_CONTENT (delta)
+    A-->>B: SSE: TEXT_MESSAGE_END
+    A-->>B: SSE: RUN_FINISHED
 ```
 
 ## Options
 
-| Option                 | Type                                           | Required | Description                                    |
-| ---------------------- | ---------------------------------------------- | -------- | ---------------------------------------------- |
-| `agent`                | `string`                                       | Yes      | URL of the AG-UI compatible agent endpoint     |
-| `initialSessions`      | `Session[]`                                    | No       | Pre-populate with existing sessions            |
-| `initialActiveSessionId` | `string`                                     | No       | Set the initially active session               |
-| `tools`                | `AgUiTool[]`                                   | No       | Tools to expose to the agent                   |
-| `context`              | `AgUiContext[]`                                | No       | Context to send with each run                  |
-| `forwardedProps`       | `Record<string, unknown>`                      | No       | Additional properties forwarded to the agent   |
-| `headers`              | `Record<string, string>`                       | No       | Custom headers for the HTTP request            |
-| `onToolCall`           | `(toolCall: AgUiToolCallInfo) => Promise<void>` | No       | Called when a tool call is received             |
-| `onError`              | `(error: Error) => void`                       | No       | Called when the agent run encounters an error   |
-| `onEvent`              | `(event: AgUiEvent) => void`                   | No       | Called for every AG-UI event (useful for debug) |
+<PropsTable name="UseAgUiOptions" typeName="UseAgUiOptions" />
 
 ## Return Value
 
 All return values map directly to `<Chat>` component props:
 
-| Property           | Type                        | Description                                   |
-| ------------------ | --------------------------- | --------------------------------------------- |
-| `sessions`         | `Session[]`                 | All chat sessions                             |
-| `activeSessionId`  | `string \| null`            | Currently active session                      |
-| `isLoading`        | `boolean`                   | Whether the agent is streaming a response     |
-| `selectSession`    | `(id: string) => void`     | Select a session                              |
-| `deleteSession`    | `(id: string) => void`     | Delete a session                              |
-| `createSession`    | `() => void`                | Create a new empty session                    |
-| `sendMessage`      | `(message: string) => void` | Send a message to the agent                   |
-| `stopMessage`      | `() => void`                | Cancel the in-flight request                  |
+<PropsTable name="UseAgUiReturn" typeName="UseAgUiReturn" />
 
 ## Examples
 

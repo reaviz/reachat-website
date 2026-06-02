@@ -48,7 +48,7 @@ export const Landing = () => {
       <div className="pointer-events-none absolute top-0 h-screen w-full bg-gradient-to-b from-[#00000020] to-transparent" />
       <header
         className={cn(
-          `fixed top-0 z-50 flex w-full justify-center border-b border-[#9091A0] border-opacity-15 bg-[#11111F] transition-[backdrop-filter] md:bg-transparent`,
+          `fixed top-0 z-50 flex w-full justify-center border-b border-[#9091A0]/15 bg-[#11111F] transition-[backdrop-filter] md:bg-transparent`,
           isScrolled && 'md:backdrop-blur-md'
         )}
       >

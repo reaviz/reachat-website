@@ -212,6 +212,14 @@ language (default: `component`).
 
 ## Wiring into Chat
 
+Two ways to wire a catalog in, depending on how much control you need:
+
+```mermaid
+flowchart TD
+    A[Need custom plugins or overrides?] -->|No| B[Pass components=catalog]
+    A -->|Yes| C[Pass remarkPlugins + markdownComponents]
+```
+
 ### Simple (recommended)
 
 Pass the catalog to the `components` prop. This automatically sets up the remark
@@ -299,6 +307,15 @@ rest of the chat interface.
 ## Validation Pipeline
 
 The validation pipeline runs in order:
+
+```mermaid
+flowchart LR
+    A[JSON parse] --> B[Structure check]
+    B --> C[Catalog lookup]
+    C --> D[Zod validation]
+    D --> E[Recursive children]
+    E -.->|repeat 2-4 per child| B
+```
 
 1. **JSON parse** — checks for syntactically valid JSON
 2. **Structure check** — verifies `type` is a string

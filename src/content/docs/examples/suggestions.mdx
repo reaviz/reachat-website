@@ -1,4 +1,5 @@
 import { SuggestionsExample } from '@/components/examples/suggestions';
+import { PropsTable } from '@/components/ui/props-table';
 
 # Chat Suggestions
 The `ChatSuggestions` component renders clickable suggestion chips that help
@@ -323,23 +324,11 @@ function ChatWithSuggestions() {
 
 ### ChatSuggestionsProps
 
-```typescript
-interface ChatSuggestionsProps {
-  suggestions: Suggestion[]; // Array of suggestions
-  className?: string; // Custom CSS class
-  onSuggestionClick?: (content: string) => void; // Click handler
-  children?: ReactElement; // Custom render function
-}
-```
+<PropsTable name="ChatSuggestions" />
 
-### Suggestion Interface
+### Suggestion
 
-```typescript
-interface Suggestion {
-  id: string; // Unique identifier
-  content: string; // Suggestion text
-}
-```
+See [`Suggestion`](/docs/api/models#suggestion) in the API Models reference.
 
 ### Custom Render Function
 

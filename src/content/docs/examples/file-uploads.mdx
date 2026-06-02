@@ -6,6 +6,23 @@ your `onFileUpload` handler and is rendered on questions via
 `<MessageFiles>`/`<MessageFile>` with type-aware previews for images, CSVs, and
 PDFs.
 
+## Upload lifecycle
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant CI as ChatInput
+    participant H as onFileUpload
+    participant S as Your server
+    participant MF as MessageFile
+    U->>CI: select file(s)
+    CI->>H: File or File[]
+    H->>S: upload
+    S-->>H: URL + metadata
+    H->>H: store as ConversationFile[]
+    MF->>MF: on render, pick renderer by MIME type
+```
+
 ## Enabling uploads
 
 Wire an `onFileUpload` handler on `<Chat>`:

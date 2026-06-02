@@ -155,6 +155,29 @@ export const OpenAIChat = () => {
 - **`isLoading`** drives the streaming cursor and disables the send button.
 - **`disabled`** locks the input until the user provides an API key.
 
+### Request flow
+
+Whether you call the provider once or stream deltas, the shape is the same — `onSendMessage` drives the provider and writes back into the active session:
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant C as onSendMessage
+    participant P as Provider API
+    U->>C: send message
+    C->>P: create completion
+    alt non-streaming
+        P-->>C: full response
+        C->>C: set conversation.response
+    else streaming
+        loop each delta
+            P-->>C: token delta
+            C->>C: append to conversation.response
+        end
+    end
+    C-->>U: re-render updated sessions
+```
+
 ### Streaming responses
 
 For a streaming experience, replace the single `chat.completions.create` call
