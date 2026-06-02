@@ -1,9 +1,41 @@
+/**
+ * @file Build-time generator for the docs "Show code" manifest.
+ *
+ * Walks the copied story files under {@link STORIES_DIR} (produced by
+ * `scripts/copy-stories.mjs`) and, for each exported story, extracts a
+ * human-readable JSX source snippet into {@link OUTPUT_FILE}. The docs
+ * `StoryRenderer` ("Show code" panel) fetches that manifest through the edge
+ * route `/api/story-source?storyPath=…&functionName=…`, keyed
+ * `"<relativePath>:<ExportName>"`.
+ *
+ * Run from `postinstall` and at the head of `build:cloudflare`.
+ *
+ * Extraction is regex / brace-matching string parsing — NOT a real TS/AST
+ * parser — so the emitted source is *illustrative*: the live preview is the
+ * actually-compiled story (rendered separately by the theme), while this text
+ * is only what the reader sees in "Show code". Shapes the heuristics don't
+ * cover degrade to a `(args) => <Component {...args} />` or `// not found`
+ * fallback rather than throwing.
+ *
+ * Run: `node scripts/generate-story-sources.mjs`
+ */
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, existsSync } from 'fs';
 import { join } from 'path';
 
+/** Directory the copied `*.stories.tsx` live in (relative to repo root). */
 const STORIES_DIR = 'src/stories';
+/** Generated manifest consumed by the edge `/api/story-source` route. */
 const OUTPUT_FILE = 'public/_story-sources.json';
 
+/**
+ * Best-effort resolve of the primary component name documented by a CSF story
+ * file, used to synthesize fallback snippets. Tries, in order: meta
+ * `component: X`, `Meta<typeof X>`, a `export default { component: X }`, a bare
+ * `export default X`, then the first non-Storybook-type named import.
+ *
+ * @param {string} fileContent - Full source text of a `*.stories.tsx` file.
+ * @returns {string} The component identifier, or `'Component'` if none resolves.
+ */
 function extractComponentName(fileContent) {
   const metaComponentMatch = fileContent.match(/component:\s*([A-Z][a-zA-Z0-9]*)/);
   if (metaComponentMatch) return metaComponentMatch[1] ?? '';
@@ -26,6 +58,17 @@ function extractComponentName(fileContent) {
   return 'Component';
 }
 
+/**
+ * Synthesize a JSX snippet from a CSF3 `args` object literal when a story has
+ * `args` but no `render`. String-parses the comma-separated key/value pairs
+ * (respecting strings and nested `{}`/`[]`) and rebuilds them as JSX props:
+ * `true` → bare attr, `false` → dropped, string → `key="v"`, anything else →
+ * `key={v}`.
+ *
+ * @param {string} componentName - Component to render (from {@link extractComponentName}).
+ * @param {string} args - Inner text of the story's `args: { … }` object (no braces).
+ * @returns {string} e.g. `() => <MessageStatus text="…" status={loading} />;`
+ */
 function generateCSFStorySource(componentName, args) {
   const propsArray = [];
   const cleanArgs = args.replace(/\s+/g, ' ').trim();
@@ -61,6 +104,21 @@ function generateCSFStorySource(componentName, args) {
   return `() => <${componentName}${propsString} />;`;
 }
 
+/**
+ * Extract a displayable source snippet for one exported story. Strategy, in
+ * order:
+ *  1. Function-flavor `export const X = (…) => BODY` → returns `() => BODY;`.
+ *  2. CSF3 StoryObj `export const X: Story = { … }` (brace-matched):
+ *     - a `render:` fn → its body (handles both `(args) =>` and bare
+ *       `args =>` params; block `{ … }` or expression bodies);
+ *     - else an `args: { … }` object → {@link generateCSFStorySource};
+ *     - else `(args) => <Component {...args} />;`.
+ *  3. Nothing matched → `// Function <name> not found`.
+ *
+ * @param {string} fileContent - Full source text of the story file.
+ * @param {string} functionName - The exported story name to extract.
+ * @returns {string} A JSX arrow-function snippet (illustrative, see file header).
+ */
 function extractStorySource(fileContent, functionName) {
   const componentName = extractComponentName(fileContent);
 
@@ -151,6 +209,13 @@ function extractStorySource(fileContent, functionName) {
   return `// Function ${functionName} not found`;
 }
 
+/**
+ * Collect the names of exported stories — `export const <Name>` where `Name`
+ * starts uppercase (so meta/helpers like lowercase consts are skipped).
+ *
+ * @param {string} fileContent - Full source text of the story file.
+ * @returns {string[]} Uppercase-initial exported const names.
+ */
 function getExportedFunctions(fileContent) {
   const functions = [];
   const regex = /export\s+const\s+([A-Z][a-zA-Z0-9]*)\s*[=:]/g;
@@ -159,6 +224,12 @@ function getExportedFunctions(fileContent) {
   return functions;
 }
 
+/**
+ * Recursively collect `*.stories.tsx` file paths under a directory.
+ *
+ * @param {string} dir - Directory to walk (recurses into subdirectories).
+ * @returns {string[]} Absolute-from-cwd paths of every `*.stories.tsx` found.
+ */
 function getStoryFiles(dir) {
   const files = [];
   const entries = readdirSync(dir, { withFileTypes: true });
@@ -170,6 +241,14 @@ function getStoryFiles(dir) {
   return files;
 }
 
+/**
+ * Entry point: walk {@link STORIES_DIR}, extract a snippet for every exported
+ * story, and write the `{ "<relativePath>:<ExportName>": source }` map to
+ * {@link OUTPUT_FILE} (minified). Missing stories dir → writes an empty
+ * manifest (so the route still resolves) rather than failing the build.
+ *
+ * @returns {void}
+ */
 function main() {
   console.log('Generating story sources...');
   const sources = {};
