@@ -43,8 +43,8 @@ importers:
         specifier: 2.3.3
         version: 2.3.3(@emotion/is-prop-valid@0.8.8)(@types/react@19.2.15)(next@15.5.18(@babel/core@7.29.7)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(nextra@4.6.1(next@15.5.18(@babel/core@7.29.7)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(typescript@5.4.5))(prop-types@15.8.1)(react-compiler-runtime@19.1.0-rc.3(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(use-sync-external-store@1.6.0(react@19.2.6))
       reachat:
-        specifier: ^3.2.2
-        version: 3.2.2(@emotion/is-prop-valid@0.8.8)(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(reaviz@16.1.4(@emotion/is-prop-valid@0.8.8)(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(remark-rehype@11.1.0)
+        specifier: 3.2.3
+        version: 3.2.3(@emotion/is-prop-valid@0.8.8)(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(reaviz@16.1.4(@emotion/is-prop-valid@0.8.8)(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(remark-rehype@11.1.0)
       react:
         specifier: ^19.1.0
         version: 19.2.6
@@ -4256,8 +4256,8 @@ packages:
       react: '>=16'
       react-dom: '>=16'
 
-  reachat@3.2.2:
-    resolution: {integrity: sha512-gnol6aOpD2Ef5epDBqWycBVlPYRxKfgUavqcgdjOwqWUP/VrdG3+N7tYQMlS6LuvKo/3R1q1b5O51z87EOyhTQ==}
+  reachat@3.2.3:
+    resolution: {integrity: sha512-Y8skL/A9c7aulwfmMCQ1SvD76rUotNQQFAl9fj5DFCdRVR7gEpwlY35OXLVwbSJx6ZtZC3CULnYkAIoH7T3TJg==}
     peerDependencies:
       react: '>=18'
       react-dom: '>=18'
@@ -10163,7 +10163,7 @@ snapshots:
       - '@types/react'
       - prop-types
 
-  reachat@3.2.2(@emotion/is-prop-valid@0.8.8)(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(reaviz@16.1.4(@emotion/is-prop-valid@0.8.8)(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(remark-rehype@11.1.0):
+  reachat@3.2.3(@emotion/is-prop-valid@0.8.8)(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(reaviz@16.1.4(@emotion/is-prop-valid@0.8.8)(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(remark-rehype@11.1.0):
     dependencies:
       '@floating-ui/dom': 1.7.6
       '@floating-ui/react': 0.27.19(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
