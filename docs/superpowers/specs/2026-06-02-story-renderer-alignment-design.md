@@ -38,12 +38,18 @@ reachat's stories are the same Storybook CSF: 5 of 6 main files are function-fla
 
 ### A. reachat library changes (`/Users/c4r0n0s/Projects/gg/reachat`)
 
-Make stories portable from the package without disturbing reachat's own Storybook (which imports `../src`):
+**The mechanism already exists** — `npm run build` runs `rewrite:stories` (`scripts/stories.cjs`), which uses `typescript-rewrite-paths` to rewrite every `./` / `../` / `@/` import specifier in `dist/stories/*.tsx` → `'reachat'`, while **excluding** `./examples` and `./assets` (so those stay relative and resolve against the copied sibling files). `viteStaticCopy` already copies `stories/*` (including `examples.ts` and `assets/*.svg`) into `dist/stories/`. `node_modules/reachat` in the website is a **symlink** to this repo, so a rebuild is picked up with no relink.
 
-- **Build-time dist transform:** reachat's build emits `dist/stories/*` — both `*.stories.tsx` **and** the shared `examples.ts` — with internal specifiers rewritten `'../src' | '../src/X' | '@/types' | '@/...' → 'reachat'`, and copies `stories/assets/` → `dist/stories/assets/`. Source `stories/*` keep `../src` for Storybook.
-- **PoC scope of the fix:** only `ChatSuggestions.stories.tsx` + `examples.ts` (which imports `@/types`) must resolve. `MessageStatus.stories.tsx` needs no fix (public exports only, no SVG).
-- **Deferred (Phase 2 — Console):** export the currently-non-public internals from `src/index.ts`: `MessageActions`, `MessageFiles`, `MessageQuestion`, `MessageResponse`, `MessageSources`, `remarkCve`, `createChartComponentDef`.
-- Rebuild `dist` (`npm run build:js`); consumed via the existing local `pnpm link`.
+The current `dist/stories` shows raw `../src` imports only because recent rebuilds ran `build:js` alone (per `plan.md`), not the full `build` that includes `rewrite:stories`.
+
+Required changes (small):
+
+- **Extend `scripts/stories.cjs`** so its glob also covers `examples.ts` (currently `dist/stories/*.tsx` misses the `.ts` file, leaving its `@/types` import un-rewritten). Add `dist/stories/*.ts` (or target `examples.ts` explicitly). `@/types → reachat`; `date-fns`/`react` untouched.
+- **Make PoC stories' `@storybook/react` import type-only.** `rewrite:stories` does not touch `@storybook/react` (not a relative/alias path), so a value import (`import { Meta }` in `ChatSuggestions.stories.tsx`) would make the website bundle try to resolve `@storybook/react` and fail. Change to `import type { Meta }`. `MessageStatus.stories.tsx` already uses `import type`.
+- **Produce a rewritten `dist/stories`:** run `npm run rewrite:stories` (rewrites the already-copied dist in place) — or a full `npm run build`. Note: `vite-plugin-checker` has 6 pre-existing type errors (per `plan.md`) that block `build:js`; running `rewrite:stories` alone against the current dist avoids that, but the type-only source edit then needs the source re-copied (re-run `build:js` with checker temporarily disabled, or hand-apply to dist).
+- **Deferred (Phase 2 — Console):** export the currently-non-public internals from `src/index.ts` so `@/SessionMessages → reachat` resolves: `MessageActions`, `MessageFiles`, `MessageQuestion`, `MessageResponse`, `MessageSources`, `remarkCve`, `createChartComponentDef`.
+
+PoC needs only `MessageStatus.stories.tsx` (public exports, no SVG, no examples.ts) and `ChatSuggestions.stories.tsx` + `examples.ts` + 3 SVG assets.
 
 ### B. Website build pipeline (`scripts/` + `package.json`)
 
@@ -82,7 +88,9 @@ After the two demos render live, delete `src/components/examples/status.tsx` + `
 - **No build-time gate on live demos.** Client-island React errors and the regex source-extractor degrade at runtime, not build (per project memory). PoC must be eye-verified in `pnpm start`.
 - **SVGR `?react` query.** Must be wired in Next exactly as the copied stories import (`./assets/x.svg?react`); mismatch fails the ChatSuggestions bundle.
 - **Source-extractor fidelity.** `generate-story-sources.mjs` is regex/brace-based; CSF3 `StoryObj` (MessageStatus) and function-flavor must both extract correctly or "Show code" shows a fallback.
-- **Library rebuild coupling.** PoC depends on the reachat `dist` transform landing and the local link picking it up.
+- **`@storybook/react` leakage.** Copied stories still `import ... from '@storybook/react'` (the rewrite doesn't touch it). Must be type-only so SWC erases it; otherwise the website bundle fails to resolve Storybook. Audit every copied story, not just the PoC pair.
+- **Library rebuild coupling.** PoC depends on `dist/stories` carrying the rewritten imports. `node_modules/reachat` is a symlink to the repo, so a rebuild needs no relink — but the website's `copy:stories` must run *after* the reachat rewrite (a stale dist yields raw `../src` imports that fail to bundle).
+- **`vite-plugin-checker` blocks `build:js`.** 6 pre-existing reachat type errors mean a clean full `build` may fail; mitigate by running `rewrite:stories` against the existing dist, or temporarily disabling the checker.
 
 ## Out of scope (this pass)
 
