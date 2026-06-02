@@ -10,49 +10,6 @@ experience is setting `viewType="companion"` on the `<Chat />` component.
 
 <StoryRenderer path="Companion.stories.tsx" name="Basic" storybookKey="demos-companion--basic" />
 
-Below is the code for the above example.
-
-```tsx
-<Chat
-  sessions={[
-    {
-      id: '1',
-      title: 'Session 1',
-      createdAt: new Date('2024-01-15T10:00:00Z'),
-      updatedAt: new Date('2024-01-15T10:00:00Z'),
-      conversations: [
-        {
-          id: '1',
-          question: 'What is React?',
-          response: 'React is a JavaScript library for building user interfaces.',
-          createdAt: new Date('2024-01-15T10:00:00Z'),
-          updatedAt: new Date('2024-01-15T10:00:00Z')
-        },
-        {
-          id: '2',
-          question: 'What is JSX?',
-          response: 'JSX is a syntax extension for JavaScript.',
-          createdAt: new Date('2024-01-15T10:00:00Z'),
-          updatedAt: new Date('2024-01-15T10:00:00Z')
-        }
-      ]
-    }
-  ]}
-  viewType="companion"
-  onDeleteSession={() => alert("delete!")}
->
-  <SessionsList>
-    <NewSessionButton />
-    <SessionGroups />
-  </SessionsList>
-  <SessionMessagePanel>
-    <SessionMessagesHeader />
-    <SessionMessages />
-    <ChatInput />
-  </SessionMessagePanel>
-</Chat>
-```
-
 For more information on how to set up a console chat, please refer to the 
 [getting started documentation](/docs/getting-started/getting-started). For
 more examples of how to use Reachat, please refer to the 

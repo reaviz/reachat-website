@@ -6,55 +6,6 @@ so it can be used on mobile devices or full-screen.
 
 <StoryRenderer path="Chat.stories.tsx" name="Compact" storybookKey="demos-chat--compact" />
 
-Below is the code for the above example.
-
-```tsx
-<Chat
-  sessions={[
-    {
-      id: '1',
-      title: 'Session 1',
-      createdAt: new Date('2024-01-15T10:00:00Z'),
-      updatedAt: new Date('2024-01-15T10:00:00Z'),
-      conversations: [
-        {
-          id: '1',
-          question: 'What is React?',
-          response: 'React is a JavaScript library for building user interfaces.',
-          createdAt: new Date('2024-01-15T10:00:00Z'),
-          updatedAt: new Date('2024-01-15T10:00:00Z')
-        },
-        {
-          id: '2',
-          question: 'What is JSX?',
-          response: 'JSX is a syntax extension for JavaScript.',
-          createdAt: new Date('2024-01-15T10:00:00Z'),
-          updatedAt: new Date('2024-01-15T10:00:00Z')
-        }
-      ]
-    }
-  ]}
-  activeSessionId="1"
-  viewType="chat"
-  onDeleteSession={() => alert("delete!")}
->
-  <SessionMessagePanel>
-    <SessionMessagesHeader />
-    <SessionMessages>
-      {(conversations) =>
-        conversations.map((conversation) => (
-          <SessionMessage
-            key={conversation.id}
-            conversation={conversation}
-          />
-        ))
-      }
-    </SessionMessages>
-    <ChatInput />
-  </SessionMessagePanel>
-</Chat>
-```
-
 ## Common props
 
 The chat experience is mostly composed by combining `<Chat>`, `<ChatInput>`,
