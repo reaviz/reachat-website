@@ -31,7 +31,7 @@ export const Nav: FC = () => {
       )}
       aria-label="Global"
     >
-      <div className="absolute left-4 top-3 flex-1 md:left-28 md:top-7">
+      <div className="absolute left-4 top-3 flex-1 md:left-30 md:top-7">
         <a href="#">
           <span className="sr-only">reachat</span>
           <Image

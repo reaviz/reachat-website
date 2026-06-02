@@ -1,4 +1,4 @@
-import { SuggestionsExample } from '@/components/examples/suggestions';
+import { StoryRenderer } from '@/components/ui/story-renderer';
 import { PropsTable } from '@/components/ui/props-table';
 
 # Chat Suggestions
@@ -41,7 +41,7 @@ Place `<ChatSuggestions>` inside `<SessionMessagePanel>` between
 `<SessionMessages>` and `<ChatInput>`. Clicking a chip fires
 `onSuggestionClick`, where you can forward the prompt to your message handler.
 
-<SuggestionsExample />
+<StoryRenderer path="ChatSuggestions.stories.tsx" name="Basic" fill height={520} storybookKey="components-chatsuggestions--basic" />
 
 ```tsx
 <Chat sessions={sessions} activeSessionId={activeId} viewType="chat">

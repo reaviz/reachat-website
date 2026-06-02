@@ -40,7 +40,7 @@ export async function generateMetadata(props: any) {
   try {
     const { metadata } = await importPage(params.mdxPath);
     return {
-      title: `${metadata?.title} - reachat` || 'reachat',
+      title: metadata?.title ? `${metadata.title} - reachat` : 'reachat',
       description:
         metadata?.description ||
         'Open-source UI Building Blocks for LLM and ChatUIs for ReactJS'

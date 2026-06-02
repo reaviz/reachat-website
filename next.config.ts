@@ -37,6 +37,14 @@ const nextConfig: NextConfig = withNextra({
       ...config.resolve.fallback,
       'source-map-support': false
     };
+    // reachat story assets import SVGs as React components via the `?react`
+    // query (vite-plugin-svgr convention). Handle only that query so other
+    // svg imports keep Next's default (URL) behavior.
+    config.module.rules.push({
+      test: /\.svg$/i,
+      resourceQuery: /react/,
+      use: ['@svgr/webpack']
+    });
     return config;
   },
 

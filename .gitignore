@@ -139,3 +139,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 .playwright-mcp
+
+# Generated story sources (copied from reachat on postinstall/build)
+/src/stories/
+/public/_story-sources.json

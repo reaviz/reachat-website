@@ -1,8 +1,20 @@
 @import 'tailwindcss';
 
-/* Custom variants */
-@custom-variant dark (&:where(.theme-dark, .theme-dark *, [data-theme=dark], [data-theme=dark] *));
-@custom-variant light (&:where(.theme-light, .theme-light *, [data-theme=light], [data-theme=light] *));
+/* Custom variants.
+ * `.dark`/`.light` match next-themes' classes (the docs Layout uses
+ * next-themes attribute="class" with no value-map, so <html> gets a bare
+ * `dark`/`light` class). Including them here keeps the reachat stories'
+ * `dark:`/`light:` utilities in sync with the page theme — without them the
+ * stories rendered light on the dark docs page. `.theme-*` / `[data-theme]`
+ * are kept for reablocks' own convention.
+ *
+ * NOTE: `:is()` (not `:where()`). `:where()` has zero specificity, so
+ * `.dark\:bg-gray-950:where(…)` ties with plain `.bg-white` (both 0,1,0) and
+ * loses on source order — `dark:bg-gray-950 bg-white` stayed white. `:is()`
+ * carries its argument's specificity (→ 0,2,0), so `dark:`/`light:` reliably
+ * win over the base utility. */
+@custom-variant dark (&:is(.dark, .dark *, .theme-dark, .theme-dark *, [data-theme=dark], [data-theme=dark] *));
+@custom-variant light (&:is(.light, .light *, .theme-light, .theme-light *, [data-theme=light], [data-theme=light] *));
 @custom-variant disabled-within (&:has(input:is(:disabled), textarea:is(:disabled), button:is(:disabled)));
  
 
@@ -116,6 +128,53 @@ pre.highlighter code {
 
 .prismjs > div {
   white-space: pre-wrap !important;
+}
+
+/* Story renderer (ported from reaviz-website) */
+.story-scroll {
+  display: flex !important;
+  justify-content: safe center !important;
+  max-width: 100% !important;
+  overflow: auto !important;
+  padding: 5rem !important;
+}
+
+/* Reserved, relatively-positioned box for stories whose root is
+ * `position: absolute; inset: 0` (Chat/Console demos). Without a positioned,
+ * sized ancestor those escape to the viewport. Height is per-story via the
+ * inherited `--story-h` custom property (see story-renderer.tsx); default 520px. */
+.story-fill {
+  position: relative !important;
+  width: 100%;
+  height: var(--story-h, 520px);
+  overflow: hidden;
+}
+
+.docblock-code-toggle,
+.docblock-code-toggle ~ button {
+  background: black !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.sbdocs-preview {
+  border-color: hsl(
+    var(--nextra-primary-hue) var(--nextra-primary-saturation) 94% / 0.1
+  ) !important;
+}
+
+pre {
+  background-color: hsl(
+    var(--nextra-primary-hue) var(--nextra-primary-saturation) 77% / 0.1
+  );
+  box-shadow: none;
+  border-radius: 0.75rem;
+}
+
+.story-container.story-preview > div {
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 input {
