@@ -1,0 +1,18 @@
+import ServerMarkdown from '@/components/ui/server-markdown';
+
+export async function Changelog() {
+  try {
+    const response = await fetch('https://raw.githubusercontent.com/reaviz/reachat/master/CHANGELOG.md');
+    if (!response.ok) throw new Error('Failed to fetch changelog');
+    const text = await response.text();
+    return <ServerMarkdown>{text}</ServerMarkdown>;
+  } catch (error) {
+    return (
+      <div className="p-4 text-center">
+        <p>Unable to load changelog. Please visit the <a href="https://github.com/reaviz/reachat/blob/master/CHANGELOG.md" className="text-primary underline">GitHub repository</a> for the latest changelog.</p>
+      </div>
+    );
+  }
+}
+
+<Changelog />

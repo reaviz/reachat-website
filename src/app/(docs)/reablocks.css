@@ -1,0 +1,7 @@
+/* Precompiled reablocks component styles — needed only for the inline
+ * reachat/reablocks demos in the docs examples. Scoped to the docs route group
+ * (imported by `app/(docs)/layout.tsx`) so it never loads on the landing page:
+ * it's a full Tailwind build whose `@layer utilities` would otherwise merge
+ * after the app's and override our responsive `md:` display variants, breaking
+ * the landing's header/footer. (See the note in `app/globals.css`.) */
+@import 'reablocks/index.css';

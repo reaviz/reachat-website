@@ -1,0 +1,193 @@
+@import 'tailwindcss';
+
+/* Custom variants.
+ * `.dark`/`.light` match next-themes' classes (the docs Layout uses
+ * next-themes attribute="class" with no value-map, so <html> gets a bare
+ * `dark`/`light` class). Including them here keeps the reachat stories'
+ * `dark:`/`light:` utilities in sync with the page theme — without them the
+ * stories rendered light on the dark docs page. `.theme-*` / `[data-theme]`
+ * are kept for reablocks' own convention.
+ *
+ * NOTE: `:is()` (not `:where()`). `:where()` has zero specificity, so
+ * `.dark\:bg-gray-950:where(…)` ties with plain `.bg-white` (both 0,1,0) and
+ * loses on source order — `dark:bg-gray-950 bg-white` stayed white. `:is()`
+ * carries its argument's specificity (→ 0,2,0), so `dark:`/`light:` reliably
+ * win over the base utility. */
+@custom-variant dark (&:is(.dark, .dark *, .theme-dark, .theme-dark *, [data-theme=dark], [data-theme=dark] *));
+@custom-variant light (&:is(.light, .light *, .theme-light, .theme-light *, [data-theme=light], [data-theme=light] *));
+@custom-variant disabled-within (&:has(input:is(:disabled), textarea:is(:disabled), button:is(:disabled)));
+ 
+
+/* NOTE: `reablocks/index.css` (the precompiled reablocks component styles) is a
+ * full Tailwind build of its own. It is intentionally NOT imported here — when
+ * pulled into this shared stylesheet its `@layer utilities` merges *after* the
+ * app's, so its unconditional `.flex`/`.hidden`/`.block` overrode our responsive
+ * `md:` display variants and broke every responsive show/hide on the landing
+ * (header stuck mobile, footer rendering both variants). It is now imported only
+ * in the docs route group (`app/(docs)/layout.tsx`), where the inline
+ * reachat/reablocks demos actually need it and the landing never loads it. */
+
+@source './**/*.{ts,tsx}';
+@source '../../node_modules/reablocks';
+@source '../../node_modules/reachat';
+
+/* Website design tokens, ported from the old tailwind.config.ts */
+@theme {
+  --breakpoint-2xl: 1440px;
+
+  --font-sans: Inter, sans-serif;
+  --font-inter: Inter, sans-serif;
+
+  /* 14px base scale (matches the v3 fontSize overrides) */
+  --text-sm: 0.75rem;
+  --text-sm--line-height: 1rem;
+  --text-base: 0.875rem;
+  --text-base--line-height: 1.25rem;
+  --text-lg: 1rem;
+  --text-lg--line-height: 1.5rem;
+
+  /* Blue palette */
+  --color-blue-100: #e7efff;
+  --color-blue-200: #c3d7ff;
+  --color-blue-300: #87aeff;
+  --color-blue-400: #4c86ff;
+  --color-blue-500: #105eff;
+  --color-blue-600: #0d4ed2;
+  --color-blue-700: #0a3da6;
+  --color-blue-800: #082d79;
+  --color-blue-900: #051c4c;
+  --color-blue-950: #041028;
+
+  /* Semantic colors used across the site */
+  --color-primary: #105eff;
+  --color-primary-hover: #4c86ff;
+  --color-secondary: #87aeff;
+  --color-content-primary: #f2f3f7;
+  --color-content-secondary: #c6cbd9;
+
+  --shadow-button: 0px 4px 16px 0px rgba(0, 0, 0, 0.25);
+  --shadow-card: 0px 4px 16px 0px rgba(0, 0, 0, 0.25);
+}
+
+/* Custom background gradients (Tailwind v4 has no bg-image theme namespace,
+ * so these are authored as plain utility classes). */
+.bg-gradient-line {
+  background-image: linear-gradient(
+    90deg,
+    rgba(38, 38, 49, 0) 19.91%,
+    #87aeff 100%
+  );
+}
+.bg-gradient-code {
+  background-image: linear-gradient(
+    180deg,
+    rgba(54, 70, 109, 0.9) 0%,
+    rgba(45, 58, 93, 0.9) 100%
+  );
+}
+
+/* Light / dark background variables */
+html.light {
+  --background: #ffffff;
+  --tooltip-background: #f7f7fa;
+  --tooltip-color: #3d3d4d;
+  --foreground-rgb: 0, 0, 0;
+}
+
+html.dark {
+  --background: #11101f;
+  --tooltip-background: #00050be6;
+  --tooltip-color: #fff;
+  --foreground-rgb: 255, 255, 255;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background-color: var(--background);
+  --tooltip-spacing: 5px;
+  --tooltip-border-radius: 5px;
+}
+
+/* Code sample styling retained from the previous theme */
+.rb-code {
+  color: #029cfd !important;
+}
+
+.rb-code-block {
+  margin-top: 1px;
+  background: transparent;
+}
+
+.rb-code-block code {
+  display: block !important;
+}
+
+pre.highlighter code {
+  display: block;
+}
+
+.prismjs > div {
+  white-space: pre-wrap !important;
+}
+
+/* Story renderer (ported from reaviz-website) */
+.story-scroll {
+  display: flex !important;
+  justify-content: safe center !important;
+  max-width: 100% !important;
+  overflow: auto !important;
+  padding: 5rem !important;
+}
+
+/* Reserved, relatively-positioned box for stories whose root is
+ * `position: absolute; inset: 0` (Chat/Console demos). Without a positioned,
+ * sized ancestor those escape to the viewport. Height is per-story via the
+ * inherited `--story-h` custom property (see story-renderer.tsx); default 520px. */
+.story-fill {
+  position: relative !important;
+  width: 100%;
+  height: var(--story-h, 520px);
+  overflow: hidden;
+}
+
+.docblock-code-toggle,
+.docblock-code-toggle ~ button {
+  background: black !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.sbdocs-preview {
+  border-color: hsl(
+    var(--nextra-primary-hue) var(--nextra-primary-saturation) 94% / 0.1
+  ) !important;
+}
+
+pre {
+  background-color: hsl(
+    var(--nextra-primary-hue) var(--nextra-primary-saturation) 77% / 0.1
+  );
+  box-shadow: none;
+  border-radius: 0.75rem;
+}
+
+.story-container.story-preview > div {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+input {
+  --tw-ring-opacity: 0 !important;
+  --tw-ring-offset-shadow: none !important;
+}
+
+svg {
+  overflow: visible;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

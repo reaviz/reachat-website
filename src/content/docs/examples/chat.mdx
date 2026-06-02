@@ -1,0 +1,51 @@
+import { StoryRenderer } from '@/components/ui/story-renderer';
+
+# Chat
+The chat component is a chat-only experience where no sessions are shown. Its responsive
+so it can be used on mobile devices or full-screen.
+
+<StoryRenderer path="Chat.stories.tsx" name="Compact" storybookKey="demos-chat--compact" />
+
+## Common props
+
+The chat experience is mostly composed by combining `<Chat>`, `<ChatInput>`,
+and `<SessionMessages>`. A few props are worth knowing about:
+
+### `SessionMessages` — `autoScroll`
+
+`<SessionMessages>` pins itself to the bottom of the conversation while a
+response is streaming. Disable it if you'd rather keep the user's scroll
+position:
+
+```tsx
+<SessionMessages autoScroll={false} />
+```
+
+When `autoScroll` is on (the default), reachat also renders a floating
+scroll-to-bottom button if the user scrolls away from the latest message —
+toggle it explicitly with `showScrollBottomButton`.
+
+### `ChatInput` — file uploads, controlled values, and styling
+
+```tsx
+<ChatInput
+  allowMultipleFiles
+  allowedFiles={["image/*", "application/pdf"]}
+  className="my-custom-input"
+  onMessageChange={(value) => setDraft(value)}
+/>
+```
+
+- **`allowMultipleFiles`** — accept more than one attachment per message.
+- **`allowedFiles`** — restrict the file picker to these MIME types or extensions.
+- **`onMessageChange`** — fired on every keystroke; useful for draft persistence
+  or inline command/mention detection.
+- **`className`** — applied to the input container for styling overrides.
+
+See the dedicated [File Uploads](/docs/examples/file-uploads) example for the
+multi-file render pipeline (image grid, CSV preview, PDF, generic).
+
+For more information on how to set up a chat, see the
+[Getting Started](/docs/getting-started/getting-started) guide. For more
+examples of how to use reachat, see the
+[storybook demos](https://storybook.reachat.dev).

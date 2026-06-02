@@ -1,0 +1,144 @@
+import { Steps } from "nextra/components";
+
+# Getting Started
+
+## Requirements
+
+reachat targets modern React projects. Make sure your app meets these peer
+requirements before installing:
+
+- **React 19** (also supports React 18 in most cases)
+- **reablocks 10**
+- **Tailwind CSS 4+**
+
+## Installing
+
+Install reachat in your project by following the steps below.
+
+<Steps>
+### 1. **Install the package**
+
+```sh copy npm2yarn
+npm i reachat --save
+```
+
+### 2. **Install reablocks and Tailwind**
+
+reachat is built on top of [reablocks](https://reablocks.dev) and
+[Tailwind CSS v4](https://tailwindcss.com). Use the reablocks CLI to scaffold
+both at once:
+
+```sh copy
+npx reablocks-cli@latest init
+```
+
+If your project already has Tailwind set up, the CLI detects it and skips the
+bootstrap. Otherwise it installs Tailwind v4 and wires the imports into your CSS
+entry point. To wire it up manually instead, install Tailwind per the
+[v4 installation guide](https://tailwindcss.com/docs/installation), then add the
+following to your CSS entry point:
+
+```css copy
+@import 'tailwindcss';
+@import 'reablocks/index.css';
+
+/* Let Tailwind scan reablocks and reachat for the utility classes they use.
+ * Paths are relative to this CSS file — adjust if yours lives elsewhere. */
+@source '../node_modules/reablocks';
+@source '../node_modules/reachat';
+```
+
+Tailwind v4 is configured entirely in CSS — no JavaScript config file is needed.
+Customize design tokens with the `@theme` directive; see the
+[theme guide](/docs/customization/theme).
+
+Finally, wrap your application with the `ThemeProvider` component from
+`reablocks`:
+
+```tsx copy
+import { ThemeProvider, theme } from 'reablocks';
+
+export const App = () => (
+  <ThemeProvider theme={theme}>
+    <YourComponents />
+  </ThemeProvider>
+);
+```
+
+### 3. **Include Chat components in your project**
+
+```tsx copy
+import {
+  Chat,
+  ChatInput,
+  NewSessionButton,
+  SessionGroups,
+  SessionListItem,
+  SessionMessage,
+  SessionMessages,
+  SessionMessagePanel,
+  SessionMessagesHeader,
+  SessionsGroup,
+  SessionsList,
+} from "reachat";
+
+export default function App() {
+  return (
+    <Chat sessions={[]}>
+      <SessionsList>
+        <NewSessionButton />
+        <SessionGroups>
+          {(groups) =>
+            groups.map(({ heading, sessions }) => (
+              <SessionsGroup heading={heading} key={heading}>
+                {sessions.map((s) => (
+                  <SessionListItem key={s.id} session={s} />
+                ))}
+              </SessionsGroup>
+            ))
+          }
+        </SessionGroups>
+      </SessionsList>
+      <SessionMessagePanel>
+        <SessionMessagesHeader />
+        <SessionMessages>
+          {(conversations) =>
+            conversations.map((conversation) => (
+              <SessionMessage
+                key={conversation.id}
+                conversation={conversation}
+              />
+            ))
+          }
+        </SessionMessages>
+        <ChatInput />
+      </SessionMessagePanel>
+    </Chat>
+  );
+}
+```
+
+### 4. **Connect your backend**
+
+reachat is provider-agnostic — wire it up to whichever backend or model you
+prefer:
+
+- [OpenAI example](/docs/examples/providers) — direct OpenAI SDK integration
+- [AG-UI hook](/docs/examples/ag-ui) — drop-in support for any
+  [AG-UI](https://docs.ag-ui.com) compatible agent
+- [Component Catalog](/docs/examples/component-catalog) — let your LLM emit
+  real React components in responses
+
+</Steps>
+
+## Example Repo
+
+For a complete working app, see the
+[reachat-example](https://github.com/reaviz/reachat-example) repository.
+
+## Next steps
+
+- Walk through the [first chatbot tutorial](/docs/getting-started/getting-started)
+- Explore the [examples](/docs/examples/console)
+- Customize the look with the [theme guide](/docs/customization/theme)
+- Migrating from 2.x? See the [migration guide](/docs/getting-started/migration)

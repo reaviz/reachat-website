@@ -2,8 +2,14 @@ name = "reachat-website"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
+# Cloudflare Pages output of `@cloudflare/next-on-pages` (run via `build:cloudflare`).
+# Must stay top-level (above [vars]) or Cloudflare rejects the file.
+pages_build_output_dir = ".vercel/output/static"
+
 [vars]
 NODE_ENV = "production"
-
-[site]
-pages_build_output_dir = ".vercel/output/static"
+# Cloudflare applies [vars] to the BUILD environment too, and NODE_ENV=production
+# makes `pnpm install` skip devDependencies — which breaks the build (no
+# typescript/tailwind/pagefind). This override forces pnpm to install them anyway,
+# while the deployed worker still gets NODE_ENV=production at runtime.
+NPM_CONFIG_PRODUCTION = "false"
